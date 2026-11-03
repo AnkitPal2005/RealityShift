@@ -3,7 +3,8 @@ TTS (edge-tts / ElevenLabs), SFX + music synthesis, mixing, and the frame compos
 
 Stories live in stories/<name>.py and define TOPIC, SCRIPT, SCENE_CLASSES, OUTPUTS
 plus optional overrides (EL_VOICE_ID, EL_SETTINGS, CLEAN_PUNCTUATION, MAX_GAP, MUSIC_BPM,
-MUSIC_DUCK, HOT_COLOR, HOT_COLORS, CAPTION_Y, CAPTION_SIZE, WATERMARK, OUTPUT_DIR).
+MUSIC_DUCK, HOT_COLOR, HOT_COLORS, CAPTION_Y, CAPTION_SIZE, WATERMARK, OUTPUT_DIR,
+DELIVERY, BREATHS, ROOM).
 """
 
 import asyncio
@@ -344,10 +345,11 @@ def person(ctx, x, y, s, phase, shirt, mode="run", cap=None, t=0.0, flip=False):
 
 # ============================================================ audio: narration
 
-async def synth(text_: str, dest: Path, voice: str = VOICE, rate: str = RATE, pitch: str = PITCH) -> list[float]:
+async def synth(text_: str, dest: Path, voice: str = VOICE, rate: str = RATE, pitch: str = PITCH,
+                volume: str = "+0%") -> list[float]:
     """Save narration mp3 and return word start times in seconds."""
     starts = []
-    comm = edge_tts.Communicate(text_, voice, rate=rate, pitch=pitch, boundary="WordBoundary")
+    comm = edge_tts.Communicate(text_, voice, rate=rate, pitch=pitch, volume=volume, boundary="WordBoundary")
     with dest.open("wb") as f:
         async for msg in comm.stream():
             if msg["type"] == "audio":
@@ -464,6 +466,91 @@ def align(chunks, starts, audio_len):
         out.append((starts[idx], cap))
         cum += c
     return out
+
+
+# ============================================================ audio: performed narration
+# A story may set DELIVERY = {scene_key: [(tone, line), ...]} to have edge-tts read a scene the
+# way a narrator performs it: each line is synthesised with its own rate/pitch/volume, joined by
+# a pause sized from its closing punctuation, with a soft inhale in the longer pauses. A line may
+# also be (tone, line, pause_seconds), and a tone may be a literal (rate, pitch, volume) tuple.
+
+TONES = {
+    "tell":  ("+16%", "+0Hz", "+0%"),    # plain storytelling
+    "hook":  ("+20%", "+5Hz", "+10%"),   # opening line, leaning in
+    "ask":   ("+14%", "+4Hz", "+0%"),    # a question left hanging
+    "low":   ("+12%", "-6Hz", "-5%"),    # serious, setting up the villain
+    "sly":   ("+10%", "+8Hz", "-5%"),    # mocking, drawn out
+    "build": ("+20%", "+2Hz", "+5%"),    # tension rising, quicker
+    "punch": ("+10%", "+8Hz", "+20%"),    # the payoff, slow and loud
+    "cta":   ("+16%", "+3Hz", "+8%"),    # warm, direct ask
+}
+LINE_PAUSE = {"?": 0.24, "!": 0.2, "।": 0.18, ".": 0.18, "…": 0.3, ",": 0.06}
+BREATH_MIN_PAUSE = 0.2
+
+
+def line_pause(line: str) -> float:
+    end = line.rstrip("'\" ").rstrip("?!")
+    if end.endswith(("...", "…")):
+        return LINE_PAUSE["…"]
+    return LINE_PAUSE.get(line.rstrip("'\" ")[-1:], 0.08)
+
+
+def delivery_lines(spec) -> list[tuple[str, str, str, str, float]]:
+    """[(tone, line[, pause])] -> [(line, rate, pitch, volume, pause_after)]."""
+    out = []
+    for tone, line_, *pause in spec:
+        rate, pitch, volume = TONES[tone] if isinstance(tone, str) else tone
+        out.append((line_, rate, pitch, volume, pause[0] if pause else line_pause(line_)))
+    return out
+
+
+def breath(dur: float, seed: int = 0) -> np.ndarray:
+    """A quiet inhale: band-limited noise that swells and eases off (peak 1.0)."""
+    n = int(dur * SR)
+    u = np.arange(n) / n
+    x = _noise(n, seed)
+    x = _lowpass(x, 2400) - _lowpass(x, 450)
+    x *= np.sin(np.pi * u ** 0.6) ** 2
+    return x / (np.max(np.abs(x)) + 1e-9)
+
+
+def perform(lines, clips, trim_kw, max_gap, breaths=True, seed=0):
+    """Join separately synthesised lines into one take; returns (audio, word starts)."""
+    kw = {**trim_kw, "keep": 0.03, "keep_tail": 0.07}
+    parts, starts, t = [], [], 0.0
+    fade = int(0.006 * SR)
+    for i, ((_, _, _, _, pause), (mp3, st)) in enumerate(zip(lines, clips)):
+        a, lead = trim_silence(decode(mp3), **kw)
+        st = [max(0.0, s - lead) for s in st]
+        if max_gap is not None:
+            a, st = tighten_pauses(a, st, max_gap=max_gap)
+        a = a.copy()
+        a[:fade] *= np.linspace(0, 1, fade)
+        a[-fade:] *= np.linspace(1, 0, fade)
+        parts.append(a)
+        starts += [t + s for s in st]
+        t += len(a) / SR
+        if i < len(lines) - 1:
+            gap = np.zeros(int(pause * SR))
+            if breaths and pause >= BREATH_MIN_PAUSE:
+                b = breath(min(0.26, pause - 0.03), seed * 31 + i)
+                at = len(gap) - len(b) - int(0.02 * SR)
+                gap[at:at + len(b)] += 0.03 * np.max(np.abs(a)) * b
+            parts.append(gap)
+            t += pause
+    return np.concatenate(parts), starts
+
+
+def room(x: np.ndarray, wet: float) -> np.ndarray:
+    """Small-room early reflections so the voice sits in a space instead of dead air."""
+    n = int(0.3 * SR)
+    t = np.arange(n) / SR
+    ir = _lowpass(_noise(n, 7) * np.exp(-t / 0.06), 3800)
+    ir[:int(0.004 * SR)] = 0                       # predelay: reflections arrive after the dry voice
+    ir /= np.sqrt(np.sum(ir ** 2))
+    size = 1 << int(np.ceil(np.log2(len(x) + n)))
+    rev = np.fft.irfft(np.fft.rfft(x, size) * np.fft.rfft(ir, size), size)[:len(x)]
+    return x + wet * rev
 
 
 # ============================================================ audio: SFX synthesis
@@ -738,6 +825,7 @@ def render(story, engine: str) -> Path:
     work.mkdir(parents=True, exist_ok=True)
     final.parent.mkdir(parents=True, exist_ok=True)
     mp3s = [work / f"scene_{i + 1:02d}.mp3" for i in range(len(script))]
+    delivery = {k: delivery_lines(v) for k, v in getattr(story, "DELIVERY", {}).items()} if engine == "edge" else {}
 
     if engine == "elevenlabs":
         voice_id = getattr(story, "EL_VOICE_ID", EL_VOICE_ID)
@@ -748,11 +836,19 @@ def render(story, engine: str) -> Path:
     else:
         voice = getattr(story, "EDGE_VOICE", VOICE)
         rate, pitch = getattr(story, "EDGE_RATE", RATE), getattr(story, "EDGE_PITCH", PITCH)
-        print(f"[1/4] Generating narration + word timings with {voice} (rate {rate}, pitch {pitch})...")
+        how = f"performed delivery on {len(delivery)} scenes" if delivery else f"rate {rate}, pitch {pitch}"
+        print(f"[1/4] Generating narration + word timings with {voice} ({how})...")
+
+        async def scene(key, chunks, p):
+            if key not in delivery:
+                return await synth(text_for(chunks), p, voice, rate, pitch)
+            lines = delivery[key]
+            paths = [p.with_name(f"{p.stem}_l{j:02d}.mp3") for j in range(len(lines))]
+            return list(zip(paths, await asyncio.gather(*(synth(ln[0], lp, voice, *ln[1:4])
+                                                           for ln, lp in zip(lines, paths)))))
 
         async def run_all():
-            return await asyncio.gather(*(synth(text_for(chunks), p, voice, rate, pitch)
-                                          for (_, chunks), p in zip(script, mp3s)))
+            return await asyncio.gather(*(scene(key, chunks, p) for (key, chunks), p in zip(script, mp3s)))
 
         word_starts = asyncio.run(run_all())
 
@@ -760,12 +856,17 @@ def render(story, engine: str) -> Path:
     t = 0.0
     voice_tracks = []
     diag = []
+    breaths = getattr(story, "BREATHS", True)
     for i, ((key, chunks), starts) in enumerate(zip(script, word_starts)):
-        raw = decode(mp3s[i])
-        audio, lead = trim_silence(raw, **trim_kw)
-        starts = [max(0.0, s - lead) for s in starts]
-        if max_gap is not None:
-            audio, starts = tighten_pauses(audio, starts, max_gap=max_gap)
+        if key in delivery:   # starts holds (line mp3, line word starts) pairs
+            audio, starts = perform(delivery[key], starts, trim_kw, max_gap, breaths, seed=i)
+            raw, lead = audio, 0.0
+        else:
+            raw = decode(mp3s[i])
+            audio, lead = trim_silence(raw, **trim_kw)
+            starts = [max(0.0, s - lead) for s in starts]
+            if max_gap is not None:
+                audio, starts = tighten_pauses(audio, starts, max_gap=max_gap)
         dur = max(len(audio) / SR, 1 / FPS) + tail_pad  # audio-first: the clip sets the scene length
         SCENES.append({"key": key, "obj": scene_classes[key](), "start": t, "dur": dur,
                        "captions": align(chunks, starts, len(audio) / SR)})
@@ -787,6 +888,8 @@ def render(story, engine: str) -> Path:
     # voice chain: rumble cut, presence lift, firm compression, peak normalise
     voice = ffilter(voice, "highpass=f=90,equalizer=f=3000:t=q:w=1.2:g=3,"
                            "acompressor=threshold=0.08:ratio=4:attack=4:release=70:makeup=2")
+    if getattr(story, "ROOM", 0):
+        voice = room(voice, story.ROOM)
     voice *= 0.9 / (np.max(np.abs(voice)) + 1e-9)
     # music ducks ~6 dB whenever the narrator is speaking (MUSIC_DUCK = 0 keeps it at a flat MUSIC_VOLUME)
     env = moving_avg(np.abs(voice), int(0.05 * SR))
