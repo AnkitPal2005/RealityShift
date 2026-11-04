@@ -27,5 +27,8 @@
     "generate_maldives_short",
     "generate_rupee_short",
     "generate_lithium_short"
-  ]
+  ],
+  "titles": {
+    "generate_chickens_neck_short": "India vs China: 22 KM Ka Chicken's Neck Kyun Ahem Hai?"
+  }
 }

@@ -33,6 +33,7 @@ MAX_GAP = 0.3
 TAIL_PAD = 0.35            # the breath between scenes
 TRIM = {"thresh": 0.006, "keep": 0.08, "keep_tail": 0.15}
 MUSIC_BPM = 96
+MUSIC_STYLE = "march"     # snare cadence + low brass for an Army story; rotate per Short
 EDGE_VOICE = "hi-IN-MadhurNeural"
 EDGE_RATE = "+10%"
 EDGE_PITCH = "+0Hz"
@@ -40,6 +41,16 @@ EDGE_PITCH = "+0Hz"
 RED = hexc("#FF3B3B")
 TEAL = hexc("#46E0B0")
 MONO = "Consolas"
+
+# where every number / claim comes from (policy.py requires these; verify before upload)
+SOURCES = [
+    "Siliguri Corridor: ~20-22 km wide at its narrowest between Nepal and Bangladesh, links the 8 North-East "
+    "states (Encyclopaedia/Wikipedia 'Siliguri Corridor'; widely reported explainers, e.g. The Hindu, BBC)",
+    "Doklam stand-off 16 June - 28 August 2017 (73 days), ended by mutual disengagement; road work at the "
+    "face-off site stopped (MEA press statement 'Recent developments in Doklam', 28 Aug 2017)",
+    "Indian Army 33 Corps 'Trishakti Corps', HQ Sukna near Siliguri (Indian Army / PIB releases)",
+    "North-East population 'crores': ~4.5 crore in Census 2011 (8 states incl. Sikkim)",
+]
 
 # each line: (tone, [(spoken Hindi, Hinglish caption), ...], pause after) - pauses as approved on the voice sample:
 # ~0.15 after a comma, ~0.35 after a sentence, ~0.5 after a "..." setup, ~0.6 before the CTA
@@ -77,7 +88,7 @@ SPEC = [
             ("ask", [("क्या भारत को", "KYA BHARAT KO"), ("यहां एक दूसरा रास्ता", "YAHAN EK DOOSRA RAASTA"),
                      ("बनाना चाहिए?", "BANANA CHAHIYE?")], 0.6),
             ("cta", [("हाँ या ना,", "HAAN YA NAA,"), ("कमेंट में लिखो।", "COMMENT MEIN LIKHO!")], 0.3),
-            ("cta", [("और रियलिटी शिफ्ट को", "AUR REALITY SHIFT KO"), ("सब्सक्राइब करो!", "SUBSCRIBE KARO!")], 0)]},
+            ("cta", [("भारत की ऐसी और कहानियों के लिए,", "BHARAT KI AISI AUR KAHANIYON KE LIYE,"), ("सब्सक्राइब करो!", "SUBSCRIBE KARO!")], 0)]},
 ]
 
 # the approved Reality Shift narrator: Rupee VOICE_TONES as-is (one pitch, no extra speed-up), pauses from SPEC
