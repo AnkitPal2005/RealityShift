@@ -17,7 +17,6 @@ from stories.reality_shift_weapons import CYAN, FIRE, RED, Rapid, fireball, grou
 
 TOPIC = "S-400 VS PROJECT KUSHA"
 OUTPUTS = {"edge": "reality_shift_project_kusha.mp4", "elevenlabs": "reality_shift_project_kusha_el.mp4"}
-OUTPUT_DIR = OUT_DIR
 WATERMARK = "Reality Shift"
 
 CLEAN_PUNCTUATION = False
