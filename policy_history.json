@@ -11,7 +11,8 @@
     "generate_chabahar_short",
     "generate_maldives_short",
     "generate_rupee_short",
-    "generate_lithium_short"
+    "generate_lithium_short",
+    "generate_chickens_neck_short"
   ],
   "grandfathered": [
     "reality_shift",
