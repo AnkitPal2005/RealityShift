@@ -16,7 +16,6 @@ from stories.reality_shift_defense import Cued, flash
 TOPIC = "LEETCODE #1 · EASY"
 WATERMARK = "TWO SUM"
 OUTPUTS = {"edge": "leetcode_two_sum_32s.mp4", "elevenlabs": "leetcode_two_sum_32s_el.mp4"}
-OUTPUT_DIR = OUT_DIR
 
 CLEAN_PUNCTUATION = False
 MAX_GAP = 0.2

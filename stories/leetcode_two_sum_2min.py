@@ -16,7 +16,6 @@ from stories.reality_shift import stamp
 TOPIC = "LEETCODE #1 · TWO SUM"
 WATERMARK = "2 MIN DSA"
 OUTPUTS = {"edge": "leetcode_two_sum_2min.mp4", "elevenlabs": "leetcode_two_sum_2min_el.mp4"}
-OUTPUT_DIR = OUT_DIR
 
 CLEAN_PUNCTUATION = False
 MAX_GAP = 0.22

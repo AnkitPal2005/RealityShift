@@ -6,7 +6,7 @@ Usage:
 Same pipeline and Golden Safe Zone layout as generate_chabahar_short.py (whose compositor, badge,
 plates and leader busts it reuses): watermark top-centre, on-screen text badge locked to Y 1150-1250,
 bottom 400px clean, ending on the comment + subscribe CTA.
-Output: render_maldives/maldives_boycott_short.mp4 (+ a .json with the scene/word alignment).
+Output: output/shorts/maldives_boycott_short.mp4 (+ a .json with the scene/word alignment).
 """
 
 import importlib
@@ -22,7 +22,6 @@ from generate_chabahar_short import NEON, RED, Cued, bell, bust, flash, partial,
 from stories.reality_shift import GOLD, INDIA_GREEN, SAFFRON, flag, hero, stamp, subscribe_badge
 
 TOPIC = "INDIA VS MALDIVES"
-OUTPUT_DIR = ROOT / "render_maldives"
 OUTPUTS = {"edge": "maldives_boycott_short.mp4"}
 
 CLEAN_PUNCTUATION = False

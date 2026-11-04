@@ -10,7 +10,7 @@ This module swaps in its own compositor for the Golden Safe Zone layout:
   - each scene's on-screen text in a high-contrast badge clipped to Y 1150-1250
   - bottom 400px faded to a clean dark band for the YouTube UI
 and ends on a subscribe CTA scene.
-Output: render_chabahar/chabahar_port_bypass_short.mp4 (+ a .json with the scene/word alignment).
+Output: output/shorts/chabahar_port_bypass_short.mp4 (+ a .json with the scene/word alignment).
 """
 
 import importlib
@@ -25,7 +25,6 @@ from engine import *  # noqa: F401,F403
 from stories.reality_shift import GOLD, INDIA_GREEN, SAFFRON, FACE, _ellipse, flag, stamp, subscribe_badge
 
 TOPIC = "CHABAHAR VS CPEC"
-OUTPUT_DIR = ROOT / "render_chabahar"
 OUTPUTS = {"edge": "chabahar_port_bypass_short.mp4"}
 
 CLEAN_PUNCTUATION = False      # keep ? ! … so the voice phrases the Devanagari naturally

@@ -15,7 +15,6 @@ from stories.reality_shift_defense import Cued, bowing_figure, brahmos, flash, l
 
 TOPIC = "MADE IN INDIA HATHIYAR"
 OUTPUTS = {"edge": "reality_shift_32s_weapons.mp4", "elevenlabs": "reality_shift_32s_weapons_el.mp4"}
-OUTPUT_DIR = OUT_DIR
 
 CLEAN_PUNCTUATION = False
 MAX_GAP = 0.12             # zero dead air

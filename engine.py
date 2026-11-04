@@ -3,12 +3,14 @@ TTS (edge-tts / ElevenLabs), SFX + music synthesis, mixing, and the frame compos
 
 Stories live in stories/<name>.py and define TOPIC, SCRIPT, SCENE_CLASSES, OUTPUTS
 plus optional overrides (EL_VOICE_ID, EL_SETTINGS, CLEAN_PUNCTUATION, MAX_GAP, MUSIC_BPM,
-MUSIC_DUCK, HOT_COLOR, HOT_COLORS, CAPTION_Y, CAPTION_SIZE, WATERMARK, OUTPUT_DIR,
-DELIVERY, BREATHS, ROOM).
+MUSIC_DUCK, HOT_COLOR, HOT_COLORS, CAPTION_Y, CAPTION_SIZE, WATERMARK,
+DELIVERY, BREATHS, ROOM, MUSIC_SEED).
+Every render first passes policy.check() (YouTube Partner Program reused/inauthentic content gate).
 """
 
 import asyncio
 import base64
+import hashlib
 import json
 import math
 import os
@@ -345,18 +347,36 @@ def person(ctx, x, y, s, phase, shirt, mode="run", cap=None, t=0.0, flip=False):
 
 # ============================================================ audio: narration
 
+EDGE_PARALLEL = 4     # the edge-tts service answers 503 when a script fires ~25+ lines at once
+EDGE_RETRIES = 4
+_edge_slots: tuple | None = None   # (event loop, semaphore): a semaphore is bound to one loop
+
+
 async def synth(text_: str, dest: Path, voice: str = VOICE, rate: str = RATE, pitch: str = PITCH,
                 volume: str = "+0%") -> list[float]:
     """Save narration mp3 and return word start times in seconds."""
-    starts = []
-    comm = edge_tts.Communicate(text_, voice, rate=rate, pitch=pitch, volume=volume, boundary="WordBoundary")
-    with dest.open("wb") as f:
-        async for msg in comm.stream():
-            if msg["type"] == "audio":
-                f.write(msg["data"])
-            elif msg["type"] == "WordBoundary":
-                starts.append(msg["offset"] / 1e7)
-    return starts
+    global _edge_slots
+    loop = asyncio.get_running_loop()
+    if _edge_slots is None or _edge_slots[0] is not loop:
+        _edge_slots = (loop, asyncio.Semaphore(EDGE_PARALLEL))
+    async with _edge_slots[1]:
+        for attempt in range(EDGE_RETRIES):
+            try:
+                starts = []
+                comm = edge_tts.Communicate(text_, voice, rate=rate, pitch=pitch, volume=volume,
+                                            boundary="WordBoundary")
+                with dest.open("wb") as f:
+                    async for msg in comm.stream():
+                        if msg["type"] == "audio":
+                            f.write(msg["data"])
+                        elif msg["type"] == "WordBoundary":
+                            starts.append(msg["offset"] / 1e7)
+                return starts
+            except Exception as e:
+                if attempt == EDGE_RETRIES - 1:
+                    raise
+                print(f"      edge-tts retry {attempt + 1} for {dest.name}: {str(e)[:60]}")
+                await asyncio.sleep(1.5 * 2 ** attempt)
 
 
 def synth_elevenlabs(text_: str, dest: Path, voice_id: str = EL_VOICE_ID,
@@ -649,8 +669,14 @@ def engine_sound(dur: float) -> np.ndarray:
     return out / (np.max(np.abs(out)) + 1e-9)
 
 
-def tension_music(dur: float, bpm: float = 100) -> np.ndarray:
-    """Dark documentary bed: drone + heartbeat kick + minor arpeggio (Am-F-Dm-E) + ticking hats."""
+def tension_music(dur: float, bpm: float = 100, seed: int = 0) -> np.ndarray:
+    """Dark documentary bed: drone + heartbeat kick + minor arpeggio (Am-F-Dm-E) + ticking hats.
+    seed (one per story) picks the key, chord order, arpeggio and groove, so no two Shorts share a bed."""
+    rng = np.random.default_rng(seed)
+    key = 2 ** (int(rng.integers(-4, 6)) / 12)          # transpose -4..+5 semitones
+    order = rng.permutation(4) if seed else np.arange(4)
+    pattern = tuple(rng.permutation([0, 1, 2, 3, 2, 1, 2, 3])) if seed else (0, 1, 2, 3, 2, 1, 2, 3)
+    kick_every = int(rng.choice([2, 2, 4])) if seed else 2
     n = int(dur * SR)
     t = np.arange(n) / SR
     beat = 60 / bpm
@@ -661,8 +687,8 @@ def tension_music(dur: float, bpm: float = 100) -> np.ndarray:
         if i0 < n:
             out[i0:i0 + len(sig)] += gain * sig[:len(out) - i0]
 
-    drone = (np.sin(2 * np.pi * 55 * t) + 0.6 * np.sin(2 * np.pi * 82.41 * t + 0.4 * np.sin(2 * np.pi * 0.1 * t))
-             + 0.25 * np.sin(2 * np.pi * 110.4 * t)) * (0.7 + 0.3 * np.sin(2 * np.pi * t / (beat * 8)))
+    drone = (np.sin(2 * np.pi * 55 * key * t) + 0.6 * np.sin(2 * np.pi * 82.41 * key * t + 0.4 * np.sin(2 * np.pi * 0.1 * t))
+             + 0.25 * np.sin(2 * np.pi * 110.4 * key * t)) * (0.7 + 0.3 * np.sin(2 * np.pi * t / (beat * 8)))
     out[:n] += 0.3 * drone
 
     tk = np.arange(int(0.3 * SR)) / SR
@@ -671,10 +697,10 @@ def tension_music(dur: float, bpm: float = 100) -> np.ndarray:
     hat = np.diff(_noise(int(0.05 * SR) + 1, 7)) * np.exp(-np.arange(int(0.05 * SR)) / SR * 90)
     chords = [(220.0, 261.63, 329.63, 440.0), (174.61, 220.0, 261.63, 349.23),
               (146.83, 174.61, 220.0, 293.66), (164.81, 207.65, 246.94, 329.63)]
-    pattern = (0, 1, 2, 3, 2, 1, 2, 3)
+    chords = [tuple(f * key for f in chords[i]) for i in order]
     for b in range(int(dur / beat) + 1):
         at = b * beat
-        if b % 2 == 0:  # lub-dub heartbeat
+        if b % kick_every == 0:  # lub-dub heartbeat
             place(kick, at, 0.9)
             place(kick, at + 0.17, 0.55)
         for h in range(4):
@@ -820,8 +846,10 @@ def render(story, engine: str) -> Path:
         (lambda chunks: " ".join(h for h, _ in chunks))
 
     name = story.__name__.split(".")[-1]
+    import policy   # YPP gate: refuses reused/repetitive Shorts before any TTS is spent
+    policy.check(story, name)
     work = WORK_DIR / name / engine
-    final = getattr(story, "OUTPUT_DIR", SHORTS_DIR) / story.OUTPUTS[engine]
+    final = SHORTS_DIR / story.OUTPUTS[engine]   # one common folder for every Short
     work.mkdir(parents=True, exist_ok=True)
     final.parent.mkdir(parents=True, exist_ok=True)
     mp3s = [work / f"scene_{i + 1:02d}.mp3" for i in range(len(script))]
@@ -895,7 +923,8 @@ def render(story, engine: str) -> Path:
     env = moving_avg(np.abs(voice), int(0.05 * SR))
     duck_amt = getattr(story, "MUSIC_DUCK", 0.5)
     duck = moving_avg(1 - duck_amt * np.clip(env / 0.04, 0, 1), int(0.15 * SR))
-    music = tension_music(len(voice) / SR, bpm=getattr(story, "MUSIC_BPM", 100))
+    music = tension_music(len(voice) / SR, bpm=getattr(story, "MUSIC_BPM", 100),
+                          seed=getattr(story, "MUSIC_SEED", int(hashlib.md5(name.encode()).hexdigest()[:8], 16)))
     music = np.pad(music, (0, max(0, len(voice) - len(music))))[:len(voice)]
     mix = voice + MUSIC_VOLUME * music * duck
     events = [(max(0.0, s["start"] - 0.2), "whoosh") for s in SCENES[1:]]
