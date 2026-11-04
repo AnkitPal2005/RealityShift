@@ -1,20 +1,33 @@
 """YouTube Partner Program gate, run by engine.render() before any narration is generated.
 
 Blocks a render that would risk YPP's "reused content" / "inauthentic (mass-produced, repetitive)
-content" policies:
+content" policies, or its misleading-metadata / spam rules:
   - narration that repeats another Short's script (4-word shingle overlap above MAX_OVERLAP)
   - a TOPIC already used by another Short
   - third-party media pulled into the story (video/image/audio files, downloads, stock clips)
+  - the same screen layout as the last MAX_LAYOUT_RUN Shorts in a row (one template, mass-produced)
+  - the same ending (CTA devices) as either of the last two Shorts
+  - off-platform calls to action ("DM me", "link in bio/inbox") that YouTube viewers can't follow
+and warns about clickbait words that must be literally true before upload.
 Everything else in the pipeline is original by construction: Cairo-drawn visuals, synthesized
 music (seeded per story, see engine.tension_music) and synthesized SFX.
+
+Render order lives in policy_history.json (committed with the code). Shorts made before the template
+rules existed are listed under "grandfathered" so they can still be re-rendered as published.
 """
 
+import ast
 import importlib
+import json
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
+HISTORY = ROOT / "policy_history.json"
 MAX_OVERLAP = 0.25   # share of this script's 4-word phrases allowed to appear in any other Short
+MAX_LAYOUT_RUN = 3   # Shorts in a row allowed on the same screen layout
+CTA_DEVICES = {"subscribe_badge", "cursor_click", "comment_bubble", "bell"}
 
 # Loading outside media is how reused content sneaks in; every frame and sound must be made here.
 MEDIA_PATTERNS = [
@@ -24,6 +37,11 @@ MEDIA_PATTERNS = [
 ]
 # Files the engine itself writes (TTS clips, the mix, the render) are not outside media.
 GENERATED = re.compile(r'(scene_\{|_l\{|master_audio\.wav|\.mp3"\)|OUTPUTS\s*=|^Output:|"\.json"|mp3_44100)')
+# YouTube has no DMs and Shorts links aren't clickable: promising links this way misleads the viewer.
+OFF_PLATFORM = re.compile(r"(डीएम|\bDM\b|इनबॉक्स|\binbox\b|link in bio|लिंक इन बायो|\bbio\b|बायो)", re.IGNORECASE)
+# Allowed only when literally true; YPP's misleading-metadata rule covers titles/text that oversell.
+CLICKBAIT = re.compile(r"(ILLEGAL|इलीगल|गैरकानूनी|GUARANTEED|गारंटी|100% SURE|BANNED|बैन|SECRET|सीक्रेट|"
+                       r"HACK|हैक|FREE MONEY)", re.IGNORECASE)
 
 
 def narration(story) -> list[str]:
@@ -46,15 +64,74 @@ def other_shorts(name: str):
             print(f"      [policy] could not load {mod} for comparison: {e}")
 
 
-def check(story, name: str) -> None:
+def source_of(name: str) -> Path | None:
+    for p in (ROOT / f"{name}.py", ROOT / "stories" / f"{name}.py"):
+        if p.exists():
+            return p
+    return None
+
+
+def template(path: Path) -> tuple[str, frozenset]:
+    """(screen layout, ending devices) of a Short, read from the calls in its source."""
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    alias, origin, local = {}, {}, set()
+    for n in ast.walk(tree):
+        if isinstance(n, ast.Import):
+            for a in n.names:
+                alias[a.asname or a.name] = a.name
+        elif isinstance(n, ast.ImportFrom) and n.module:
+            for a in n.names:
+                origin[a.asname or a.name] = n.module
+        elif isinstance(n, (ast.FunctionDef, ast.ClassDef)):
+            local.add(n.name)
+    calls = set()
+    for n in ast.walk(tree):
+        if isinstance(n, ast.Call):
+            f = n.func
+            if isinstance(f, ast.Attribute) and isinstance(f.value, ast.Name) and f.value.id in alias:
+                calls.add((alias[f.value.id], f.attr))
+            elif isinstance(f, ast.Name):
+                calls.add((path.stem if f.id in local else origin.get(f.id, "engine"), f.id))
+    composers = sorted(o for o, fn in calls if fn == "compose")
+    # a story's own compose() is its own layout; with none, engine.make_frame draws the kinetic captions
+    layout = composers[0] if composers else (path.stem if "make_frame" in local else "engine")
+    return layout, frozenset(fn for _, fn in calls if fn in CTA_DEVICES)
+
+
+def load_history() -> dict:
+    if HISTORY.exists():
+        return json.loads(HISTORY.read_text(encoding="utf-8"))
+    return {"order": [], "grandfathered": []}
+
+
+def template_problems(name: str, path: Path, history: dict) -> list[str]:
+    order = history["order"]
+    before = order[:order.index(name)] if name in order else order
+    prev = [(n, template(p)) for n in before if (p := source_of(n))]
+    layout, ending = template(path)
     problems = []
-    src = Path(story.__file__).read_text(encoding="utf-8")
+    run = [n for n, (lay, _) in prev[-MAX_LAYOUT_RUN:] if lay == layout]
+    if len(run) == MAX_LAYOUT_RUN:
+        problems.append(f'same screen layout ("{layout}") as the last {MAX_LAYOUT_RUN} Shorts ({", ".join(run)}) - '
+                        f"build a new layout (badge position, header, transitions, caption style)")
+    for n, (_, end) in prev[-2:]:
+        if ending and ending == end:
+            problems.append(f"same ending as {n} ({', '.join(sorted(ending))}) - change the closing scene/CTA")
+    return problems
+
+
+def check(story, name: str) -> None:
+    if hasattr(sys.stdout, "reconfigure"):   # Devanagari in a message must not crash a cp1252 console
+        sys.stdout.reconfigure(errors="backslashreplace")
+    problems, warnings = [], []
+    path = Path(story.__file__)
+    src = path.read_text(encoding="utf-8")
     for ln, line in enumerate(src.splitlines(), 1):
         if GENERATED.search(line):
             continue
         for pat in MEDIA_PATTERNS:
             if re.search(pat, line):
-                problems.append(f"outside media at {Path(story.__file__).name}:{ln}: {line.strip()[:90]}")
+                problems.append(f"outside media at {path.name}:{ln}: {line.strip()[:90]}")
                 break
 
     mine = shingles(narration(story))
@@ -67,10 +144,30 @@ def check(story, name: str) -> None:
             if overlap > MAX_OVERLAP:
                 problems.append(f"{overlap:.0%} of the narration repeats {mod} (limit {MAX_OVERLAP:.0%})")
 
+    spoken = " ".join(narration(story))
+    shown = [story.TOPIC] + [s.get("text", "") for s in getattr(story, "SPEC", [])]
+    if m := OFF_PLATFORM.search(spoken + " " + " ".join(shown)):
+        problems.append(f'off-platform call to action "{m.group(0)}" - YouTube has no DMs/bio links; '
+                        f"ask for a comment or subscribe instead")
+    for s in sorted({m.group(0) for m in CLICKBAIT.finditer(spoken + " " + " ".join(shown))}):
+        warnings.append(f'"{s}" in narration/on-screen text - keep only if literally true, or YPP may treat it '
+                        f"as misleading")
+
+    history = load_history()
+    if name not in history["grandfathered"]:
+        problems += template_problems(name, path, history)
+
     if problems:
-        raise SystemExit("[policy] Render blocked - YPP reused/inauthentic content risk:\n  - "
+        raise SystemExit("[policy] Render blocked - YPP reused/inauthentic/misleading content risk:\n  - "
                          + "\n  - ".join(problems)
-                         + "\nWrite a fresh script/topic or draw the visual in code, then render again.")
-    print(f"[policy] OK - original narration, unique topic, no outside media ({len(mine)} phrases checked)")
+                         + "\nFix the story (fresh script/topic, new layout or ending, drawn visuals), then render again.")
+    for w in warnings:
+        print(f"[policy] WARNING: {w}")
+    if name not in history["order"]:
+        history["order"].append(name)
+        HISTORY.write_text(json.dumps(history, indent=2) + "\n", encoding="utf-8")
+    layout, ending = template(path)
+    print(f"[policy] OK - original narration, unique topic, no outside media ({len(mine)} phrases checked); "
+          f"layout {layout}, ending {', '.join(sorted(ending)) or 'none'}")
     print("[policy] On upload: original title/description/thumbnail; tick 'altered or synthetic' only if a\n"
           "         real person is shown realistically saying/doing something they didn't (cartoons don't need it).")
