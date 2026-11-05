@@ -15,12 +15,15 @@ content" policies, or its misleading-metadata / spam rules:
   - the same music style as the previous Short, a style already used twice in the last three, or a tempo
     within MIN_BPM_STEP of the previous Short (one bed under every video reads as a template)
   - no SOURCES for the facts (misinformation), no UPLOAD kit / thumbnail (packaging is checked in upload_kit.py)
+  - a Silent Reality (no-voice) Short with fewer than MIN_SILENT_WORDS words of on-screen text
   - derogatory words for a people, nation or religion (hate / harassment)
 and warns about clickbait words that must be literally true, graphic/violent words that limit ads, and a
 closing line or scene count copied from recent Shorts.
 Everything else in the pipeline is original by construction: Cairo-drawn visuals, synthesized
 music (seeded per story, style rotated, see engine.MUSIC_STYLES) and synthesized SFX.
 
+Series rules (layout run, Lego, music, ending, opening) compare a Short only with earlier Shorts of the
+same CHANNEL; topic and script-copy checks run across every channel, so nothing is reused between them.
 Render order lives in policy_history.json (committed with the code). Shorts made before the template
 rules existed are listed under "grandfathered" so they can still be re-rendered as published.
 """
@@ -44,6 +47,7 @@ MIN_SOURCES = 2
 COMBO_LOOKBACK = 10  # a Lego combination may not repeat within this many Shorts
 MAX_PIECE_RUN = 2    # the same option in one slot this many Shorts in a row at most
 MIN_SLOTS_CHANGED = 2
+MIN_SILENT_WORDS = 8  # a no-voice Short must still say something on screen, not just picture + music
 STOCK_HOOKS = ("क्या आपको पता है", "क्या आप जानते हैं", "kya aapko pata hai", "kya aap jaante hain")
 
 # Loading outside media is how reused content sneaks in; every frame and sound must be made here.
@@ -67,7 +71,14 @@ DEROGATORY = re.compile(r"(भिखारी|कुत्ते|कीड़े
                         re.IGNORECASE)
 
 
+def channel_of(story) -> str:
+    """Which channel a Short is for; series rules (layout/music/ending/hook) are judged per channel."""
+    return getattr(story, "CHANNEL", "reality_shift")
+
+
 def narration(story) -> list[str]:
+    """Words the viewer gets: spoken lines, or for a no-voice Short (CHANNEL = "silent_reality") the
+    on-screen text in SCRIPT - so script-copy, hook and ending checks cover silent Shorts too."""
     return [w for _, chunks in story.SCRIPT for spoken, _ in chunks for w in spoken.lower().split()]
 
 
@@ -189,7 +200,7 @@ def template(path: Path) -> tuple[str, frozenset]:
                 calls.add((path.stem if f.id in local else origin.get(f.id, "engine"), f.id))
     composers = sorted(o for o, fn in calls if fn == "compose")
     # a story's own compose() is its own layout; with none, engine.make_frame draws the kinetic captions
-    layout = composers[0] if composers else (path.stem if "make_frame" in local else "engine")
+    layout = composers[0] if composers else (path.stem if {"make_frame", "draw"} & local else "engine")
     return layout, frozenset(fn for _, fn in calls if fn in CTA_DEVICES)
 
 
@@ -241,9 +252,7 @@ def lego_problems(story, before: list[str]) -> list[str]:
     return problems
 
 
-def template_problems(name: str, path: Path, history: dict) -> list[str]:
-    order = history["order"]
-    before = order[:order.index(name)] if name in order else order
+def template_problems(name: str, path: Path, before: list[str]) -> list[str]:
     prev = [(n, (layout_of(n, p), template(p)[1])) for n in before if (p := source_of(n))]
     layout, ending = layout_of(name, path), template(path)[1]
     problems = []
@@ -304,7 +313,13 @@ def check(story, name: str) -> None:
             problems.append(f'"{s}" demeans a people/nation/religion - hate & harassment policy; remove it')
         order = history["order"]
         before = order[:order.index(name)] if name in order else order
-        problems += template_problems(name, path, history)
+        channel = channel_of(story)   # each channel's run of Shorts is judged on its own
+        before = [n for n in before if (m := module_of(n)) is not None and channel_of(m) == channel]
+        if channel == "silent_reality" and len(bare(narration(story))) < MIN_SILENT_WORDS:
+            problems.append(f"only {len(bare(narration(story)))} on-screen words - a no-voice Short needs at least "
+                            f"{MIN_SILENT_WORDS} so it adds a real fact/idea, not just visuals + music "
+                            f"(inauthentic-content risk)")
+        problems += template_problems(name, path, before)
         more, warn = series_problems(story, before)
         problems += more + kit_problems(story) + lego_problems(story, before)
         warnings += warn

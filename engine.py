@@ -29,6 +29,12 @@ ROOT = Path(__file__).resolve().parent
 OUT_DIR = ROOT / "output"
 SHORTS_DIR = OUT_DIR / "shorts"   # every finished Short lands here, whatever the story
 WORK_DIR = OUT_DIR / "work"
+SILENT_REALITY_DIR = OUT_DIR / "silent_reality"   # Silent Reality channel: no-voice 10-15s Shorts
+
+
+def shorts_dir(story):
+    """Finished-Short folder for a story: CHANNEL = "silent_reality" goes to its own folder."""
+    return SILENT_REALITY_DIR if getattr(story, "CHANNEL", "") == "silent_reality" else SHORTS_DIR
 
 W, H = 1080, 1920
 FPS = 30
@@ -971,7 +977,7 @@ def render(story, engine: str) -> Path:
     import policy   # YPP gate: refuses reused/repetitive Shorts before any TTS is spent
     policy.check(story, name)
     work = WORK_DIR / name / engine
-    final = SHORTS_DIR / story.OUTPUTS[engine]   # one common folder for every Short
+    final = shorts_dir(story) / story.OUTPUTS[engine]   # per-channel folder
     work.mkdir(parents=True, exist_ok=True)
     final.parent.mkdir(parents=True, exist_ok=True)
     mp3s = [work / f"scene_{i + 1:02d}.mp3" for i in range(len(script))]

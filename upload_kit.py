@@ -161,8 +161,11 @@ def build(story, final: Path, duration: float) -> Path:
 
 def main() -> None:
     name = sys.argv[1].removesuffix(".py")
-    story = importlib.import_module(name)
-    final = engine.SHORTS_DIR / story.OUTPUTS["edge"]
+    try:
+        story = importlib.import_module(name)
+    except ModuleNotFoundError:
+        story = importlib.import_module(f"stories.{name}")
+    final = engine.shorts_dir(story) / (story.OUTPUTS.get("edge") or story.OUTPUTS["silent"])
     if not final.exists():
         raise SystemExit(f"render {name} first: {final} is missing")
     scenes = json.loads(final.with_suffix(".json").read_text(encoding="utf-8"))
