@@ -27,6 +27,8 @@ from stories.reality_shift import GOLD, INDIA_GREEN, SAFFRON, flag, stamp
 
 TOPIC = "CHICKEN'S NECK"
 OUTPUTS = {"edge": "chickens_neck_short.mp4"}
+# its frame pieces, as named in lego.py (drawn locally here; the gate reads this to rotate the next Shorts)
+LEGO = {"header": "intel", "caption": "typewriter", "transition": "shutter", "palette": "intel", "ending": "poll"}
 
 CLEAN_PUNCTUATION = False
 MAX_GAP = 0.3

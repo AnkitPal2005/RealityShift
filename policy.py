@@ -6,6 +6,9 @@ content" policies, or its misleading-metadata / spam rules:
   - a TOPIC already used by another Short
   - third-party media pulled into the story (video/image/audio files, downloads, stock clips)
   - the same screen layout as the last MAX_LAYOUT_RUN Shorts in a row (one template, mass-produced)
+  - for Lego-template Shorts (LEGO = {...}, see lego.py): a combination used in the last COMBO_LOOKBACK Shorts,
+    one piece in the same slot more than MAX_PIECE_RUN Shorts in a row, or fewer than MIN_SLOTS_CHANGED
+    slots changed from the previous Short
   - the same ending (CTA devices) as either of the last two Shorts
   - off-platform calls to action ("DM me", "link in bio/inbox") that YouTube viewers can't follow
   - the same opening words as a recent Short, or a stock hook ("क्या आपको पता है")
@@ -38,6 +41,9 @@ OPENING_WORDS = 4    # this many opening words may not match any of the last OPE
 OPENING_LOOKBACK = 5
 MIN_BPM_STEP = 6     # music tempo must move at least this far from the previous Short
 MIN_SOURCES = 2
+COMBO_LOOKBACK = 10  # a Lego combination may not repeat within this many Shorts
+MAX_PIECE_RUN = 2    # the same option in one slot this many Shorts in a row at most
+MIN_SLOTS_CHANGED = 2
 STOCK_HOOKS = ("क्या आपको पता है", "क्या आप जानते हैं", "kya aapko pata hai", "kya aap jaante hain")
 
 # Loading outside media is how reused content sneaks in; every frame and sound must be made here.
@@ -193,11 +199,53 @@ def load_history() -> dict:
     return {"order": [], "grandfathered": []}
 
 
+def lego_of(name: str) -> dict | None:
+    m = module_of(name)
+    return getattr(m, "LEGO", None) if m is not None else None
+
+
+def layout_of(name: str, path: Path) -> str:
+    """A Lego Short's layout is its piece combination; otherwise the compose()/make_frame it draws through."""
+    lego = lego_of(name)
+    if lego:
+        import lego as lego_mod
+        return "lego:" + lego_mod.combo(lego)
+    return template(path)[0]
+
+
+def lego_problems(story, before: list[str]) -> list[str]:
+    lego = getattr(story, "LEGO", None)
+    if not lego:
+        return []
+    import lego as lego_mod
+    problems = []
+    for slot in lego_mod.SLOTS:
+        if lego.get(slot) not in lego_mod.OPTIONS[slot]:
+            problems.append(f'LEGO {slot} "{lego.get(slot)}" is not a lego.py option '
+                            f"({', '.join(lego_mod.OPTIONS[slot])})")
+    if problems:
+        return problems
+    prev = [(n, lego_of(n)) for n in before]
+    mine = lego_mod.combo(lego)
+    for n, other in prev[-COMBO_LOOKBACK:]:
+        if other and lego_mod.combo(other) == mine:
+            problems.append(f"Lego combination {mine} was already used by {n} - change pieces")
+    for slot in lego_mod.SLOTS:
+        run = [n for n, other in prev[-MAX_PIECE_RUN:] if other and other.get(slot) == lego[slot]]
+        if len(run) == MAX_PIECE_RUN:
+            problems.append(f'LEGO {slot} "{lego[slot]}" already ran {MAX_PIECE_RUN} Shorts in a row ({", ".join(run)})')
+    if prev and prev[-1][1]:
+        changed = sum(prev[-1][1].get(s) != lego[s] for s in lego_mod.SLOTS)
+        if changed < MIN_SLOTS_CHANGED:
+            problems.append(f"only {changed} Lego slot(s) differ from {prev[-1][0]} - change at least {MIN_SLOTS_CHANGED}")
+    return problems
+
+
 def template_problems(name: str, path: Path, history: dict) -> list[str]:
     order = history["order"]
     before = order[:order.index(name)] if name in order else order
-    prev = [(n, template(p)) for n in before if (p := source_of(n))]
-    layout, ending = template(path)
+    prev = [(n, (layout_of(n, p), template(p)[1])) for n in before if (p := source_of(n))]
+    layout, ending = layout_of(name, path), template(path)[1]
     problems = []
     run = [n for n, (lay, _) in prev[-MAX_LAYOUT_RUN:] if lay == layout]
     if len(run) == MAX_LAYOUT_RUN:
@@ -258,7 +306,7 @@ def check(story, name: str) -> None:
         before = order[:order.index(name)] if name in order else order
         problems += template_problems(name, path, history)
         more, warn = series_problems(story, before)
-        problems += more + kit_problems(story)
+        problems += more + kit_problems(story) + lego_problems(story, before)
         warnings += warn
 
     if problems:
@@ -270,7 +318,7 @@ def check(story, name: str) -> None:
     if name not in history["order"]:
         history["order"].append(name)
         HISTORY.write_text(json.dumps(history, indent=2) + "\n", encoding="utf-8")
-    layout, ending = template(path)
+    layout, ending = layout_of(name, path), template(path)[1]
     style, bpm = music_of(story)
     print(f"[policy] OK - original narration, unique topic, no outside media ({len(mine)} phrases checked); "
           f"layout {layout}, ending {', '.join(sorted(ending)) or 'none'}, music {style} @ {bpm} BPM")

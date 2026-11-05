@@ -12,7 +12,8 @@
     "generate_maldives_short",
     "generate_rupee_short",
     "generate_lithium_short",
-    "generate_chickens_neck_short"
+    "generate_chickens_neck_short",
+    "generate_brahmos_short"
   ],
   "grandfathered": [
     "reality_shift",
@@ -29,6 +30,7 @@
     "generate_lithium_short"
   ],
   "titles": {
-    "generate_chickens_neck_short": "India vs China: 22 KM Ka Chicken's Neck Kyun Ahem Hai?"
+    "generate_chickens_neck_short": "India vs China: 22 KM Ka Chicken's Neck Kyun Ahem Hai?",
+    "generate_brahmos_short": "Aawaz Se 3 Guna Tez: BrahMos Ko Rokna Kyun Mushkil?"
   }
 }

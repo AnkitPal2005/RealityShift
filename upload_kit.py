@@ -5,7 +5,8 @@ Usage:
 
 A story opts in by defining UPLOAD = {"titles": [...10 candidates...], "thumb_text": "MAX 3 WORDS",
 "queries": [...3 searches it should win...], "description": "...", "tags": [...], "hashtags": [...]}
-and thumbnail(ctx) that draws the 1080x1920 cover. Writes output/shorts/<OUTPUT stem>_upload.md and
+and thumbnail(ctx) that draws the 1080x1920 cover. An optional UPLOAD["title"] (the creator's pick)
+ships instead of the top-ranked candidate. Writes output/shorts/<OUTPUT stem>_upload.md and
 <OUTPUT stem>_thumb.png (plus a feed-size preview), and prints the scores.
 Titles are scored by the yt-package skill's title.py; the rest by YouTube's published limits.
 """
@@ -122,7 +123,11 @@ def build(story, final: Path, duration: float) -> Path:
                 r["chars"])
 
     ranked = sorted((check(t, up["thumb_text"]) for t in up["titles"]), key=rank)
-    best = ranked[0]
+    if up.get("title"):  # the creator picked a title: it ships, the ranking stays in the kit for comparison
+        best = check(up["title"], up["thumb_text"])
+        ranked = [best] + [r for r in ranked if r["title"] != best["title"]]
+    else:
+        best = ranked[0]
     name = story.__name__.split(".")[-1]
     rows = metadata_checks(up, best["title"], duration, name)
     passed = sum(ok for ok, *_ in rows)
