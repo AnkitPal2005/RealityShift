@@ -32,8 +32,10 @@ SHOWN_HASHTAGS = 3     # the first three show above the title
 
 def title_checker():
     path = next((p for p in TITLE_PY if p.exists()), None)
-    if path is None:
-        raise SystemExit("yt-package/title.py not found; install the yt-* skills first")
+    if path is None:  # still write the kit + thumbnail; titles just go unscored
+        print("[upload] yt-package/title.py not found - titles are listed unscored (install the yt-* skills to score)")
+        return lambda t, _thumb: {"title": t, "score": 0, "issues": [("title.py", "not installed, unscored")],
+                                  "chars": len(t)}
     spec = importlib.util.spec_from_file_location("yt_title", path)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
@@ -92,6 +94,8 @@ def build(story, final: Path, duration: float) -> Path:
     topic = words(story.TOPIC)
 
     def rank(r):  # title.py caps at 100, so ties go to: names the topic, wins more queries, fewer issues, shorter
+        if not r["score"]:  # unscored (no title.py): keep the story's own order, its first title is the pick
+            return (0, up["titles"].index(r["title"]))
         tw = words(r["title"])
         return (-r["score"], -len(topic & tw), -sum(words(q) <= tw for q in up["queries"]), len(r["issues"]),
                 r["chars"])

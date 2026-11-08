@@ -163,9 +163,9 @@ def text(ctx, s, x, y, size, c, font=UI_FONT, bold=True, a=1.0, anchor="c",
     ctx.select_font_face(font, cairo.FONT_SLANT_NORMAL,
                          cairo.FONT_WEIGHT_BOLD if bold else cairo.FONT_WEIGHT_NORMAL)
     ctx.set_font_size(size)
-    if "₹" in s and font != UI_FONT:
-        # Impact has no rupee glyph: lay out runs, borrowing "₹" from Segoe UI
-        _, yb, _, th, _, _ = ctx.text_extents(s.replace("₹", "4"))
+    if any(ch in BORROW for ch in s) and font != UI_FONT:
+        # Impact has no rupee glyph and a malformed "?": lay out runs, borrowing those from Segoe UI
+        _, yb, _, th, _, _ = ctx.text_extents(s.replace("₹", "4").replace("?", "4"))
         runs = _rupee_runs(ctx, s, size, font, bold)
         tw = sum(adv for _, _, adv in runs)
         cx = x - tw / 2 if anchor == "c" else (x if anchor == "l" else x - tw)
@@ -198,11 +198,14 @@ def _select(ctx, face, size):
     ctx.set_font_size(size)
 
 
+BORROW = "₹?"   # glyphs always drawn in UI_FONT: Impact lacks "₹" and draws "?" with a reversed hook
+
+
 def _rupee_runs(ctx, s, size, font, bold):
-    """Split s into (run, face, advance) so '₹' renders in a font that has it."""
+    """Split s into (run, face, advance) so '₹' and '?' render in a font that draws them right."""
     runs = []
     for ch in s:
-        face = (UI_FONT, True) if ch == "₹" else (font, bold)
+        face = (UI_FONT, True) if ch in BORROW else (font, bold)
         if runs and runs[-1][1] == face:
             runs[-1][0] += ch
         else:
@@ -215,7 +218,7 @@ def _rupee_runs(ctx, s, size, font, bold):
 
 
 def text_width(ctx, s, size, font=UI_FONT, bold=True):
-    if "₹" in s and font != UI_FONT:
+    if any(ch in BORROW for ch in s) and font != UI_FONT:
         return sum(adv for _, _, adv in _rupee_runs(ctx, s, size, font, bold))
     _select(ctx, (font, bold), size)
     return ctx.text_extents(s)[2]
