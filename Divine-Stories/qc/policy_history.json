@@ -1,0 +1,20 @@
+{
+  "order": [
+    {
+      "slug": "shiva_neelkanth",
+      "template": "mystery_reveal",
+      "layout": "classic",
+      "ending": "शिव का सबसे बड़ा त्याग कौन सा है कमेंट में लिखिए हर हर महादेव",
+      "assets": [
+        "File:A version from the Ravi Varma press- \"Shankar,\" c.1910's.jpg",
+        "File:Churning of the ocean - Manthan.jpg",
+        "File:Mount Kailash with coulds.jpg",
+        "File:Mount Kailash, Tibet.jpg",
+        "File:Sagar Manthan.jpg",
+        "File:Samudramanthan.jpg",
+        "File:Shiva as an ascetic, with a disciple.jpg",
+        "File:Shiva as the Lord of Dance LACMA edit.jpg"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+# Divine Stories - all free / open-source. No paid APIs, no keys.
+# Python 3.12; FFmpeg (ffmpeg + ffprobe) must be on PATH.
+pycairo==1.29.2
+numpy==2.5.4
+pillow==13.0.0
+uharfbuzz==0.57.0        # Devanagari shaping (Pillow here has no libraqm)
+edge-tts==7.3.1          # hi-IN-MadhurNeural; online, no account/key
+requests==2.34.2         # Wikimedia Commons API + downloads
+pytest==9.2.0

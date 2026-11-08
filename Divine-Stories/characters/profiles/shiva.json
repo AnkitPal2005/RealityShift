@@ -1,0 +1,26 @@
+{
+  "id": "shiva",
+  "name_hi": "भगवान शिव",
+  "name_en": "Lord Shiva",
+  "iconography": {
+    "skin": "ash-smeared pale blue-grey (blue throat after the halahala episode)",
+    "hair": "matted jata, coiled high",
+    "crown": "crescent moon in the jata",
+    "neck": "serpent (Vasuki) and rudraksha",
+    "weapon": "trishul with damaru",
+    "clothing": "tiger skin, minimal ornaments",
+    "mount": "Nandi"
+  },
+  "visual_rules": {
+    "throat_glow_color": "#3FA9FF",
+    "aura_color": "#BFD9FF",
+    "grade": "divine",
+    "never": ["cartoon/anime styles", "change of skin colour between scenes", "text baked into images"]
+  },
+  "approved_assets": {
+    "primary_portrait": "File:Shiva as an ascetic, with a disciple.jpg",
+    "family": "File:A version from the Ravi Varma press- \"Shankar,\" c.1910's.jpg",
+    "iconic_form": "File:Shiva as the Lord of Dance LACMA edit.jpg"
+  },
+  "consistency_note": "Close-ups and any 'Shiva acts' scene must use primary_portrait so his face stays the same through the video. 'family' and 'iconic_form' are allowed only for group or symbolic scenes. A new asset needs to be added here (human-approved) before it can be used."
+}
