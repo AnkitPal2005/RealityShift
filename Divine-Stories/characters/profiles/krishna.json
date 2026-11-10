@@ -1,0 +1,28 @@
+{
+  "id": "krishna",
+  "name_hi": "भगवान श्रीकृष्ण",
+  "name_en": "Lord Krishna",
+  "iconography": {
+    "skin": "dark blue / blue-grey (shyam varna)",
+    "crown": "mukut with peacock feather",
+    "clothing": "yellow pitambar, vaijayanti / pearl garlands",
+    "attribute": "flute; in this episode Govardhan held up on one raised hand",
+    "age": "Bala-Krishna (Bhagavata 10.26: a seven-year-old boy at Govardhan)"
+  },
+  "visual_rules": {
+    "aura_color": "#FFD98A",
+    "grade": "divine",
+    "never": ["cartoon/anime styles", "adult warrior Krishna in Braj-leela scenes", "text baked into images"]
+  },
+  "approved_assets": {
+    "primary_portrait": "File:India, Pahari Hills, Kangra School, 18th century - Krishna Lifting Mt. Govardhana - 2001.45 - Cleveland Museum of Art.jpg",
+    "group_malwa": "File:Central India, Malwa - A page from the Bhagavata Purana- Indra sends a torrent of rain; Krishna li - 2018.134 - Cleveland Museum of Art.jpg",
+    "group_bundi": "File:India, Rajasthan, Bundi school, 18th century - Krishna Supporting Mt. Govardhana - 2006.203 - Cleveland Museum of Art.jpg",
+    "group_rain_1640": "File:Krishna raising Mount Govardhan, Bhagavata Purana,ca 1640.jpg",
+    "group_mola_ram": "File:Krishna Holding Mount Govardhan.jpg",
+    "group_yale": "File:Anonymous - Illustration from a Bhagavata Purana Series, Book 10, Krishna Lifts Mount Govardhan - 2001.138.38 - Yale University Art Gallery.jpg",
+    "group_night": "File:Krishna Lifting Mount Govardhan - Google Art Project.jpg",
+    "procession": "File:Delhi-National Museum-Govardhan puja Krishna and Gopas-20131006.jpg"
+  },
+  "consistency_note": "Close-ups and the 'Krishna lifts the hill' climax use primary_portrait (Kangra, Cleveland 2001.45) so his face is the same in every tight shot. The other miniatures paint Krishna differently (blue vs grey skin), so they are used only for wide group/symbolic shots where the face is small."
+}

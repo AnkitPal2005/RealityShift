@@ -337,11 +337,35 @@ def throat_glow(ctx, t, dur, env):
     ctx.restore()
 
 
+def rain(ctx, t, dur, env):
+    """Monsoon downpour: slanted streaks in two depth layers (far = thin/slow/faint, near = long/fast/bright)."""
+    p = env.fx.get("rain", {})
+    dens = p.get("density", 1.0)
+    slant = p.get("slant", 0.18)          # horizontal drift per unit of fall
+    r = rng(env.seed + 11)
+    ctx.save()
+    ctx.set_line_cap(cairo.LINE_CAP_ROUND)
+    for layer, (n, speed, length, width, alpha) in enumerate(((int(260 * dens), 1500, 38, 1.4, 0.22),
+                                                               (int(110 * dens), 2600, 95, 2.6, 0.32))):
+        xs, ys = r.uniform(-200, W + 200, n), r.uniform(0, H, n)
+        jit = r.uniform(0.85, 1.15, n)
+        for i in range(n):
+            fall = t * speed * jit[i]
+            y = (ys[i] + fall) % (H + 200) - 100
+            x = (xs[i] + fall * slant) % (W + 400) - 200
+            ctx.set_source_rgba(0.82, 0.88, 1.0, alpha)
+            ctx.set_line_width(width)
+            ctx.move_to(x, y)
+            ctx.line_to(x - length * slant, y - length)
+            ctx.stroke()
+    ctx.restore()
+
+
 EFFECTS = {
     # back-to-front draw order
     "clouds": clouds, "ocean_mist": ocean_mist, "fog": fog, "poison_smoke": poison_smoke, "rays": rays,
     "throat_glow": throat_glow, "energy_wave": energy_wave, "dust": dust, "embers": embers, "sparks": sparks,
-    "lightning": lightning, "rain_light": dust,
+    "rain": rain, "lightning": lightning, "rain_light": dust,
 }
 ORDER = list(EFFECTS)
 

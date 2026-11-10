@@ -230,9 +230,19 @@ def sfx(kind: str, seed: int = 0) -> np.ndarray:
         am = 0.5 + 0.5 * np.sin(2 * np.pi * t / 3.1) * np.sin(2 * np.pi * t / 1.7 + 1)
         env = np.minimum(1, t / 0.8) * np.minimum(1, (d - t) / 1.5)
         return norm(x * am * env, 0.6)
+    if kind == "rain":    # heavy rain: dense pink-noise hiss + random droplet ticks
+        d = 6.0
+        t = _t(d)
+        hiss = bandpass(pink(len(t), seed + 5), 400, 7000)
+        drops = np.zeros_like(t)
+        for _ in range(600):
+            p = r.integers(0, len(t) - 200)
+            drops[p:p + 200] += r.uniform(0.2, 1) * np.exp(-np.arange(200) / 18) * r.standard_normal(200)
+        env = np.minimum(1, t / 0.7) * np.minimum(1, (d - t) / 1.5)
+        return norm((hiss + bandpass(drops, 2000, 9000) * 0.5) * env, 0.6)
     raise ValueError(f"unknown sfx {kind}")
 
 
-SFX_KINDS = ("whoosh", "boom", "thunder", "bell", "shimmer", "riser", "fire", "waves", "wind")
+SFX_KINDS = ("whoosh", "boom", "thunder", "bell", "shimmer", "riser", "fire", "waves", "wind", "rain")
 SFX_GAIN = {"whoosh": 0.55, "boom": 0.9, "thunder": 0.8, "bell": 0.45, "shimmer": 0.35, "riser": 0.5,
-            "fire": 0.35, "waves": 0.45, "wind": 0.4}
+            "fire": 0.35, "waves": 0.45, "wind": 0.4, "rain": 0.4}

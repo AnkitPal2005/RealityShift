@@ -18,7 +18,7 @@ from pathlib import Path
 CLAIM_KINDS = ("scripture", "regional_tradition", "popular_interpretation")
 KIND_LABEL_HI = {"scripture": "शास्त्र", "regional_tradition": "क्षेत्रीय परंपरा", "popular_interpretation": "लोक मान्यता"}
 EFFECTS = {"dust", "embers", "sparks", "fog", "clouds", "rays", "lightning", "energy_wave", "poison_smoke",
-           "throat_glow", "ocean_mist", "rain_light"}
+           "throat_glow", "ocean_mist", "rain_light", "rain"}
 GRADES = {"cinematic", "night", "poison", "divine", "warm", "cold"}
 WORDS_PER_SEC = 2.45   # measured after pause capping: hi-IN-MadhurNeural, -4% rate, -6Hz (pre-TTS estimate only)
 

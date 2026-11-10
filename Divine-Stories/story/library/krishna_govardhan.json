@@ -1,0 +1,969 @@
+{
+  "slug": "krishna_govardhan",
+  "topic": "Why Govardhan Puja is celebrated: Krishna lifts Govardhan hill against Indra's storm",
+  "template": "lesser_known_fact",
+  "title_hi": "गोवर्धन पूजा क्यों होती है?",
+  "characters": [
+    "krishna"
+  ],
+  "sources": [
+    {
+      "id": "bp10_24",
+      "work": "श्रीमद्भागवत महापुराण (Bhagavata Purana)",
+      "ref": "Skandha 10, Adhyaya 24 (Krishna questions the Indra-yajna; argues for worship of the cows, brahmanas and Govardhan; Vraja makes the offering to the hill)",
+      "kind": "scripture",
+      "url": "https://vedabase.io/en/library/sb/10/24/",
+      "note": "Chapter-level reference; reviewer to confirm verse numbers."
+    },
+    {
+      "id": "bp10_25",
+      "work": "श्रीमद्भागवत महापुराण (Bhagavata Purana)",
+      "ref": "Skandha 10, Adhyaya 25 (Indra sends the Samvartaka clouds; rain, hail and wind; Krishna lifts Govardhan with one hand 'like a child holds a mushroom' (~v.19) and holds it seven days (~v.23))",
+      "kind": "scripture",
+      "url": "https://vedabase.io/en/library/sb/10/25/",
+      "note": "Verse numbers approximate; reviewer to confirm."
+    },
+    {
+      "id": "bp10_26",
+      "work": "श्रीमद्भागवत महापुराण (Bhagavata Purana)",
+      "ref": "Skandha 10, Adhyaya 26 (the cowherds wonder how a seven-year-old boy could hold up the great hill)",
+      "kind": "scripture",
+      "url": "https://vedabase.io/en/library/sb/10/26/",
+      "note": "Source for 'seven-year-old'."
+    },
+    {
+      "id": "bp10_27",
+      "work": "श्रीमद्भागवत महापुराण (Bhagavata Purana)",
+      "ref": "Skandha 10, Adhyaya 27 (Indra and Surabhi come to Krishna; Indra asks forgiveness; Krishna is bathed and called Govinda)",
+      "kind": "scripture",
+      "url": "https://vedabase.io/en/library/sb/10/27/",
+      "note": ""
+    },
+    {
+      "id": "folk_finger",
+      "work": "Popular retellings and devotional art",
+      "ref": "Krishna holding Govardhan on his little finger (kanishthika) is the widely told popular image; Bhagavata 10.25 itself says 'with one hand'.",
+      "kind": "popular_interpretation",
+      "url": "",
+      "note": "Shown on screen as 'लोक मान्यता'."
+    },
+    {
+      "id": "trad_annakut",
+      "work": "Living festival tradition (Braj, Nathdwara and across North India)",
+      "ref": "Govardhan Puja / Annakut on Kartika Shukla Pratipada, the day after Diwali (10 Nov 2026 in India): a 'mountain of food' is offered and a Govardhan made of cow dung is worshipped.",
+      "kind": "regional_tradition",
+      "url": "https://www.drikpanchang.com/festivals/govardhan-puja/govardhan-puja-date-time.html?year=2026",
+      "note": ""
+    }
+  ],
+  "scenes": [
+    {
+      "id": "s01",
+      "beat": "hook",
+      "narration": "सात साल का बालक... और हाथ पर पूरा पर्वत!",
+      "highlight": [
+        "सात",
+        "पर्वत"
+      ],
+      "label": "",
+      "claims": [
+        {
+          "text": "Krishna was a seven-year-old boy when he held up Govardhan",
+          "kind": "scripture",
+          "sources": [
+            "bp10_26"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:India, Pahari Hills, Kangra School, 18th century - Krishna Lifting Mt. Govardhana - 2001.45 - Cleveland Museum of Art.jpg",
+        "bounds": [
+          0.085,
+          0.045,
+          0.925,
+          0.945
+        ],
+        "character": "krishna",
+        "shot": "medium",
+        "focus": [
+          0.52,
+          0.26
+        ],
+        "zoom": [
+          2.3,
+          1.75
+        ],
+        "pan": [
+          -0.03,
+          0.06
+        ],
+        "grade": "night",
+        "effects": [
+          "clouds",
+          "rain",
+          "lightning",
+          "energy_wave"
+        ],
+        "fx": {
+          "lightning": {
+            "times": [
+              0.3,
+              1.9
+            ]
+          },
+          "energy_wave": {
+            "point": [
+              0.494,
+              0.217
+            ],
+            "at": "word:पर्वत"
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "boom",
+          "at": 0.0
+        },
+        {
+          "type": "thunder",
+          "at": 0.3
+        },
+        {
+          "type": "rain",
+          "at": 0.0
+        },
+        {
+          "type": "boom",
+          "at": "word:पर्वत"
+        }
+      ],
+      "title": "गोवर्धन",
+      "title_at": "word:पर्वत",
+      "pause_after": 0.25
+    },
+    {
+      "id": "s02",
+      "beat": "setup",
+      "narration": "भागवत पुराण, दसवाँ स्कंध। ब्रज में इंद्र-यज्ञ की तैयारी थी।",
+      "highlight": [
+        "भागवत",
+        "इंद्र-यज्ञ"
+      ],
+      "label": "श्रीमद्भागवत पुराण · स्कंध 10",
+      "claims": [
+        {
+          "text": "The cowherds of Vraja were preparing a sacrifice for Indra",
+          "kind": "scripture",
+          "sources": [
+            "bp10_24"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Central India, Malwa - A page from the Bhagavata Purana- Indra sends a torrent of rain; Krishna li - 2018.134 - Cleveland Museum of Art.jpg",
+        "bounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "focus": [
+          0.2,
+          0.19
+        ],
+        "zoom": [
+          2.5,
+          2.1
+        ],
+        "pan": [
+          0.06,
+          0.0
+        ],
+        "grade": "warm",
+        "effects": [
+          "dust",
+          "rays"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.17,
+              0.05
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "whoosh",
+          "at": 0.0
+        },
+        {
+          "type": "bell",
+          "at": "word:इंद्र-यज्ञ"
+        }
+      ]
+    },
+    {
+      "id": "s03",
+      "beat": "setup",
+      "narration": "कृष्ण बोले, गायें तो गोवर्धन पालता है... पूजा उसी की हो।",
+      "highlight": [
+        "गायें",
+        "गोवर्धन"
+      ],
+      "label": "भागवत 10.24",
+      "claims": [
+        {
+          "text": "Krishna argued that Vraja's cows and livelihood depend on Govardhan, so the hill, the cows and the brahmanas should be worshipped instead",
+          "kind": "scripture",
+          "sources": [
+            "bp10_24"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Central India, Malwa - A page from the Bhagavata Purana- Indra sends a torrent of rain; Krishna li - 2018.134 - Cleveland Museum of Art.jpg",
+        "bounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "character": "krishna",
+        "shot": "group",
+        "focus": [
+          0.36,
+          0.52
+        ],
+        "zoom": [
+          1.95,
+          1.6
+        ],
+        "pan": [
+          0.03,
+          -0.02
+        ],
+        "grade": "warm",
+        "effects": [
+          "dust",
+          "rays"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.42,
+              0.35
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "whoosh",
+          "at": 0.0
+        },
+        {
+          "type": "shimmer",
+          "at": "word:गोवर्धन"
+        }
+      ]
+    },
+    {
+      "id": "s04",
+      "beat": "rising",
+      "narration": "ब्रजवासियों ने इंद्र की जगह, गोवर्धन को भोग लगाया।",
+      "highlight": [
+        "गोवर्धन",
+        "भोग"
+      ],
+      "label": "भागवत 10.24",
+      "claims": [
+        {
+          "text": "The people of Vraja offered the sacrifice to Govardhan and the cows instead of Indra",
+          "kind": "scripture",
+          "sources": [
+            "bp10_24"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Delhi-National Museum-Govardhan puja Krishna and Gopas-20131006.jpg",
+        "bounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "character": "krishna",
+        "shot": "group",
+        "focus": [
+          0.55,
+          0.38
+        ],
+        "zoom": [
+          1.35,
+          1.15
+        ],
+        "pan": [
+          0.17,
+          0.0
+        ],
+        "grade": "warm",
+        "effects": [
+          "dust",
+          "rays"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.72,
+              0.1
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "bell",
+          "at": 0.1
+        }
+      ]
+    },
+    {
+      "id": "s05",
+      "beat": "rising",
+      "narration": "अपमान से क्रोधित इंद्र ने प्रलय के मेघ भेज दिए।",
+      "highlight": [
+        "क्रोधित",
+        "प्रलय"
+      ],
+      "label": "भागवत 10.25",
+      "claims": [
+        {
+          "text": "Angered, Indra sent the Samvartaka clouds of dissolution to flood Vraja",
+          "kind": "scripture",
+          "sources": [
+            "bp10_25"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:India, Rajasthan, Bundi school, 18th century - Krishna Supporting Mt. Govardhana - 2006.203 - Cleveland Museum of Art.jpg",
+        "bounds": [
+          0.07,
+          0.12,
+          0.88,
+          0.89
+        ],
+        "focus": [
+          0.62,
+          0.15
+        ],
+        "zoom": [
+          2.3,
+          1.8
+        ],
+        "pan": [
+          -0.04,
+          0.03
+        ],
+        "grade": "night",
+        "effects": [
+          "clouds",
+          "fog",
+          "lightning"
+        ],
+        "fx": {
+          "lightning": {
+            "times": [
+              0.5,
+              1.7
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "thunder",
+          "at": 0.5
+        },
+        {
+          "type": "wind",
+          "at": 0.0
+        },
+        {
+          "type": "boom",
+          "at": "word:प्रलय"
+        }
+      ]
+    },
+    {
+      "id": "s06",
+      "beat": "rising",
+      "narration": "मूसलधार वर्षा, ओले और आँधी... पूरा ब्रज काँप उठा।",
+      "highlight": [
+        "वर्षा",
+        "ब्रज"
+      ],
+      "label": "भागवत 10.25",
+      "claims": [
+        {
+          "text": "Torrential rain, hail and wind battered Vraja; people and cows were in distress",
+          "kind": "scripture",
+          "sources": [
+            "bp10_25"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Krishna raising Mount Govardhan, Bhagavata Purana,ca 1640.jpg",
+        "bounds": [
+          0,
+          0,
+          1,
+          0.97
+        ],
+        "character": "krishna",
+        "shot": "group",
+        "focus": [
+          0.27,
+          0.62
+        ],
+        "zoom": [
+          2.0,
+          1.6
+        ],
+        "pan": [
+          0.02,
+          -0.04
+        ],
+        "grade": "night",
+        "effects": [
+          "clouds",
+          "rain",
+          "lightning",
+          "fog"
+        ],
+        "fx": {
+          "lightning": {
+            "times": [
+              0.2,
+              2.3
+            ]
+          },
+          "rain": {
+            "density": 1.4
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "rain",
+          "at": 0.0
+        },
+        {
+          "type": "thunder",
+          "at": 0.2
+        },
+        {
+          "type": "wind",
+          "at": 0.5
+        }
+      ]
+    },
+    {
+      "id": "s07",
+      "beat": "climax",
+      "narration": "तब कृष्ण ने खेल-खेल में, एक हाथ से गोवर्धन उठा लिया।",
+      "highlight": [
+        "खेल-खेल",
+        "एक",
+        "हाथ"
+      ],
+      "label": "भागवत 10.25",
+      "claims": [
+        {
+          "text": "Krishna playfully lifted Govardhan with one hand, like a child holding up a mushroom",
+          "kind": "scripture",
+          "sources": [
+            "bp10_25"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:India, Pahari Hills, Kangra School, 18th century - Krishna Lifting Mt. Govardhana - 2001.45 - Cleveland Museum of Art.jpg",
+        "bounds": [
+          0.085,
+          0.045,
+          0.925,
+          0.945
+        ],
+        "character": "krishna",
+        "shot": "medium",
+        "focus": [
+          0.46,
+          0.45
+        ],
+        "zoom": [
+          1.25,
+          1.0
+        ],
+        "pan": [
+          0.02,
+          -0.12
+        ],
+        "grade": "divine",
+        "effects": [
+          "rain",
+          "rays",
+          "energy_wave",
+          "dust"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.494,
+              0.217
+            ]
+          },
+          "energy_wave": {
+            "point": [
+              0.56,
+              0.294
+            ],
+            "at": "word:उठा"
+          },
+          "rain": {
+            "density": 0.6
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "riser",
+          "at": 0.0
+        },
+        {
+          "type": "boom",
+          "at": "word:उठा"
+        },
+        {
+          "type": "bell",
+          "at": "word:उठा"
+        }
+      ]
+    },
+    {
+      "id": "s08",
+      "beat": "reveal",
+      "narration": "सात दिन तक वे वहीं डटे रहे, और पूरा ब्रज सुरक्षित रहा।",
+      "highlight": [
+        "सात",
+        "दिन",
+        "सुरक्षित"
+      ],
+      "label": "भागवत 10.25",
+      "claims": [
+        {
+          "text": "Krishna held the hill for seven days without moving, and all of Vraja sheltered beneath it",
+          "kind": "scripture",
+          "sources": [
+            "bp10_25"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:India, Pahari Hills, Kangra School, 18th century - Krishna Lifting Mt. Govardhana - 2001.45 - Cleveland Museum of Art.jpg",
+        "bounds": [
+          0.085,
+          0.045,
+          0.925,
+          0.945
+        ],
+        "character": "krishna",
+        "shot": "closeup",
+        "focus": [
+          0.42,
+          0.39
+        ],
+        "zoom": [
+          1.9,
+          2.35
+        ],
+        "pan": [
+          0.0,
+          0.0
+        ],
+        "grade": "divine",
+        "effects": [
+          "rays",
+          "dust"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.5,
+              0.22
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "shimmer",
+          "at": "word:सात"
+        },
+        {
+          "type": "bell",
+          "at": "word:सुरक्षित"
+        }
+      ],
+      "title": "7 दिन",
+      "title_at": "word:दिन",
+      "title_y": 430
+    },
+    {
+      "id": "s09",
+      "beat": "tradition",
+      "narration": "भागवत में 'एक हाथ' लिखा है। छोटी उँगली पर पर्वत... यह लोक मान्यता है।",
+      "highlight": [
+        "हाथ",
+        "उँगली"
+      ],
+      "label": "लोक मान्यता (शास्त्र नहीं)",
+      "claims": [
+        {
+          "text": "Bhagavata says one hand",
+          "kind": "scripture",
+          "sources": [
+            "bp10_25"
+          ]
+        },
+        {
+          "text": "Krishna held the hill on his little finger",
+          "kind": "popular_interpretation",
+          "sources": [
+            "folk_finger"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Krishna Holding Mount Govardhan.jpg",
+        "bounds": [
+          0.1,
+          0.07,
+          0.93,
+          0.95
+        ],
+        "character": "krishna",
+        "shot": "group",
+        "focus": [
+          0.5,
+          0.3
+        ],
+        "zoom": [
+          1.9,
+          1.55
+        ],
+        "pan": [
+          -0.03,
+          0.04
+        ],
+        "grade": "warm",
+        "effects": [
+          "dust",
+          "rays"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.35,
+              0.12
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "whoosh",
+          "at": 0.0
+        },
+        {
+          "type": "shimmer",
+          "at": "word:उँगली"
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "beat": "reveal",
+      "narration": "हारकर इंद्र ने क्षमा माँगी, और कृष्ण का नाम पड़ा... गोविंद।",
+      "highlight": [
+        "इंद्र",
+        "क्षमा",
+        "गोविंद"
+      ],
+      "label": "भागवत 10.27",
+      "claims": [
+        {
+          "text": "Indra, humbled, begged forgiveness; with Surabhi he bathed Krishna and named him Govinda",
+          "kind": "scripture",
+          "sources": [
+            "bp10_27"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Anonymous - Illustration from a Bhagavata Purana Series, Book 10, Krishna Lifts Mount Govardhan - 2001.138.38 - Yale University Art Gallery.jpg",
+        "bounds": [
+          0.08,
+          0.105,
+          0.92,
+          0.89
+        ],
+        "character": "krishna",
+        "shot": "group",
+        "focus": [
+          0.76,
+          0.12
+        ],
+        "zoom": [
+          1.9,
+          1.3
+        ],
+        "pan": [
+          -0.29,
+          0.4
+        ],
+        "grade": "divine",
+        "effects": [
+          "rays",
+          "dust",
+          "clouds"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.47,
+              0.3
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "whoosh",
+          "at": 0.0
+        },
+        {
+          "type": "boom",
+          "at": "word:गोविंद"
+        },
+        {
+          "type": "bell",
+          "at": "word:गोविंद"
+        }
+      ],
+      "title": "गोविंद",
+      "title_at": "word:गोविंद",
+      "title_y": 430
+    },
+    {
+      "id": "s11",
+      "beat": "meaning",
+      "narration": "इसी याद में, गोवर्धन पूजा पर अन्नकूट का भोग लगता है।",
+      "highlight": [
+        "गोवर्धन",
+        "अन्नकूट"
+      ],
+      "label": "परंपरा",
+      "claims": [
+        {
+          "text": "Govardhan Puja / Annakut is celebrated on Kartika Shukla Pratipada, offering a 'mountain of food' to Govardhan",
+          "kind": "regional_tradition",
+          "sources": [
+            "trad_annakut"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Krishna Lifting Mount Govardhan - Google Art Project.jpg",
+        "bounds": [
+          0.11,
+          0.1,
+          0.89,
+          0.9
+        ],
+        "character": "krishna",
+        "shot": "group",
+        "focus": [
+          0.5,
+          0.45
+        ],
+        "zoom": [
+          1.05,
+          1.35
+        ],
+        "pan": [
+          0.0,
+          -0.05
+        ],
+        "grade": "warm",
+        "effects": [
+          "embers",
+          "rays",
+          "dust"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.5,
+              0.2
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "riser",
+          "at": 0.0
+        },
+        {
+          "type": "bell",
+          "at": "word:अन्नकूट"
+        }
+      ]
+    },
+    {
+      "id": "s12",
+      "beat": "question",
+      "narration": "आप अन्नकूट में क्या भोग लगाते हैं? कमेंट में बताइए। जय श्री कृष्ण!",
+      "highlight": [
+        "अन्नकूट",
+        "कमेंट",
+        "कृष्ण"
+      ],
+      "label": "",
+      "claims": [],
+      "visual": {
+        "asset": "File:Central India, Malwa - A page from the Bhagavata Purana- Indra sends a torrent of rain; Krishna li - 2018.134 - Cleveland Museum of Art.jpg",
+        "bounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "character": "krishna",
+        "shot": "group",
+        "focus": [
+          0.77,
+          0.48
+        ],
+        "zoom": [
+          1.35,
+          1.1
+        ],
+        "pan": [
+          0.0,
+          -0.04
+        ],
+        "grade": "divine",
+        "effects": [
+          "rays",
+          "dust"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.73,
+              0.3
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "whoosh",
+          "at": 0.0
+        },
+        {
+          "type": "bell",
+          "at": "word:जय"
+        }
+      ],
+      "pause_after": 0.8
+    }
+  ],
+  "upload": {
+    "titles": [
+      "Govardhan Puja Kyon Manate Hain? Krishna Ne 7 Din Uthaya Parvat | Annakut ⛰️",
+      "गोवर्धन पूजा की असली कथा | Ek Haath Par Govardhan Parvat | Krishna Annakut",
+      "Indra Ka Ghamand Kaise Toota? Govardhan Puja Ki Katha | Krishna Annakut",
+      "Choti Ungli Ya Ek Haath? Govardhan Puja Katha | Krishna Annakut"
+    ],
+    "thumb_text": "गोवर्धन पूजा क्यों?",
+    "queries": [
+      "govardhan puja",
+      "krishna",
+      "annakut"
+    ],
+    "intro": [
+      "Govardhan Puja kyon manate hain? Indra ke pralay-megh se Braj ko bachane ke liye Krishna ne 7 din tak Govardhan Parvat uthaya, aur isi ki yaad mein lagta hai Annakut.",
+      "Bhagwat Puran (Skandh 10, Adhyay 24-27) ke aadhaar par Govardhan leela aur 'Govind' naam ki katha, 60 second mein."
+    ],
+    "summary": "गोवर्धन पूजा (अन्नकूट) की कथा: इंद्र-यज्ञ की जगह गोवर्धन पूजा, इंद्र का क्रोध, सात दिन तक एक हाथ पर गोवर्धन पर्वत, और श्रीकृष्ण का 'गोविंद' नाम: श्रीमद्भागवत पुराण, स्कंध 10 के आधार पर।",
+    "question": "Aap Annakut mein kya bhog lagate hain? Comment mein batayiye. Jai Shri Krishna 🙏",
+    "tags": [
+      "govardhan puja",
+      "govardhan puja 2026",
+      "govardhan puja kyu manaya jata hai",
+      "govardhan puja ki katha",
+      "govardhan parvat",
+      "govardhan leela",
+      "krishna govardhan",
+      "annakut",
+      "annakut 2026",
+      "indra krishna katha",
+      "govind",
+      "bhagwat puran",
+      "krishna katha",
+      "jai shri krishna",
+      "divya rahasya"
+    ],
+    "hashtags": [
+      "#Shorts",
+      "#GovardhanPuja",
+      "#Krishna"
+    ]
+  },
+  "review": {
+    "verified_by": "",
+    "verified_on": "",
+    "notes": "Pending human check of verse numbers in bp10_25 (one hand ~v.19, seven days ~v.23) and bp10_26 (seven-year-old)."
+  },
+  "thumbnail": {
+    "character": "krishna",
+    "focus": [
+      0.47,
+      0.3
+    ],
+    "zoom": 1.6,
+    "headline_y": 1600,
+    "headline": "गोवर्धन पूजा क्यों?",
+    "subline": "7 दिन, एक हाथ पर पर्वत",
+    "effects": [
+      "rays",
+      "dust"
+    ],
+    "fx": {
+      "rays": {
+        "origin": [
+          0.494,
+          0.217
+        ]
+      }
+    }
+  }
+}
