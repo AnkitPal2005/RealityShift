@@ -1,0 +1,25 @@
+{
+  "id": "yama",
+  "name_hi": "यमराज",
+  "name_en": "Yama, god of death",
+  "iconography": {
+    "skin": "dark blue / blue-black",
+    "crown": "tall golden kirita mukut",
+    "clothing": "yellow/red silks, heavy jewellery",
+    "attribute": "danda (staff), pasha (noose); rides a buffalo",
+    "age": "adult"
+  },
+  "visual_rules": {
+    "aura_color": "#FFB46A",
+    "grade": "night",
+    "never": ["horror / gore close-ups", "cartoon/anime styles", "Tibetan or Japanese Yama (different tradition)"]
+  },
+  "approved_assets": {
+    "primary_portrait": "File:Four-armed and dark-complexioned Yama rides on his bejewelled and caparisoned buffalo. In his upper right hand is the danda (staff).jpg",
+    "fierce_portrait": "File:Yama deva.JPG",
+    "procession": "File:Yama on buffalo.jpg",
+    "group_chamba": "File:Brahma on Hamsa, Shani on vulture, and Yama on buffalo, Pahari school, Chamba style chitra 1740 CE.jpg",
+    "court": "File:Court of Yama, God of Death. Coloured transfer lithograph.jpg"
+  },
+  "consistency_note": "Close-ups use primary_portrait (Company School, blue Yama on buffalo, 4784x6900 source). The other paintings show a similar blue, crowned Yama on a buffalo and are used for medium, group or symbolic shots."
+}

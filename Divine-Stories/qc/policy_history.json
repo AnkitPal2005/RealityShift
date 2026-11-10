@@ -15,6 +15,39 @@
         "File:Shiva as an ascetic, with a disciple.jpg",
         "File:Shiva as the Lord of Dance LACMA edit.jpg"
       ]
+    },
+    {
+      "slug": "krishna_govardhan",
+      "template": "lesser_known_fact",
+      "layout": "classic",
+      "ending": "आप अन्नकूट में क्या भोग लगाते हैं कमेंट में बताइए जय श्री कृष्ण",
+      "assets": [
+        "File:Anonymous - Illustration from a Bhagavata Purana Series, Book 10, Krishna Lifts Mount Govardhan - 2001.138.38 - Yale University Art Gallery.jpg",
+        "File:Central India, Malwa - A page from the Bhagavata Purana- Indra sends a torrent of rain; Krishna li - 2018.134 - Cleveland Museum of Art.jpg",
+        "File:Delhi-National Museum-Govardhan puja Krishna and Gopas-20131006.jpg",
+        "File:India, Pahari Hills, Kangra School, 18th century - Krishna Lifting Mt. Govardhana - 2001.45 - Cleveland Museum of Art.jpg",
+        "File:India, Rajasthan, Bundi school, 18th century - Krishna Supporting Mt. Govardhana - 2006.203 - Cleveland Museum of Art.jpg",
+        "File:Krishna Holding Mount Govardhan.jpg",
+        "File:Krishna Lifting Mount Govardhan - Google Art Project.jpg",
+        "File:Krishna raising Mount Govardhan, Bhagavata Purana,ca 1640.jpg"
+      ]
+    },
+    {
+      "slug": "yama_yamuna_bhaidooj",
+      "template": "mystery_reveal",
+      "layout": "classic",
+      "ending": "आप अपने भाई या बहन को क्या देंगे कमेंट में बताइए",
+      "assets": [
+        "File:Court of Yama, God of Death. Coloured transfer lithograph.jpg",
+        "File:Diya Diwali India.jpg",
+        "File:Diya and Food (15558130038).jpg",
+        "File:Edwin Lord Weeks - Along the Ghats, Mathura.jpg",
+        "File:Four-armed and dark-complexioned Yama rides on his bejewelled and caparisoned buffalo. In his upper right hand is the danda (staff).jpg",
+        "File:The River Goddess Yamuna and Attendants LACMA M.79.9.10.2a-b (4 of 12).jpg",
+        "File:Yama deva.JPG",
+        "File:Yama on buffalo.jpg",
+        "File:YamunaTerracottaAhichchhatra.JPG"
+      ]
     }
   ]
 }

@@ -1,0 +1,895 @@
+{
+  "slug": "yama_yamuna_bhaidooj",
+  "topic": "Why Bhai Dooj is celebrated: Yama visits his sister Yamuna on Kartika Dvitiya and grants a boon (Yama Dwitiya)",
+  "template": "mystery_reveal",
+  "title_hi": "भाई दूज की असली कथा",
+  "characters": [
+    "yama",
+    "yamuna"
+  ],
+  "sources": [
+    {
+      "id": "sp_yd",
+      "work": "स्कंद पुराण (Skanda Purana)",
+      "ref": "Vaishnava Khanda, Kartikamasa-mahatmya, Adhyaya 11 'Yamadvitiya', vv. 41-53 (Yamuna's repeated invitations ~42-43; Yama frees the beings in hell and visits on Kartika Dvitiya ~44-46; bath, ornaments, food in gold vessels ~46-48; boon asked ~50-51; boon granted ~52-53)",
+      "kind": "scripture",
+      "url": "https://www.wisdomlib.org/hinduism/book/the-skanda-purana/d/doc371652.html",
+      "note": "Verse ranges from G. V. Tagare's translation; reviewer to confirm."
+    },
+    {
+      "id": "trad_bhaidooj",
+      "work": "Living festival tradition (Bhai Dooj / Bhau-beej / Bhai Phonta / Yama Dwitiya)",
+      "ref": "Kartika Shukla Dwitiya, two days after Diwali (11 Nov 2026 in India): sisters apply tilak and pray for their brother's long life, brothers give gifts; in Mathura brothers and sisters bathe together at Vishram Ghat on the Yamuna.",
+      "kind": "regional_tradition",
+      "url": "https://www.drikpanchang.com/diwali/yama-dwitiya/yama-dwitiya-date-time.html?lang=en",
+      "note": "Tilak is a living custom, not described in Skanda Purana 11."
+    }
+  ],
+  "scenes": [
+    {
+      "id": "s01",
+      "beat": "hook",
+      "narration": "मृत्यु के देवता यमराज... बहन के घर भोजन करने आए!",
+      "highlight": [
+        "यमराज",
+        "बहन"
+      ],
+      "label": "",
+      "claims": [
+        {
+          "text": "Yama, god of death, came to eat at his sister Yamuna's house",
+          "kind": "scripture",
+          "sources": [
+            "sp_yd"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Yama deva.JPG",
+        "bounds": [
+          0.04,
+          0.03,
+          0.96,
+          0.97
+        ],
+        "character": "yama",
+        "shot": "medium",
+        "focus": [
+          0.52,
+          0.27
+        ],
+        "zoom": [
+          2.0,
+          1.6
+        ],
+        "pan": [
+          0.0,
+          0.05
+        ],
+        "grade": "night",
+        "effects": [
+          "fog",
+          "embers",
+          "energy_wave"
+        ],
+        "fx": {
+          "energy_wave": {
+            "point": [
+              0.53,
+              0.22
+            ],
+            "at": "word:बहन"
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "boom",
+          "at": 0.0
+        },
+        {
+          "type": "wind",
+          "at": 0.0
+        },
+        {
+          "type": "bell",
+          "at": "word:बहन"
+        }
+      ],
+      "title": "भाई दूज",
+      "title_at": "word:बहन",
+      "pause_after": 0.25,
+      "title_y": 1020
+    },
+    {
+      "id": "s02",
+      "beat": "setup",
+      "narration": "स्कंद पुराण। यमराज की एक बहन थीं... यमुना।",
+      "highlight": [
+        "स्कंद",
+        "यमुना"
+      ],
+      "label": "स्कंद पुराण · कार्तिक माहात्म्य",
+      "claims": [
+        {
+          "text": "Yamuna is Yama's sister",
+          "kind": "scripture",
+          "sources": [
+            "sp_yd"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:YamunaTerracottaAhichchhatra.JPG",
+        "bounds": [
+          0.05,
+          0.0,
+          0.95,
+          1.0
+        ],
+        "character": "yamuna",
+        "shot": "medium",
+        "focus": [
+          0.45,
+          0.28
+        ],
+        "zoom": [
+          1.3,
+          1.65
+        ],
+        "pan": [
+          0.0,
+          -0.03
+        ],
+        "grade": "divine",
+        "effects": [
+          "rays",
+          "dust"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.5,
+              0.02
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "whoosh",
+          "at": 0.0
+        },
+        {
+          "type": "shimmer",
+          "at": "word:यमुना"
+        }
+      ]
+    },
+    {
+      "id": "s03",
+      "beat": "setup",
+      "narration": "यमुना बार-बार बुलातीं, भैया, मेरे घर भोजन करने आओ।",
+      "highlight": [
+        "बार-बार",
+        "भैया"
+      ],
+      "label": "स्कंद पुराण · यम द्वितीया अध्याय",
+      "claims": [
+        {
+          "text": "Yamuna repeatedly invited Yama to come and eat at her house",
+          "kind": "scripture",
+          "sources": [
+            "sp_yd"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:The River Goddess Yamuna and Attendants LACMA M.79.9.10.2a-b (4 of 12).jpg",
+        "bounds": [
+          0.1,
+          0.1,
+          0.92,
+          0.9
+        ],
+        "character": "yamuna",
+        "shot": "closeup",
+        "focus": [
+          0.6,
+          0.31
+        ],
+        "zoom": [
+          2.6,
+          3.1
+        ],
+        "pan": [
+          0.0,
+          -0.02
+        ],
+        "grade": "warm",
+        "effects": [
+          "rays",
+          "dust"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.75,
+              0.0
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "whoosh",
+          "at": 0.0
+        },
+        {
+          "type": "shimmer",
+          "at": "word:भैया"
+        }
+      ]
+    },
+    {
+      "id": "s04",
+      "beat": "rising",
+      "narration": "पर यम हर बार टाल देते... आज, कल, परसों।",
+      "highlight": [
+        "टाल",
+        "परसों।"
+      ],
+      "label": "स्कंद पुराण",
+      "claims": [
+        {
+          "text": "Yama kept postponing: today, tomorrow, the day after",
+          "kind": "scripture",
+          "sources": [
+            "sp_yd"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Yama on buffalo.jpg",
+        "bounds": [
+          0.02,
+          0.02,
+          0.98,
+          0.95
+        ],
+        "character": "yama",
+        "shot": "group",
+        "focus": [
+          0.5,
+          0.35
+        ],
+        "zoom": [
+          1.5,
+          1.25
+        ],
+        "pan": [
+          0.08,
+          0.0
+        ],
+        "grade": "cinematic",
+        "effects": [
+          "dust",
+          "fog"
+        ],
+        "fx": {}
+      },
+      "sfx": [
+        {
+          "type": "whoosh",
+          "at": 0.0
+        }
+      ]
+    },
+    {
+      "id": "s05",
+      "beat": "rising",
+      "narration": "यमलोक का काम, कभी रुकता ही नहीं था।",
+      "highlight": [
+        "यमलोक"
+      ],
+      "label": "स्कंद पुराण",
+      "claims": [
+        {
+          "text": "Yama's duties kept him busy",
+          "kind": "scripture",
+          "sources": [
+            "sp_yd"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Court of Yama, God of Death. Coloured transfer lithograph.jpg",
+        "bounds": [
+          0.02,
+          0.04,
+          0.98,
+          0.96
+        ],
+        "character": "yama",
+        "shot": "group",
+        "focus": [
+          0.47,
+          0.45
+        ],
+        "zoom": [
+          1.3,
+          1.6
+        ],
+        "pan": [
+          -0.05,
+          0.0
+        ],
+        "grade": "night",
+        "effects": [
+          "embers",
+          "fog",
+          "lightning"
+        ],
+        "fx": {
+          "lightning": {
+            "times": [
+              0.4
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "thunder",
+          "at": 0.4
+        },
+        {
+          "type": "wind",
+          "at": 0.0
+        }
+      ]
+    },
+    {
+      "id": "s06",
+      "beat": "climax",
+      "narration": "फिर कार्तिक की द्वितीया को, यम बहन के घर पहुँचे।",
+      "highlight": [
+        "कार्तिक",
+        "द्वितीया"
+      ],
+      "label": "कार्तिक शुक्ल द्वितीया",
+      "claims": [
+        {
+          "text": "On Kartika Dvitiya Yama finally went to Yamuna's house",
+          "kind": "scripture",
+          "sources": [
+            "sp_yd"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Four-armed and dark-complexioned Yama rides on his bejewelled and caparisoned buffalo. In his upper right hand is the danda (staff).jpg",
+        "bounds": [
+          0.075,
+          0.07,
+          0.93,
+          0.83
+        ],
+        "character": "yama",
+        "shot": "medium",
+        "focus": [
+          0.5,
+          0.45
+        ],
+        "zoom": [
+          1.05,
+          1.35
+        ],
+        "pan": [
+          0.0,
+          -0.08
+        ],
+        "grade": "warm",
+        "effects": [
+          "rays",
+          "dust",
+          "energy_wave"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.5,
+              0.12
+            ]
+          },
+          "energy_wave": {
+            "point": [
+              0.5,
+              0.24
+            ],
+            "at": "word:पहुँचे"
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "riser",
+          "at": 0.0
+        },
+        {
+          "type": "boom",
+          "at": "word:पहुँचे"
+        }
+      ]
+    },
+    {
+      "id": "s07",
+      "beat": "reveal",
+      "narration": "उस दिन उन्होंने, नरक के जीवों को भी मुक्त कर दिया!",
+      "highlight": [
+        "नरक",
+        "मुक्त"
+      ],
+      "label": "स्कंद पुराण",
+      "claims": [
+        {
+          "text": "Before going, Yama released the beings in hell on that day",
+          "kind": "scripture",
+          "sources": [
+            "sp_yd"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Court of Yama, God of Death. Coloured transfer lithograph.jpg",
+        "bounds": [
+          0.02,
+          0.04,
+          0.98,
+          0.96
+        ],
+        "character": "yama",
+        "shot": "group",
+        "focus": [
+          0.2,
+          0.6
+        ],
+        "zoom": [
+          1.9,
+          1.5
+        ],
+        "pan": [
+          0.06,
+          -0.05
+        ],
+        "grade": "divine",
+        "effects": [
+          "rays",
+          "sparks",
+          "energy_wave"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.2,
+              0.1
+            ]
+          },
+          "energy_wave": {
+            "point": [
+              0.2,
+              0.55
+            ],
+            "at": "word:मुक्त"
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "whoosh",
+          "at": 0.0
+        },
+        {
+          "type": "boom",
+          "at": "word:मुक्त"
+        },
+        {
+          "type": "shimmer",
+          "at": "word:मुक्त"
+        }
+      ],
+      "title": "नरक से मुक्ति",
+      "title_at": "word:मुक्त",
+      "title_y": 430
+    },
+    {
+      "id": "s08",
+      "beat": "rising",
+      "narration": "यमुना ने स्नान कराया, सोने के थाल में भोजन परोसा।",
+      "highlight": [
+        "स्नान",
+        "सोने"
+      ],
+      "label": "स्कंद पुराण",
+      "claims": [
+        {
+          "text": "Yamuna bathed and adorned Yama and fed him from gold vessels",
+          "kind": "scripture",
+          "sources": [
+            "sp_yd"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Diya and Food (15558130038).jpg",
+        "bounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "focus": [
+          0.62,
+          0.6
+        ],
+        "zoom": [
+          1.15,
+          1.45
+        ],
+        "pan": [
+          -0.04,
+          0.0
+        ],
+        "grade": "warm",
+        "effects": [
+          "embers",
+          "dust"
+        ],
+        "fx": {}
+      },
+      "sfx": [
+        {
+          "type": "bell",
+          "at": 0.1
+        }
+      ]
+    },
+    {
+      "id": "s09",
+      "beat": "reveal",
+      "narration": "प्रसन्न यम बोले, वर माँगो। यमुना बोलीं, हर साल इसी दिन आना।",
+      "highlight": [
+        "वर",
+        "साल"
+      ],
+      "label": "स्कंद पुराण",
+      "claims": [
+        {
+          "text": "Pleased, Yama offered a boon; Yamuna asked him to come for food every year on this day",
+          "kind": "scripture",
+          "sources": [
+            "sp_yd"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:The River Goddess Yamuna and Attendants LACMA M.79.9.10.2a-b (4 of 12).jpg",
+        "bounds": [
+          0.1,
+          0.1,
+          0.92,
+          0.9
+        ],
+        "character": "yamuna",
+        "shot": "closeup",
+        "focus": [
+          0.6,
+          0.29
+        ],
+        "zoom": [
+          3.3,
+          2.95
+        ],
+        "pan": [
+          0.03,
+          0.0
+        ],
+        "grade": "divine",
+        "effects": [
+          "rays",
+          "dust"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.6,
+              0.0
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "shimmer",
+          "at": "word:वर"
+        },
+        {
+          "type": "bell",
+          "at": "word:साल"
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "beat": "climax",
+      "narration": "वरदान मिला: आज जो भाई बहन के घर भोजन करे, वो यमलोक का द्वार नहीं देखेगा।",
+      "highlight": [
+        "वरदान",
+        "भाई",
+        "यमलोक"
+      ],
+      "label": "स्कंद पुराण · यम का वरदान",
+      "claims": [
+        {
+          "text": "Yama's boon: whoever eats at his sister's house on this day and honours her will not see the gate of Yama's abode",
+          "kind": "scripture",
+          "sources": [
+            "sp_yd"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Four-armed and dark-complexioned Yama rides on his bejewelled and caparisoned buffalo. In his upper right hand is the danda (staff).jpg",
+        "bounds": [
+          0.075,
+          0.07,
+          0.93,
+          0.83
+        ],
+        "character": "yama",
+        "shot": "closeup",
+        "focus": [
+          0.5,
+          0.26
+        ],
+        "zoom": [
+          2.0,
+          2.6
+        ],
+        "pan": [
+          0.0,
+          0.0
+        ],
+        "grade": "divine",
+        "effects": [
+          "rays",
+          "dust",
+          "energy_wave"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.5,
+              0.12
+            ]
+          },
+          "energy_wave": {
+            "point": [
+              0.5,
+              0.24
+            ],
+            "at": "word:वरदान"
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "riser",
+          "at": 0.0
+        },
+        {
+          "type": "boom",
+          "at": "word:वरदान"
+        },
+        {
+          "type": "bell",
+          "at": "word:यमलोक"
+        }
+      ],
+      "title": "यम का वरदान",
+      "title_at": "word:वरदान",
+      "title_y": 430
+    },
+    {
+      "id": "s11",
+      "beat": "tradition",
+      "narration": "इसीलिए भाई दूज को, यम द्वितीया भी कहते हैं।",
+      "highlight": [
+        "भाई",
+        "द्वितीया"
+      ],
+      "label": "परंपरा · तिलक और उपहार",
+      "claims": [
+        {
+          "text": "Bhai Dooj is also called Yama Dwitiya (the Skanda chapter is titled Yamadvitiya)",
+          "kind": "scripture",
+          "sources": [
+            "sp_yd"
+          ]
+        },
+        {
+          "text": "Sisters apply tilak and brothers give gifts on Bhai Dooj; in Mathura siblings bathe at Vishram Ghat",
+          "kind": "regional_tradition",
+          "sources": [
+            "trad_bhaidooj"
+          ]
+        }
+      ],
+      "visual": {
+        "asset": "File:Edwin Lord Weeks - Along the Ghats, Mathura.jpg",
+        "bounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "focus": [
+          0.36,
+          0.55
+        ],
+        "zoom": [
+          1.2,
+          1.5
+        ],
+        "pan": [
+          0.06,
+          0.0
+        ],
+        "grade": "warm",
+        "effects": [
+          "rays",
+          "ocean_mist",
+          "dust"
+        ],
+        "fx": {
+          "rays": {
+            "origin": [
+              0.6,
+              0.05
+            ]
+          }
+        }
+      },
+      "sfx": [
+        {
+          "type": "whoosh",
+          "at": 0.0
+        },
+        {
+          "type": "bell",
+          "at": "word:द्वितीया"
+        }
+      ]
+    },
+    {
+      "id": "s12",
+      "beat": "question",
+      "narration": "आप अपने भाई या बहन को क्या देंगे? कमेंट में बताइए।",
+      "highlight": [
+        "भाई",
+        "बहन",
+        "कमेंट"
+      ],
+      "label": "",
+      "claims": [],
+      "visual": {
+        "asset": "File:Diya Diwali India.jpg",
+        "bounds": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "focus": [
+          0.58,
+          0.5
+        ],
+        "zoom": [
+          1.1,
+          1.4
+        ],
+        "pan": [
+          0.0,
+          -0.03
+        ],
+        "grade": "warm",
+        "effects": [
+          "embers",
+          "dust"
+        ],
+        "fx": {}
+      },
+      "sfx": [
+        {
+          "type": "whoosh",
+          "at": 0.0
+        },
+        {
+          "type": "bell",
+          "at": "word:कमेंट"
+        }
+      ],
+      "pause_after": 0.8
+    }
+  ],
+  "upload": {
+    "titles": [
+      "Bhai Dooj Kyon Manate Hain? Yamraj Behen Ke Ghar Aaye! 🪔 Yam Dwitiya Katha",
+      "Yamraj Bhi Behen Ke Ghar Khana Khane Aaye! Bhai Dooj Ki Asli Katha 🪔",
+      "भाई दूज की कथा | Yamraj Aur Yamuna | Bhai Dooj 2026",
+      "Is Din Yamraj Ne Narak Bhi Khaali Kar Diya! Bhai Dooj Katha"
+    ],
+    "thumb_text": "भाई दूज क्यों?",
+    "queries": [
+      "bhai dooj",
+      "yamraj yamuna",
+      "yam dwitiya"
+    ],
+    "intro": [
+      "Bhai Dooj (Yam Dwitiya) kyon manate hain? Mrityu ke devta Yamraj apni behen Yamuna ke ghar bhojan karne aaye, aur us din unhone narak ke jeevon ko bhi mukt kar diya.",
+      "Skanda Puran ke 'Yam Dwitiya' adhyay (Kartik Mahatmya, Adhyay 11) ke aadhaar par Bhai Dooj ki katha, 60 second mein. Bhai Dooj 2026: 11 November."
+    ],
+    "summary": "भाई दूज (यम द्वितीया) की कथा: यमुना का बार-बार निमंत्रण, कार्तिक द्वितीया को यमराज का बहन के घर आना, नरक के जीवों की मुक्ति, और यम का वरदान: स्कंद पुराण, कार्तिक माहात्म्य, अध्याय 11 के आधार पर।",
+    "question": "Is Bhai Dooj aap apne bhai ya behen ko kya denge? Comment mein batayiye 🙏",
+    "tags": [
+      "bhai dooj",
+      "bhai dooj 2026",
+      "bhai dooj kyu manaya jata hai",
+      "bhai dooj ki katha",
+      "bhai dooj story",
+      "भाई दूज",
+      "भाई दूज की कथा",
+      "yam dwitiya",
+      "yamraj yamuna katha",
+      "यमराज यमुना",
+      "yamraj",
+      "bhaiya dooj ki kahani",
+      "skanda puran",
+      "diwali 2026",
+      "divya rahasya"
+    ],
+    "hashtags": [
+      "#Shorts",
+      "#BhaiDooj",
+      "#Yamraj"
+    ]
+  },
+  "review": {
+    "verified_by": "",
+    "verified_on": "",
+    "notes": "Pending human check of Skanda Purana Vaishnava Khanda, Kartikamasa-mahatmya 11.41-53 (Tagare translation, wisdomlib). Tilak/gifts are labelled as tradition, not scripture."
+  },
+  "thumbnail": {
+    "character": "yama",
+    "focus": [
+      0.5,
+      0.26
+    ],
+    "zoom": 2.0,
+    "headline_y": 1500,
+    "headline": "भाई दूज क्यों?",
+    "subline": "यमराज का वरदान",
+    "effects": [
+      "rays",
+      "embers"
+    ],
+    "fx": {
+      "rays": {
+        "origin": [
+          0.5,
+          0.12
+        ]
+      }
+    }
+  }
+}

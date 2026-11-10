@@ -1,0 +1,23 @@
+{
+  "id": "yamuna",
+  "name_hi": "यमुना देवी",
+  "name_en": "Goddess Yamuna, sister of Yama",
+  "iconography": {
+    "skin": "stone / terracotta (sculpture only; no painted portrait found under a free licence)",
+    "crown": "high jewelled hair",
+    "clothing": "classical river-goddess sculpture",
+    "attribute": "water pot; tortoise vahana",
+    "age": "adult"
+  },
+  "visual_rules": {
+    "aura_color": "#9AD0FF",
+    "grade": "divine",
+    "never": ["framing that centres the torso of the sculptures - keep crops on the face and the water pot"]
+  },
+  "approved_assets": {
+    "primary_portrait": "File:The River Goddess Yamuna and Attendants LACMA M.79.9.10.2a-b (4 of 12).jpg",
+    "relief_wide": "File:The River Goddess Yamuna and Attendants LACMA M.79.9.10.2a-b (1 of 12).jpg",
+    "terracotta": "File:YamunaTerracottaAhichchhatra.JPG"
+  },
+  "consistency_note": "Only sculptures are available for Yamuna. Tight shots use the LACMA relief (4 of 12) on the face; the Ahichchhatra terracotta is used for the introduction."
+}
