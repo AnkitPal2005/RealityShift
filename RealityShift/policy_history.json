@@ -18,7 +18,9 @@
     "generate_brahmos_lego_short",
     "generate_brahmos_short",
     "generate_s400_kusha_short",
-    "silent_reality_candle"
+    "silent_reality_candle",
+    "generate_prithvi_short",
+    "generate_agni_short"
   ],
   "grandfathered": [
     "reality_shift",
@@ -38,6 +40,8 @@
     "generate_chickens_neck_short": "India vs China: 22 KM Ka Chicken's Neck Kyun Ahem Hai?",
     "generate_brahmos_lego_short": "Aawaz Se 3 Guna Tez: BrahMos Ko Rokna Kyun Mushkil?",
     "generate_s400_kusha_short": "Kya India Ne S-400 Cancel Kiya? Project Kusha Ka Sach",
-    "silent_reality_candle": "The Candle Nobody Noticed"
+    "silent_reality_candle": "The Candle Nobody Noticed",
+    "generate_prithvi_short": "1988 Me Udi Bharat Ki Pehli Desi Missile: Prithvi",
+    "generate_agni_short": "Agni 1 Se Agni 5: 700 Se 5,000 KM Tak Ka Safar"
   }
 }
