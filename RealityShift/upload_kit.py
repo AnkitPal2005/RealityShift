@@ -5,7 +5,8 @@ Usage:
 
 A story opts in by defining UPLOAD = {"titles": [...10 candidates...], "thumb_text": "MAX 3 WORDS",
 "queries": [...3 searches it should win...], "description": "...", "tags": [...], "hashtags": [...]}
-and thumbnail(ctx) that draws the 1080x1920 cover. Writes output/shorts/<OUTPUT stem>_upload.md and
+and thumbnail(ctx) that draws the 1080x1920 cover. An optional UPLOAD["title"] (the creator's pick)
+ships instead of the top-ranked candidate. Writes output/shorts/<OUTPUT stem>_upload.md and
 <OUTPUT stem>_thumb.png (plus a feed-size preview), and prints the scores.
 Titles are scored by the yt-package skill's title.py; the rest by YouTube's published limits.
 """
@@ -28,6 +29,7 @@ TAG_LIMIT = 500        # YouTube: total characters across all tags
 MAX_TAGS = 15          # yt-seo: past this it's stuffing
 DESC_LIMIT = 5000
 SHOWN_HASHTAGS = 3     # the first three show above the title
+SHORTS_MAX = 180       # YouTube counts uploads up to 3 minutes as Shorts
 
 
 def title_checker():
@@ -46,7 +48,7 @@ def words(s):
     return set(re.findall(r"[a-z0-9']+", s.lower()))
 
 
-def metadata_checks(up, title, duration):
+def metadata_checks(up, title, duration, name):
     """(ok, label, detail) rows for everything except the title score."""
     rows = []
     thumb_n = len(up["thumb_text"].split())
@@ -68,8 +70,32 @@ def metadata_checks(up, title, duration):
     rows.append((not off, "off-platform CTA", off.group(0) if off else "none"))
     bait = sorted({m.group(0) for m in policy.CLICKBAIT.finditer(meta)})
     rows.append((not bait, "clickbait words", ", ".join(bait) if bait else "none"))
-    rows.append((duration <= 60, "Shorts length", f"{duration:.1f}s"))
+    harsh = sorted({m.group(0) for rx in (policy.GRAPHIC, policy.DEROGATORY) for m in rx.finditer(meta)})
+    rows.append((not harsh, "ad-safe wording", ", ".join(harsh) if harsh else "no graphic/derogatory words"))
+    rows.append((duration <= SHORTS_MAX, "Shorts length", f"{duration:.1f}s (max {SHORTS_MAX}s)"))
+    clash = [(n, t) for n, t in policy.load_history().get("titles", {}).items() if n != name and similar(title, t)]
+    rows.append((not clash, "title vs past titles", "unique" if not clash
+                 else f'too close to {clash[0][0]}: "{clash[0][1]}"'))
     return rows
+
+
+TITLE_STOP = {"ka", "ki", "ke", "hai", "me", "mein", "se", "ko", "kya", "kyun", "aur", "the", "a", "of", "in", "vs"}
+
+
+def similar(a, b):
+    """Same opening frame (first 3 words) or half the meaningful words shared: reads as one title template."""
+    wa, wb = re.findall(r"[a-z0-9']+", a.lower()), re.findall(r"[a-z0-9']+", b.lower())
+    if wa[:3] == wb[:3]:
+        return True
+    ka, kb = set(wa) - TITLE_STOP, set(wb) - TITLE_STOP
+    return bool(ka and kb) and len(ka & kb) >= max(2, min(len(ka), len(kb)) // 2)
+
+
+def remember_title(name, title):
+    """Keep each Short's chosen title in policy_history.json so the next kit can't reuse its frame."""
+    history = policy.load_history()
+    history.setdefault("titles", {})[name] = title
+    policy.HISTORY.write_text(json.dumps(history, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
 def render_thumbnail(story, out: Path) -> Path:
@@ -101,8 +127,13 @@ def build(story, final: Path, duration: float) -> Path:
                 r["chars"])
 
     ranked = sorted((check(t, up["thumb_text"]) for t in up["titles"]), key=rank)
-    best = ranked[0]
-    rows = metadata_checks(up, best["title"], duration)
+    if up.get("title"):  # the creator picked a title: it ships, the ranking stays in the kit for comparison
+        best = check(up["title"], up["thumb_text"])
+        ranked = [best] + [r for r in ranked if r["title"] != best["title"]]
+    else:
+        best = ranked[0]
+    name = story.__name__.split(".")[-1]
+    rows = metadata_checks(up, best["title"], duration, name)
     passed = sum(ok for ok, *_ in rows)
     overall = round(0.6 * best["score"] + 40 * passed / len(rows))
     thumb = render_thumbnail(story, final.with_name(final.stem + "_thumb.png"))
@@ -123,6 +154,7 @@ def build(story, final: Path, duration: float) -> Path:
     md += ["", "Ship it, or change it?", ""]
     path = final.with_name(final.stem + "_upload.md")
     path.write_text("\n".join(md), encoding="utf-8")
+    remember_title(name, best["title"])
 
     print(f"[upload] overall {overall}/100 - best title ({best['score']}/100): {best['title']}")
     for ok, label, detail in rows:
@@ -133,8 +165,11 @@ def build(story, final: Path, duration: float) -> Path:
 
 def main() -> None:
     name = sys.argv[1].removesuffix(".py")
-    story = importlib.import_module(name)
-    final = engine.SHORTS_DIR / story.OUTPUTS["edge"]
+    try:
+        story = importlib.import_module(name)
+    except ModuleNotFoundError:
+        story = importlib.import_module(f"stories.{name}")
+    final = engine.shorts_dir(story) / (story.OUTPUTS.get("edge") or story.OUTPUTS["silent"])
     if not final.exists():
         raise SystemExit(f"render {name} first: {final} is missing")
     scenes = json.loads(final.with_suffix(".json").read_text(encoding="utf-8"))

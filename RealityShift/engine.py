@@ -4,7 +4,7 @@ TTS (edge-tts / ElevenLabs), SFX + music synthesis, mixing, and the frame compos
 Stories live in stories/<name>.py and define TOPIC, SCRIPT, SCENE_CLASSES, OUTPUTS
 plus optional overrides (EL_VOICE_ID, EL_SETTINGS, CLEAN_PUNCTUATION, MAX_GAP, MUSIC_BPM,
 MUSIC_DUCK, HOT_COLOR, HOT_COLORS, CAPTION_Y, CAPTION_SIZE, WATERMARK,
-DELIVERY, BREATHS, ROOM, MUSIC_SEED).
+DELIVERY, BREATHS, ROOM, MUSIC_SEED, MUSIC_STYLE).
 Every render first passes policy.check() (YouTube Partner Program reused/inauthentic content gate).
 """
 
@@ -29,6 +29,12 @@ ROOT = Path(__file__).resolve().parent
 OUT_DIR = ROOT / "output"
 SHORTS_DIR = OUT_DIR / "shorts"   # every finished Short lands here, whatever the story
 WORK_DIR = OUT_DIR / "work"
+SILENT_REALITY_DIR = OUT_DIR / "silent_reality"   # Silent Reality channel: no-voice 10-15s Shorts
+
+
+def shorts_dir(story):
+    """Finished-Short folder for a story: CHANNEL = "silent_reality" goes to its own folder."""
+    return SILENT_REALITY_DIR if getattr(story, "CHANNEL", "") == "silent_reality" else SHORTS_DIR
 
 W, H = 1080, 1920
 FPS = 30
@@ -717,6 +723,128 @@ def tension_music(dur: float, bpm: float = 100, seed: int = 0) -> np.ndarray:
     return out / (np.max(np.abs(out)) + 1e-9)
 
 
+def _soft_lowpass(x: np.ndarray, cutoff: float) -> np.ndarray:
+    """Gentle 4th-order-ish lowpass done in the frequency domain (fast on long beds)."""
+    f = np.fft.rfftfreq(len(x), 1 / SR)
+    return np.fft.irfft(np.fft.rfft(x) / (1 + (f / cutoff) ** 4), len(x))
+
+
+def _saw(freq, t, n=8):
+    return sum(np.sin(2 * np.pi * freq * k * t) / k for k in range(1, n + 1))
+
+
+def _bed(dur, bpm, seed):
+    """Shared set-up for the beds below: rng, transpose factor, beat length, output buffer and a placer."""
+    rng = np.random.default_rng(seed)
+    key = 2 ** (int(rng.integers(-4, 6)) / 12)
+    n = int(dur * SR)
+    out = np.zeros(n + 3 * SR)
+
+    def place(sig, at, gain=1.0):
+        i0 = int(at * SR)
+        if 0 <= i0 < n:
+            out[i0:i0 + len(sig)] += gain * sig[:len(out) - i0]
+
+    return rng, key, n, 60 / bpm, out, place
+
+
+def _finish(out, n, dur):
+    t = np.arange(n) / SR
+    out = out[:n]
+    out = np.tanh(0.16 / (np.sqrt(np.mean(out ** 2)) + 1e-9) * out)  # match tension_music's loudness, soft-clip peaks
+    out *= np.minimum(1, t / 1.0) * np.minimum(1, (dur - t) / 1.5)
+    return out / (np.max(np.abs(out)) + 1e-9)
+
+
+# minor-key progressions as semitone offsets from the root (i-VI-III-VII, i-iv-VI-v, i-VII-VI-VII)
+PROGRESSIONS = ((0, 8, 3, 10), (0, 5, 8, 7), (0, 10, 8, 10))
+
+
+def pulse_music(dur: float, bpm: float = 110, seed: int = 0) -> np.ndarray:
+    """Driving explainer bed: eighth-note saw bass ostinato, soft pad chords, claps on 2 and 4, offbeat hats."""
+    rng, key, n, beat, out, place = _bed(dur, bpm, seed)
+    prog = PROGRESSIONS[int(rng.integers(len(PROGRESSIONS)))]
+    root = 55.0 * key
+    tn = np.arange(int(beat / 2 * SR)) / SR
+    tp = np.arange(int(beat * 4 * SR)) / SR
+    tc = np.arange(int(0.12 * SR)) / SR
+    clap = _soft_lowpass(_noise(len(tc), seed + 1), 3000) * np.exp(-tc * 30)
+    hat = np.diff(_noise(int(0.04 * SR) + 1, seed + 2)) * np.exp(-np.arange(int(0.04 * SR)) / SR * 120)
+    accent = rng.permutation([1.0, 0.6, 0.8, 0.6, 1.0, 0.6, 0.8, 0.9])
+    for bar in range(int(dur / (beat * 4)) + 1):
+        f0 = root * 2 ** (prog[bar % 4] / 12)
+        at = bar * beat * 4
+        pad = sum(np.sin(2 * np.pi * f0 * 2 * 2 ** (s / 12) * tp) + 0.5 * np.sin(2 * np.pi * f0 * 2 * 2 ** (s / 12) * 1.003 * tp)
+                  for s in (0, 3, 7))
+        place(pad * np.minimum(1, tp / 0.6) * np.minimum(1, (tp[-1] - tp) / 0.4), at, 0.08)
+        for k in range(8):
+            f = f0 * (2 if k % 4 == 3 else 1)
+            place(_saw(f, tn, 6) * np.exp(-tn * 7), at + k * beat / 2, 0.22 * accent[k])
+            place(hat, at + k * beat / 2 + beat / 4, 0.12)
+        for b in (1, 3):
+            place(clap, at + b * beat, 0.5)
+    return _finish(_soft_lowpass(out, 5000), n, dur)
+
+
+def ambient_music(dur: float, bpm: float = 80, seed: int = 0) -> np.ndarray:
+    """Slow documentary bed: evolving detuned pads, sub swells and sparse bell plucks, no drums."""
+    rng, key, n, beat, out, place = _bed(dur, bpm, seed)
+    prog = PROGRESSIONS[int(rng.integers(len(PROGRESSIONS)))]
+    root = 110.0 * key
+    span = beat * 8
+    tp = np.arange(int((span + 1.5) * SR)) / SR
+    tb = np.arange(int(1.6 * SR)) / SR
+    for k in range(int(dur / span) + 1):
+        f0 = root * 2 ** (prog[k % 4] / 12)
+        env = np.minimum(1, tp / 1.5) * np.minimum(1, np.maximum(0, (tp[-1] - tp)) / 1.5)
+        pad = sum(_saw(f0 * 2 ** (s / 12) * d, tp, 5) for s in (0, 3, 7, 12) for d in (0.997, 1.003))
+        place(_soft_lowpass(pad, 900) * env * (0.8 + 0.2 * np.sin(2 * np.pi * 0.25 * tp)), k * span, 0.05)
+        place(np.sin(2 * np.pi * f0 / 2 * tp) * env, k * span, 0.25)
+        for _ in range(int(rng.integers(2, 5))):  # bells on random eighth notes
+            f = f0 * 4 * 2 ** (int(rng.choice([0, 3, 7, 10, 12])) / 12)
+            bell = (np.sin(2 * np.pi * f * tb) + 0.4 * np.sin(2 * np.pi * f * 2.76 * tb)) * np.exp(-tb * 3.5)
+            place(bell, k * span + int(rng.integers(0, 16)) * beat / 2, 0.12)
+    return _finish(out, n, dur)
+
+
+def march_music(dur: float, bpm: float = 96, seed: int = 0) -> np.ndarray:
+    """Military bed: snare cadence with rolls, bass drum on 1 and 3, low brass motif, timpani on phrase starts."""
+    rng, key, n, beat, out, place = _bed(dur, bpm, seed)
+    root = 73.42 * key                                                     # D2, transposed
+    ts = np.arange(int(0.18 * SR)) / SR
+    snare = 0.7 * _soft_lowpass(_noise(len(ts), seed + 3), 6000) * np.exp(-ts * 22) \
+        + 0.5 * np.sin(2 * np.pi * 190 * ts) * np.exp(-ts * 30)
+    tk = np.arange(int(0.35 * SR)) / SR
+    kick = np.sin(2 * np.pi * np.cumsum(45 + 70 * np.exp(-tk * 20)) / SR) * np.exp(-tk * 9)
+    tt = np.arange(int(1.2 * SR)) / SR
+    timp = np.sin(2 * np.pi * root * tt) * np.exp(-tt * 3) + 0.3 * np.sin(2 * np.pi * root * 1.5 * tt) * np.exp(-tt * 4)
+    cadence = [(0, 1.0), (2, 0.5), (3, 0.6), (4, 0.9), (6, 0.5), (7, 0.6)]  # sixteenth-note slots in a half bar
+    motif = [(0, 2), (7, 1), (5, 1)] if rng.random() < 0.5 else [(0, 2), (3, 1), (7, 1)]
+    for bar in range(int(dur / (beat * 4)) + 1):
+        at = bar * beat * 4
+        for half in (0, 2):
+            for slot, g in cadence:
+                place(snare, at + half * beat + slot * beat / 4, 0.28 * g)
+        if bar % 4 == 3:  # roll into the next phrase
+            for k in range(8):
+                place(snare, at + 3 * beat + k * beat / 8, 0.12 + 0.04 * k)
+        for b in (0, 2):
+            place(kick, at + b * beat, 0.8)
+        if bar % 4 == 0:
+            place(timp, at, 0.6)
+        if bar % 2 == 0:
+            pos = at
+            for semi, beats in motif:
+                tn = np.arange(int(beats * beat * SR)) / SR
+                note = _saw(root * 2 * 2 ** (semi / 12), tn, 10)
+                place(_soft_lowpass(note, 1200) * np.minimum(1, tn / 0.05) * np.exp(-tn * 1.2), pos, 0.1)
+                pos += beats * beat
+    return _finish(out, n, dur)
+
+
+MUSIC_STYLES = {"tension": tension_music, "pulse": pulse_music, "ambient": ambient_music, "march": march_music}
+
+
 def moving_avg(x: np.ndarray, win: int) -> np.ndarray:
     c = np.cumsum(np.concatenate([[0.0], x]))
     y = (c[win:] - c[:-win]) / win
@@ -852,7 +980,7 @@ def render(story, engine: str) -> Path:
     import policy   # YPP gate: refuses reused/repetitive Shorts before any TTS is spent
     policy.check(story, name)
     work = WORK_DIR / name / engine
-    final = SHORTS_DIR / story.OUTPUTS[engine]   # one common folder for every Short
+    final = shorts_dir(story) / story.OUTPUTS[engine]   # per-channel folder
     work.mkdir(parents=True, exist_ok=True)
     final.parent.mkdir(parents=True, exist_ok=True)
     mp3s = [work / f"scene_{i + 1:02d}.mp3" for i in range(len(script))]
@@ -926,8 +1054,9 @@ def render(story, engine: str) -> Path:
     env = moving_avg(np.abs(voice), int(0.05 * SR))
     duck_amt = getattr(story, "MUSIC_DUCK", 0.5)
     duck = moving_avg(1 - duck_amt * np.clip(env / 0.04, 0, 1), int(0.15 * SR))
-    music = tension_music(len(voice) / SR, bpm=getattr(story, "MUSIC_BPM", 100),
-                          seed=getattr(story, "MUSIC_SEED", int(hashlib.md5(name.encode()).hexdigest()[:8], 16)))
+    music = MUSIC_STYLES[getattr(story, "MUSIC_STYLE", "tension")](
+        len(voice) / SR, bpm=getattr(story, "MUSIC_BPM", 100),
+        seed=getattr(story, "MUSIC_SEED", int(hashlib.md5(name.encode()).hexdigest()[:8], 16)))
     music = np.pad(music, (0, max(0, len(voice) - len(music))))[:len(voice)]
     mix = voice + MUSIC_VOLUME * music * duck
     events = [(max(0.0, s["start"] - 0.2), "whoosh") for s in SCENES[1:]]

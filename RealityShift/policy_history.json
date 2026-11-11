@@ -15,7 +15,10 @@
     "generate_chickens_neck_short",
     "generate_zorawar_short",
     "generate_malacca_short",
-    "generate_brahmos_short"
+    "generate_brahmos_lego_short",
+    "generate_brahmos_short",
+    "generate_s400_kusha_short",
+    "silent_reality_candle"
   ],
   "grandfathered": [
     "reality_shift",
@@ -30,5 +33,11 @@
     "generate_maldives_short",
     "generate_rupee_short",
     "generate_lithium_short"
-  ]
+  ],
+  "titles": {
+    "generate_chickens_neck_short": "India vs China: 22 KM Ka Chicken's Neck Kyun Ahem Hai?",
+    "generate_brahmos_lego_short": "Aawaz Se 3 Guna Tez: BrahMos Ko Rokna Kyun Mushkil?",
+    "generate_s400_kusha_short": "Kya India Ne S-400 Cancel Kiya? Project Kusha Ka Sach",
+    "silent_reality_candle": "The Candle Nobody Noticed"
+  }
 }
