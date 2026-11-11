@@ -30,11 +30,12 @@ OUT_DIR = ROOT / "output"
 SHORTS_DIR = OUT_DIR / "shorts"   # every finished Short lands here, whatever the story
 WORK_DIR = OUT_DIR / "work"
 SILENT_REALITY_DIR = OUT_DIR / "silent_reality"   # Silent Reality channel: no-voice 10-15s Shorts
+CHANNEL_DIRS = {"silent_reality": SILENT_REALITY_DIR}   # Sanatan katha lives in ../SanatanKatha
 
 
 def shorts_dir(story):
-    """Finished-Short folder for a story: CHANNEL = "silent_reality" goes to its own folder."""
-    return SILENT_REALITY_DIR if getattr(story, "CHANNEL", "") == "silent_reality" else SHORTS_DIR
+    """Finished-Short folder for a story: a CHANNEL listed in CHANNEL_DIRS goes to its own folder."""
+    return CHANNEL_DIRS.get(getattr(story, "CHANNEL", ""), SHORTS_DIR)
 
 W, H = 1080, 1920
 FPS = 30
@@ -524,12 +525,16 @@ def line_pause(line: str) -> float:
     return LINE_PAUSE.get(line.rstrip("'\" ")[-1:], 0.08)
 
 
-def delivery_lines(spec) -> list[tuple[str, str, str, str, float]]:
-    """[(tone, line[, pause])] -> [(line, rate, pitch, volume, pause_after)]."""
+def delivery_lines(spec) -> list[tuple]:
+    """[(tone, line[, pause])] -> [(line, rate, pitch, volume, pause_after, voice)].
+    A literal tone tuple may carry a 4th element, an edge-tts voice for that line (a character's own voice);
+    voice None = the story's narrator."""
     out = []
     for tone, line_, *pause in spec:
-        rate, pitch, volume = TONES[tone] if isinstance(tone, str) else tone
-        out.append((line_, rate, pitch, volume, pause[0] if pause else line_pause(line_)))
+        tt = TONES[tone] if isinstance(tone, str) else tone
+        rate, pitch, volume = tt[:3]
+        out.append((line_, rate, pitch, volume, pause[0] if pause else line_pause(line_),
+                    tt[3] if len(tt) > 3 else None))
     return out
 
 
@@ -548,7 +553,8 @@ def perform(lines, clips, trim_kw, max_gap, breaths=True, seed=0):
     kw = {**trim_kw, "keep": 0.03, "keep_tail": 0.07}
     parts, starts, t = [], [], 0.0
     fade = int(0.006 * SR)
-    for i, ((_, _, _, _, pause), (mp3, st)) in enumerate(zip(lines, clips)):
+    for i, (ln, (mp3, st)) in enumerate(zip(lines, clips)):
+        pause = ln[4]
         a, lead = trim_silence(decode(mp3), **kw)
         st = [max(0.0, s - lead) for s in st]
         if max_gap is not None:
@@ -659,6 +665,36 @@ def sfx_bank() -> dict[str, np.ndarray]:
     n = int(1.0 * SR)
     t = np.arange(n) / SR
     bank["boom"] = np.sin(2 * np.pi * np.cumsum(30 + 90 * np.exp(-t * 6)) / SR) * _env(n, 0.003, 3.5)         + 0.5 * _lowpass(_noise(n, 10), 600) * _env(n, 0.002, 8)
+    # ---- devotional set (Sanatan katha Shorts)
+    # ghanti: temple bell, inharmonic partials ringing out over ~3 s, with the clapper's strike
+    n = int(3.2 * SR)
+    t = np.arange(n) / SR
+    bell_ring = sum(a * np.sin(2 * np.pi * f * t + p) * np.exp(-t * d)
+                    for f, a, d, p in ((880, 1.0, 1.1, 0), (2042, 0.55, 1.7, 0.4), (3744, 0.3, 2.6, 1.1),
+                                       (5830, 0.16, 3.6, 2.0), (886, 0.5, 1.3, 0.9)))
+    bank["ghanti"] = bell_ring * np.minimum(1, t / 0.002) + 0.4 * _soft_lowpass(_noise(n, 11), 5000) * _env(n, 0.0005, 90)
+    # shankh: conch - scoops up into its note, swells, slight vibrato, breath on top
+    n = int(2.6 * SR)
+    t = np.arange(n) / SR
+    f = 233.0 * (1 - 0.06 * np.exp(-t * 4)) * (1 + 0.004 * np.sin(2 * np.pi * 4.6 * t))
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    horn = _soft_lowpass(sum(np.sin(k * ph) / k ** 1.15 for k in range(1, 11)), 2400)
+    air = _soft_lowpass(_noise(n, 12), 3000) - _soft_lowpass(_noise(n, 12), 700)
+    swell = np.minimum(1, t / 0.35) * np.minimum(1, np.maximum(0, 2.6 - t) / 0.7) * (0.85 + 0.15 * np.minimum(1, t / 1.2))
+    bank["shankh"] = (horn + 0.18 * air) * swell
+    # arrow: thin rising whistle riding on a burst of air
+    n = int(0.6 * SR)
+    u = np.arange(n) / n
+    whistle = np.sin(2 * np.pi * np.cumsum(1500 + 2200 * u) / SR) * np.sin(np.pi * u) ** 3
+    bank["arrow"] = 0.5 * whistle + 1.6 * _soft_lowpass(_noise(n, 13), 4500) * np.sin(np.pi * u ** 0.5) ** 2
+    # shimmer: quick rising bell arpeggio for a divine reveal
+    n = int(1.8 * SR)
+    sh = np.zeros(n)
+    for k, semi in enumerate((0, 4, 7, 12, 16, 19)):
+        tk = np.arange(n - int(k * 0.07 * SR)) / SR
+        fk = 1046.5 * 2 ** (semi / 12)
+        sh[int(k * 0.07 * SR):] += (np.sin(2 * np.pi * fk * tk) + 0.3 * np.sin(2 * np.pi * fk * 2.76 * tk)) * np.exp(-tk * 2.8)
+    bank["shimmer"] = sh
     for k, v in bank.items():
         bank[k] = v / (np.max(np.abs(v)) + 1e-9)
     return bank
@@ -842,7 +878,91 @@ def march_music(dur: float, bpm: float = 96, seed: int = 0) -> np.ndarray:
     return _finish(out, n, dur)
 
 
-MUSIC_STYLES = {"tension": tension_music, "pulse": pulse_music, "ambient": ambient_music, "march": march_music}
+BHAIRAV = (0, 1, 4, 5, 7, 8, 11)   # Raag Bhairav (S r G m P d N): the classic "katha" colour, devotional + mysterious
+
+
+def _tanpura_pluck(f, dur, seed):
+    """One tanpura string: bright partials that bloom after the pluck (jawari buzz) and ring for seconds."""
+    rng = np.random.default_rng(seed)
+    t = np.arange(int(dur * SR)) / SR
+    out = np.zeros(len(t))
+    for k in range(1, 16):
+        det = 1 + rng.uniform(-0.0007, 0.0007)
+        env = np.exp(-t * (0.45 + 0.05 * k)) * (1 - np.exp(-t * (2.5 + 0.7 * k)))
+        shimmer = 0.6 + 0.4 * np.sin(2 * np.pi * (0.25 + 0.06 * k) * t + k)
+        out += k ** -0.85 * env * shimmer * np.sin(2 * np.pi * f * k * det * t + rng.uniform(0, 6.28))
+    return out
+
+
+def divine_music(dur: float, bpm: float = 84, seed: int = 0) -> np.ndarray:
+    """Katha bed: tanpura (Pa-Sa-Sa-Sa) drone, bansuri phrases in Raag Bhairav with meend and vibrato,
+    a keherwa tabla groove that builds through the story, and a soft temple bell on phrase starts.
+    seed picks the key, the melody walk and where the flute rests, so every Short gets its own bed."""
+    rng, key, n, beat, out, place = _bed(dur, bpm, seed)
+    sa = 130.81 * key                       # tanpura Sa (C3 transposed)
+    plucks = [_tanpura_pluck(f, 3.6, seed + i) for i, f in enumerate((sa * 0.75, sa, sa, sa / 2))]
+    cycle = beat * 4
+    for c in range(int(dur / cycle) + 1):
+        for j, p in enumerate(plucks):
+            place(p, c * cycle + j * beat, 0.05)
+    tt = np.arange(n) / SR
+    place(np.sin(2 * np.pi * sa / 2 * tt) + 0.4 * np.sin(2 * np.pi * sa * 0.75 * tt), 0, 0.05)   # low hum
+    # tabla: bayan (pitch-dropping "dhum"), dayan (ringing "na"), and light "ti/ka" taps
+    tb = np.arange(int(0.6 * SR)) / SR
+    bayan = np.sin(2 * np.pi * np.cumsum(62 + 55 * np.exp(-tb * 9)) / SR) * np.exp(-tb * 4.5)
+    td = np.arange(int(0.35 * SR)) / SR
+    dayan = (np.sin(2 * np.pi * sa * 4 * td) + 0.5 * np.sin(2 * np.pi * sa * 4 * 2.01 * td)) * np.exp(-td * 16)
+    tap = _soft_lowpass(_noise(int(0.05 * SR), seed + 5), 4000) * np.exp(-np.arange(int(0.05 * SR)) / SR * 80)
+    # keherwa in 8 half-beats: Dha Ge Na Ti | Na Ka Dhi Na
+    groove = [("b", "d"), ("b",), ("d",), ("t",), ("d",), ("t",), ("b", "d"), ("d",)]
+    voices = {"b": (bayan, 0.55), "d": (dayan, 0.22), "t": (tap, 0.18)}
+    for c in range(int(dur / cycle) + 1):
+        at0 = c * cycle
+        build = 0.3 + 0.7 * clamp(at0 / max(dur * 0.75, 1))      # the groove grows as the story rises
+        if at0 < beat * 4:
+            continue                                              # first bar: drone alone
+        for k, hits in enumerate(groove):
+            for h in hits:
+                sig, g = voices[h]
+                place(sig, at0 + k * beat / 2, g * build)
+    # bansuri: phrases that walk Raag Bhairav, gliding into each note, resting every other phrase
+    breath_bed = _soft_lowpass(_noise(n + SR, seed + 7), 2600) - _soft_lowpass(_noise(n + SR, seed + 7), 900)
+    flute_sa = sa * 4
+    idx, prev = 7, flute_sa
+    phrase = beat * 8
+    for p in range(int(dur / phrase) + 1):
+        if p == 0 or rng.random() < 0.35:
+            continue
+        at, end = p * phrase, (p + 1) * phrase - beat
+        while at < end:
+            idx = int(np.clip(idx + rng.choice([-2, -1, -1, 1, 1, 2, 0]), 3, 12))
+            d = float(rng.choice([0.5, 1, 1, 1.5, 2])) * beat
+            if at + d >= end:
+                idx, d = int(rng.choice([7, 11])), max(end - at, beat)   # land on Sa or Pa
+            octave, deg = divmod(idx, 7)
+            f1 = flute_sa / 2 * 2 ** (octave + BHAIRAV[deg] / 12)
+            m = int(d * SR)
+            t = np.arange(m) / SR
+            f = f1 + (prev - f1) * np.exp(-t / 0.05)                          # meend into the note
+            f *= 1 + 0.007 * np.sin(2 * np.pi * 5.3 * t) * np.minimum(1, t / 0.4)
+            ph = 2 * np.pi * np.cumsum(f) / SR
+            env = np.minimum(1, t / 0.06) * np.minimum(1, np.maximum(0, d - t) / 0.1)
+            i0 = int(at * SR)
+            air = breath_bed[i0:i0 + m]
+            note = (np.sin(ph) + 0.2 * np.sin(2 * ph) + 0.06 * np.sin(3 * ph)) + 0.25 * np.pad(air, (0, m - len(air)))
+            place(note * env, at, 0.16)
+            prev, at = f1, at + d
+    # temple bell on every fourth cycle
+    tg = np.arange(int(2.5 * SR)) / SR
+    bell = sum(a * np.sin(2 * np.pi * fb * tg) * np.exp(-tg * db)
+               for fb, a, db in ((sa * 8, 1.0, 1.4), (sa * 8 * 2.32, 0.4, 2.2), (sa * 8 * 4.25, 0.2, 3.2)))
+    for c in range(0, int(dur / cycle) + 1, 4):
+        place(bell, c * cycle, 0.12)
+    return _finish(_soft_lowpass(out, 7000), n, dur)
+
+
+MUSIC_STYLES = {"tension": tension_music, "pulse": pulse_music, "ambient": ambient_music, "march": march_music,
+                "divine": divine_music}
 
 
 def moving_avg(x: np.ndarray, win: int) -> np.ndarray:
@@ -853,7 +973,8 @@ def moving_avg(x: np.ndarray, win: int) -> np.ndarray:
 
 SFX_GAIN = {"tick": 0.07, "tock": 0.07, "alarm": 0.16, "beep": 0.16, "pick": 0.14, "thud": 0.4,
             "soft_thud": 0.4, "whoosh": 0.32, "dingdong": 0.34, "engine": 0.13,
-            "kaching": 0.3, "zap": 0.1, "pop": 0.12, "boom": 0.45}
+            "kaching": 0.3, "zap": 0.1, "pop": 0.12, "boom": 0.45,
+            "ghanti": 0.26, "shankh": 0.34, "arrow": 0.3, "shimmer": 0.22}
 
 
 def write_wav(path: Path, mono: np.ndarray) -> None:
@@ -1003,7 +1124,7 @@ def render(story, engine: str) -> Path:
                 return await synth(text_for(chunks), p, voice, rate, pitch)
             lines = delivery[key]
             paths = [p.with_name(f"{p.stem}_l{j:02d}.mp3") for j in range(len(lines))]
-            return list(zip(paths, await asyncio.gather(*(synth(ln[0], lp, voice, *ln[1:4])
+            return list(zip(paths, await asyncio.gather(*(synth(ln[0], lp, ln[5] or voice, *ln[1:4])
                                                            for ln, lp in zip(lines, paths)))))
 
         async def run_all():
@@ -1058,7 +1179,7 @@ def render(story, engine: str) -> Path:
         len(voice) / SR, bpm=getattr(story, "MUSIC_BPM", 100),
         seed=getattr(story, "MUSIC_SEED", int(hashlib.md5(name.encode()).hexdigest()[:8], 16)))
     music = np.pad(music, (0, max(0, len(voice) - len(music))))[:len(voice)]
-    mix = voice + MUSIC_VOLUME * music * duck
+    mix = voice + getattr(story, "MUSIC_VOLUME", MUSIC_VOLUME) * music * duck
     events = [(max(0.0, s["start"] - 0.2), "whoosh") for s in SCENES[1:]]
     for s in SCENES:
         events += [(s["start"] + ev[0],) + tuple(ev[1:]) for ev in s["obj"].events(s["dur"])]

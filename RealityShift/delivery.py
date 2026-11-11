@@ -37,8 +37,11 @@ def _pause(line: str, nxt) -> float:
     return STOP_PAUSE
 
 
-def build(spec) -> dict:
-    """SPEC -> engine DELIVERY {scene: [((rate, pitch, volume), line, pause_after), ...]}."""
+def build(spec, tones=None, pause_scale=1.0, honor_pauses=False) -> dict:
+    """SPEC -> engine DELIVERY {scene: [((rate, pitch, volume), line, pause_after), ...]}.
+    tones / pause_scale let another channel keep these rules with its own voice (e.g. a slower katha);
+    honor_pauses=True lets a line's own 3rd element (seconds) set its pause, like a storyteller's held silence."""
+    tones = tones or TONES
     out = {}
     for s in spec:
         lines = s["vo"]
@@ -46,7 +49,7 @@ def build(spec) -> dict:
         for i, (tone, chunks, *pause) in enumerate(lines):
             text = " ".join(hi for hi, _ in chunks)
             nxt = lines[i + 1] if i + 1 < len(lines) else None
-            p = _pause(text, nxt)
-            rows.append((TONES[tone], text, 0 if nxt is None else p))
+            p = (pause[0] if (honor_pauses and pause) else _pause(text, nxt)) * pause_scale
+            rows.append((tones[tone], text, 0 if nxt is None else p))
         out[s["key"]] = rows
     return out
