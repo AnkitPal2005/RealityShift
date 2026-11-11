@@ -13,6 +13,7 @@ Characters (each drawn standing on (x, y) = feet, scale s, time t):
   surya(...)     Surya Dev: rayed sun disc, kirit mukut, a lotus in each raised hand
   raja(...)      a king (Priyavrat): kalgi mukut, moustache, purple angarkha; pose hold (with baby) / stand; mood sad / happy
   vrati(...)     a Chhath vrati waist-deep in water raising her soop; also baby(), soop(), yagya_kund(), lotus(), sun_disc()
+  karna(...)     Karna: golden kavach + shining kundal (kavach 0..1), Surya mukut; poses stand / arghya (lota) / give / namaste
 Props: peepal tree (leaves that can be marked by an arrow), divine arrow, bow, balance, diya, hill, army
 silhouettes, petals, Kailash, ribbons/name plates.
 Nothing here is traced from or copies anyone's artwork: shapes are built from ellipses and spline paths.
@@ -402,12 +403,14 @@ def _krishna_head(ctx, t, look, smile):
 
 # ============================================================ Brahmin (Krishna's disguise)
 
-def brahmin(ctx, x, y, s, t, pose="stand", mood="smile", look=(0.0, 0.0), flip=False, a=1.0, hint=0.0):
-    """Old brahmin with shikha, white beard, saffron dhoti and a staff. hint (0..1) = a faint blue divine glow."""
+def brahmin(ctx, x, y, s, t, pose="stand", mood="smile", look=(0.0, 0.0), flip=False, a=1.0, hint=0.0,
+            hint_c=KRISHNA_SKIN):
+    """Old brahmin with shikha, white beard, saffron dhoti and a staff. hint (0..1) = a faint divine glow in hint_c
+    (blue for Krishna, gold for Indra)."""
     def draw():
         place(ctx, x, y, s, t, flip)
         if hint > 0:
-            glow(ctx, 0, -560, 420, KRISHNA_SKIN, 0.45 * hint)
+            glow(ctx, 0, -560, 420, hint_c, 0.45 * hint)
         _brahmin_body(ctx, t, pose, mood, look)
         ctx.restore()
     group(ctx, a, draw)
@@ -1496,3 +1499,170 @@ def silhouette(ctx, draw, c=hexc("#1A0A10"), a=1.0):
     pattern = ctx.pop_group()
     rgba(ctx, c, a)
     ctx.mask(pattern)
+
+
+# ============================================================ Karna
+
+KARNA_SKIN = hexc("#D99A62")
+
+
+def lota(ctx, x, y, s, tilt=0.0, pour=0.0, t=0.0, a=1.0):
+    """Copper lota at (x, y) (its belly centre), tilted by tilt; pour (0..1) draws a falling water stream."""
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.rotate(tilt)
+    ctx.scale(s, s)
+    ell(ctx, 0, 0, 46, 40)
+    ink(ctx, hexc("#C8743A"), 4, a)
+    rrect(ctx, -20, -58, 40, 22, 6)
+    ink(ctx, hexc("#C8743A"), 4, a)
+    ell(ctx, 0, -60, 30, 8)
+    ink(ctx, hexc("#E39A55"), 3, a)
+    sheen(ctx, -16, -10, 14, 10, 0.3 * a)
+    ctx.restore()
+    if pour > 0:   # stream from the lip, wobbling a little
+        lx, ly = x + 40 * s * math.cos(tilt) + 50 * s * math.sin(tilt), y - 50 * s * math.cos(tilt) + 10 * s
+        pts = [(lx + 6 * math.sin(t * 9 + k), ly + 70 * k * pour) for k in range(8)]
+        line(ctx, pts, hexc("#BFE6FF"), 12 * s, 0.85 * a)
+        line(ctx, pts, (1, 1, 1), 4 * s, 0.7 * a)
+
+
+def karna(ctx, x, y, s, t, pose="stand", kavach=1.0, look=(0.0, 0.0), mood="calm", flip=False, a=1.0, pour=0.0):
+    """Karna, cartoon: the golden kavach grown on his chest and the shining kundal (kavach 0..1 fades them out),
+    warrior mukut, saffron dhoti. Poses: stand (bow) / arghya (lota raised, pour 0..1) / give (both hands held out)
+    / namaste. mood calm / smile."""
+    def draw():
+        place(ctx, x, y, s, t, flip)
+        _karna_body(ctx, t, pose, kavach, look, mood, pour)
+        ctx.restore()
+    group(ctx, a, draw)
+
+
+def _karna_body(ctx, t, pose, kavach, look, mood, pour):
+    skin = KARNA_SKIN
+    hair = hexc("#1A100A")
+    ell(ctx, 0, -690, 120, 118)
+    ink(ctx, hair)
+    for side in (-1, 1):
+        smooth(ctx, [(side * 76, -700), (side * 128, -600), (side * 140, -500), (side * 112, -470), (side * 94, -560)])
+        ink(ctx, hair)
+    for side in (-1, 1):
+        limb(ctx, [(side * 56, -330), (side * 62, -170), (side * 60, -34)], skin, 50)
+        ell(ctx, side * 66, -14, 44, 17)
+        ink(ctx, skin)
+        line(ctx, [(side * 60 - 26, -46), (side * 60 + 26, -46)], GOLD, 8)
+    smooth(ctx, [(-138, -350), (138, -350), (150, -230), (120, -150), (10, -170), (-120, -150), (-150, -230)])
+    ink(ctx, hexc("#E8741E"))
+    line(ctx, [(148, -228), (120, -156), (10, -176), (-120, -156), (-148, -228)], GOLD, 10)
+    smooth(ctx, [(-146, -520), (-78, -546), (78, -546), (146, -520), (148, -440), (114, -350), (-114, -350),
+                 (-148, -440)])
+    ink(ctx, skin)
+    if kavach > 0:   # the kavach: gold scales grown over the chest, glowing
+        glow(ctx, 0, -460, 220, GOLD_HI, 0.35 * kavach)
+        smooth(ctx, [(-120, -526), (120, -526), (126, -430), (90, -372), (0, -360), (-90, -372), (-126, -430)])
+        ink(ctx, GOLD, 5, kavach)
+        for row in range(4):
+            for col in range(-3, 4):
+                sx, sy = col * 30 + (15 if row % 2 else 0), -505 + row * 34
+                if abs(sx) < 108 - row * 8:
+                    ctx.new_sub_path()
+                    ctx.arc(sx, sy, 15, 0, math.pi)
+                    rgba(ctx, GOLD_DK, 0.8 * kavach)
+                    ctx.set_line_width(3)
+                    ctx.stroke()
+        circle(ctx, 0, -462, 26, hexc("#FFF3B0"), kavach)
+        sun_disc(ctx, 0, -462, 18, t, a=kavach, rays=12)
+    rrect(ctx, -124, -374, 248, 32, 10)
+    ink(ctx, hexc("#7A1424"))
+    L, R = (-146, -515), (146, -515)
+    if pose == "arghya":     # lota raised beside the head, on the screen-right side
+        arms = [(L, (-70, -600), (170, -700)), (R, (250, -560), (262, -700))]
+    elif pose == "give":     # both hands held out in front, cupped
+        arms = [(L, (-170, -420), (-60, -410)), (R, (170, -420), (60, -410))]
+    elif pose == "namaste":
+        arms = [(L, (-118, -420), (-14, -480)), (R, (118, -420), (14, -480))]
+    else:
+        arms = [(L, (-200, -420), (-212, -330)), (R, (200, -420), (190, -330))]
+    if pose == "stand":
+        bow(ctx, -230, -700, -40, -70)
+    for sh, el, hd in arms:
+        limb(ctx, [sh, el], skin, 56)
+        limb(ctx, [el, hd], skin, 48)
+        circle(ctx, lerp(sh[0], el[0], 0.5), lerp(sh[1], el[1], 0.5), 30, GOLD)
+        circle(ctx, lerp(sh[0], el[0], 0.5), lerp(sh[1], el[1], 0.5), 23, skin)
+    for side in (-1, 1):
+        ell(ctx, side * 146, -518, 40, 30)
+        ink(ctx, GOLD)
+    _karna_head(ctx, t, kavach, look, mood)
+    if pose == "arghya":
+        lota(ctx, 215, -770, 1.1, tilt=0.55 * pour, pour=pour, t=t)
+        for _, _, hd in arms:
+            hand(ctx, *hd, skin, 28)
+    elif pose == "namaste":
+        smooth(ctx, [(0, -560), (24, -520), (22, -470), (0, -440), (-22, -470), (-24, -520)])
+        ink(ctx, skin)
+    elif pose == "give":
+        ell(ctx, 0, -404, 92, 30)
+        ink(ctx, skin)
+        line(ctx, [(0, -430), (0, -380)], shade(skin, 0.75), 3)
+    else:
+        for _, _, hd in arms:
+            hand(ctx, *hd, skin, 28)
+
+
+def _karna_head(ctx, t, kavach, look, mood):
+    skin = KARNA_SKIN
+    hair = hexc("#1A100A")
+    rrect(ctx, -34, -600, 68, 70, 14)
+    ink(ctx, skin)
+    for side in (-1, 1):
+        ell(ctx, side * 100, -688, 18, 28)
+        ink(ctx, skin)
+    ell(ctx, 0, -690, 100, 108)
+    ink(ctx, skin)
+    sheen(ctx, -36, -740, 38, 22, 0.18)
+    for side in (-1, 1):
+        if mood == "smile":
+            line(ctx, [(side * 38 - 18, -696), (side * 38, -708), (side * 38 + 18, -696)], OUTLINE, 6)
+        else:
+            eye(ctx, side * 38, -700, 24, 26, t, look=look, seed=9)
+        line(ctx, [(side * 14, -736), (side * 40, -746), (side * 64, -740)], hair, 9)
+    ell(ctx, 0, -668, 12, 18)
+    ink(ctx, shade(skin, 0.9), 3.5)
+    ctx.move_to(-24, -628)
+    ctx.curve_to(-8, -610, 8, -610, 24, -628)
+    ctx.curve_to(8, -620, -8, -620, -24, -628)
+    ctx.close_path()
+    ink(ctx, hexc("#B5283C"), 3)
+    rrect(ctx, -5, -778, 10, 40, 4)
+    rgba(ctx, hexc("#E2231A"))
+    ctx.fill()
+    for k in range(9):
+        circle(ctx, -88 + 22 * k, -768, 16, hair)
+    smooth(ctx, [(-102, -796), (-80, -858), (-46, -818), (0, -896), (46, -818), (80, -858), (102, -796)], k=0.06)
+    ink(ctx, GOLD, 5)
+    rrect(ctx, -106, -806, 212, 38, 10)
+    ink(ctx, GOLD, 5)
+    sun_disc(ctx, 0, -842, 18, t, rays=12)                    # Surya's emblem on his mukut
+    if kavach > 0:                                          # the shining kundal
+        for side in (-1, 1):
+            glow(ctx, side * 106, -640, 44, GOLD_HI, 0.7 * kavach)
+            circle(ctx, side * 106, -640, 18, GOLD, kavach)
+            circle(ctx, side * 106, -640, 9, hexc("#FFF3B0"), kavach)
+
+
+def basket(ctx, x, y, s, t, a=1.0):
+    """Reed basket floating on a river with a baby (and a tiny gold glow of the kavach)."""
+    ctx.save()
+    ctx.translate(x, y + 6 * math.sin(t * 2))
+    ctx.rotate(0.05 * math.sin(t * 1.5))
+    ctx.scale(s, s)
+    ctx.move_to(-120, -40)
+    ctx.curve_to(-110, 40, 110, 40, 120, -40)
+    ctx.close_path()
+    ink(ctx, hexc("#B08A4A"), 4, a)
+    for k in range(7):
+        line(ctx, [(-100 + 33 * k, -36), (-92 + 31 * k, 20)], hexc("#7A5A2A"), 2.5, a)
+    glow(ctx, 0, -50, 120, GOLD_HI, 0.5 * a)
+    baby(ctx, 0, -40, 0.65, t, awake=True, a=a)
+    ctx.restore()
