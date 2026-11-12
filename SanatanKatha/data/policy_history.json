@@ -2,12 +2,16 @@
   "order": [
     "barbarik",
     "chhath",
-    "karna"
+    "karna",
+    "sudama",
+    "sita_chhath"
   ],
   "grandfathered": [],
   "titles": {
     "barbarik": "Khatu Shyam Ki Kahani: Krishna Ne Sheesh Kyun Maanga?",
     "chhath": "Chhath Puja 2026: Why Offer Arghya To The Setting Sun?",
-    "karna": "Karna Ne Apna Kavach Kyun De Diya? Daanveer Karna Ki Kahani"
+    "karna": "Karna Ne Apna Kavach Kyun De Diya? Daanveer Karna Ki Kahani",
+    "sudama": "Why Did Rukmini Stop Krishna From Eating Sudama's Rice?",
+    "sita_chhath": "Munger Ke Patthar Par Sita Maa Ke Charan Kyun?"
   }
 }
