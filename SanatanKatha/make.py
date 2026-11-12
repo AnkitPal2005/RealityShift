@@ -5,6 +5,9 @@ Usage (run from this folder):
   python make.py barbarik --check    # only the YPP policy gate (no voice spent, nothing rendered)
   python make.py barbarik --preview  # contact sheet of every scene (2 moments each) + thumbnail, no voice needed
   python make.py --list              # every katha in kathas/ and whether it has been rendered
+  python make.py barbarik --kiki-export   # KikiVoice: one text file per voice (narrator, devta, maa, char)
+  python make.py barbarik --kiki-split    # cut the downloaded KikiVoice files into lines (+ --check-voice)
+  python make.py barbarik --engine edge   # force the old edge-tts voice (default: KikiVoice clips if split)
 
 A new katha = copy kathas/_template.py to kathas/<name>.py and write the story (see README.md).
 """
@@ -27,8 +30,8 @@ def preview(name):
     """Render stills with fake timings (each scene 6 s, captions spread evenly) so visuals can be checked fast."""
     import cairo
 
-    import engine
-    import katha
+    from core import engine
+    from core import katha
     story = importlib.import_module(f"kathas.{name}")
     out = engine.OUT_DIR / "preview"
     out.mkdir(parents=True, exist_ok=True)
@@ -65,7 +68,7 @@ def main():
         print(__doc__)
         return
     if args[0] == "--list":
-        import engine
+        from core import engine
         for k in kathas():
             story_out = engine.SHORTS_DIR / f"{k}_short.mp4"
             print(f"  {k:24s} {'rendered' if story_out.exists() else '-'}")
@@ -74,13 +77,19 @@ def main():
     if name not in kathas():
         raise SystemExit(f"no kathas/{name}.py - available: {', '.join(kathas()) or 'none'}")
     if "--check" in args:
-        import policy
+        from core import policy
         policy.check(importlib.import_module(f"kathas.{name}"), name)
     elif "--preview" in args:
         preview(name)
+    elif "--kiki-export" in args:
+        from core import voice_kit
+        voice_kit.export(name)
+    elif "--kiki-split" in args:
+        from core import voice_kit
+        voice_kit.split(name, check="--check-voice" in args)
     else:
-        import katha
-        katha.run(name)
+        from core import katha
+        katha.run(name, args[args.index("--engine") + 1] if "--engine" in args else None)
 
 
 if __name__ == "__main__":

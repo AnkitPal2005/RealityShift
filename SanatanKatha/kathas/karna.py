@@ -12,7 +12,7 @@ The kavach is shown lifting off as golden light, nothing graphic. Spoken words k
 Output: output/shorts/karna_short.mp4 (+ .json scene log, thumbnail, upload kit)
 """
 
-from katha import *  # noqa: F401,F403  (engine helpers, devta as dv, scenery, Cued, story defaults)
+from core.katha import *  # noqa: F401,F403  (engine helpers, devta as dv, scenery, Cued, story defaults)
 
 TOPIC = "KARNA KAVACH KUNDAL DAAN"
 OUTPUTS = {"edge": "karna_short.mp4"}

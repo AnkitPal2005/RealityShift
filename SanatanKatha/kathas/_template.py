@@ -7,7 +7,7 @@ Usage (from SanatanKatha/):
 Output: output/shorts/<name>_short.mp4
 """
 
-from katha import *  # noqa: F401,F403  (engine helpers, devta as dv, scenery, Cued, story defaults)
+from core.katha import *  # noqa: F401,F403  (engine helpers, devta as dv, scenery, Cued, story defaults)
 
 TOPIC = "NAYI KATHA"                      # unique across every katha (policy checks it)
 OUTPUTS = {"edge": "nayi_katha_short.mp4"}

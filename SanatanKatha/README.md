@@ -1,18 +1,22 @@
 # Sanatan Katha
 
-YouTube Shorts pipeline for the **Divya Rahasya** channel (the old 4,110-sub Apni Kahaniya / Silent Reality channel, renamed). It makes animated mythology stories with code-drawn
-cartoon devta characters, a kathavachak-style voice-over and a synthesized devotional music bed.
+YouTube Shorts pipeline for the **Divya Rahasya** channel (the old 4,110-sub channel, renamed). It makes
+animated mythology stories with code-drawn cartoon devta characters, a kathavachak-style voice-over and a
+synthesized devotional music bed.
 
 It is separate from `RealityShift/` on purpose: it has its own engine copy, its own YPP gate, its own outputs
-and its own `policy_history.json`. Changing one pipeline can never break the other.
+and its own `data/policy_history.json`. Changing one pipeline can never break the other.
 
 ## Commands (run from this folder)
 
 ```
-python make.py --list               # every katha and whether it is rendered
-python make.py barbarik --preview   # contact sheet of all scenes + thumbnail (fast, no voice)
-python make.py barbarik --check     # YPP policy gate only
-python make.py barbarik             # full render -> output/shorts/barbarik_short.mp4 + upload kit
+python make.py --list                   # every katha and whether it is rendered
+python make.py barbarik --preview       # contact sheet of all scenes + thumbnail (fast, no voice)
+python make.py barbarik --check         # YPP policy gate only
+python make.py barbarik --kiki-export   # KikiVoice: one text file per voice (narrator, devta, maa, char)
+python make.py barbarik --kiki-split    # cut the downloaded KikiVoice files into lines (+ --check-voice)
+python make.py barbarik                 # full render -> output/shorts/barbarik_short.mp4 + upload kit
+python make.py barbarik --engine edge   # force the edge-tts voice instead of the KikiVoice clips
 ```
 
 Every full render writes these files to `output/shorts/`:
@@ -24,24 +28,35 @@ Every full render writes these files to `output/shorts/`:
 
 ## Folder
 
-| File | What it is |
+```
+SanatanKatha/
+├── make.py                  the only entry point
+├── kathas/                  one module per katha (SPEC, scenes, UPLOAD, thumbnail)
+│   └── _template.py         copy this to start a new katha
+├── core/                    the engine, shared by every katha
+├── data/
+│   └── policy_history.json  render order + shipped titles the YPP gate compares against (committed)
+└── output/                  renders, previews, work files (git-ignored)
+    ├── shorts/  preview/  work/<katha>/
+```
+
+| Path | What it is |
 |---|---|
-| `make.py` | One command per katha: render, `--check`, `--preview`, `--list` |
-| `katha.py` | Shared by every katha: storyteller voice tones (`TONES`), `script_of()`, `Cued` scenes, scenery (battlefield, meadow, temple, mother), the diya header, scroll captions, the compositor, `run()` |
-| `devta.py` | Character rig: Krishna, the brahmin disguise, Barbarik, the Khatu Shyam sheesh roop, plus props (peepal, divine arrow, bow, balance, diya, Kailash, trishul, army, petals, ribbon) |
-| `kathas/<name>.py` | One story: SPEC, scene classes, UPLOAD and `thumbnail()` |
-| `kathas/_template.py` | Copy this to start a new katha |
-| `engine.py` | TTS (edge-tts, a voice per line), the "divine" music bed, SFX (ghanti, shankh, arrow, shimmer), mixing and encoding |
-| `delivery.py` | Turns SPEC lines into the performed voice: tones and held pauses |
-| `policy.py` | YPP gate: original script and topic, no outside media, sources, upload kit |
-| `upload_kit.py` | Title scoring, description and tag checks, thumbnail |
+| `make.py` | One command per katha: render, `--check`, `--preview`, `--list`, KikiVoice export/split |
+| `core/katha.py` | Shared by every katha: storyteller voice tones (`TONES`), `script_of()`, `Cued` scenes, scenery (battlefield, meadow, temple, mother), the diya header, scroll captions, the compositor, `run()` |
+| `core/devta.py` | Character rig: Krishna, the brahmin disguise, Barbarik, Karna, the Khatu Shyam sheesh roop, plus props (peepal, divine arrow, bow, balance, diya, Kailash, trishul, army, petals, ribbon, lota, basket) |
+| `core/engine.py` | TTS (edge-tts, a voice per line), the "divine" music bed, SFX (ghanti, shankh, arrow, shimmer), mixing and encoding |
+| `core/delivery.py` | Turns SPEC lines into the performed voice: tones and held pauses |
+| `core/voice_kit.py` | KikiVoice: exports one text file per voice, then cuts the downloaded audio into line clips |
+| `core/policy.py` | YPP gate: original script and topic, no outside media, sources, upload kit |
+| `core/upload_kit.py` | Title scoring, description and tag checks, thumbnail |
 
 ## Making a new katha
 
 1. Copy `kathas/_template.py` to `kathas/<name>.py`.
 2. Write the script following the storytelling rules below.
-3. If the story needs a new character (Shiv ji, Hanuman ji, Ashwatthama...), add it to `devta.py`. Use the same
-   style as the existing characters: an ink outline, flat colours, big eyes, and `place()` / `group()` for
+3. If the story needs a new character (Shiv ji, Hanuman ji, Ashwatthama...), add it to `core/devta.py`. Use the
+   same style as the existing characters: an ink outline, flat colours, big eyes, and `place()` / `group()` for
    position and fade.
 4. Run `python make.py <name> --preview` and check every scene.
 5. Run `python make.py <name>` and listen to the result.

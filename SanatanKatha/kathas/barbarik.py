@@ -11,7 +11,7 @@ The sheesh daan is shown as light and petals only, nothing graphic.
 Output: output/shorts/barbarik_short.mp4 (+ .json scene log, thumbnail, upload kit)
 """
 
-from katha import *  # noqa: F401,F403  (engine helpers, devta as dv, scenery, Cued, story defaults)
+from core.katha import *  # noqa: F401,F403  (engine helpers, devta as dv, scenery, Cued, story defaults)
 
 TOPIC = "BARBARIK KHATU SHYAM"
 OUTPUTS = {"edge": "barbarik_short.mp4"}
@@ -32,85 +32,81 @@ SOURCES = [
     "sacrifice before the war); this Short follows the most widely told Khatu tradition",
 ]
 
-# each line: (tone, [(spoken Hindi, Hinglish caption), ...])
+# KikiVoice version (12 Nov 2026): the kathavachak tells each scene as ONE flowing paragraph, so the voice breathes
+# where the punctuation says - "," breath, "..." the storyteller's held beat, "।" stop, "?" lift. Characters keep
+# their own lines (and their own KikiVoice voice): "maa" = mother, "char" = the old brahmin, "deva" = Shri Krishna.
+# The 3rd element is the silence after a line, kept between voices. No dashes and no hyphenated words (TTS trips).
 SPEC = [
     {"key": "hook", "text": "SHEESH KYUN?",
      "visual": "Dusk Kurukshetra, Barbarik on a rock, three divine arrows light up above him; a shockwave wipes both "
                "armies; Krishna's blue glow enters; 'SHEESH KYUN?' ribbon",
-     "vo": [("open", [("सोचो...", "SOCHO...")], 0.45),
-            ("tell", [("एक ऐसा योद्धा,", "EK AISA YODDHA,"), ("जिसके पास बस तीन बाण थे...", "JISKE PAAS BAS 3 BAAN THE...")], 0.3),
-            ("punch", [("और वो तीन बाण", "AUR WO 3 BAAN"), ("पूरा महाभारत", "POORA MAHABHARAT"),
-                       ("एक पल में खत्म कर देते!", "EK PAL MEIN KHATAM KAR DETE!")], 0.5),
-            ("low", [("पर युद्ध से पहले ही...", "PAR YUDH SE PEHLE HI...")], 0.25),
-            ("punch", [("श्री कृष्ण ने", "SHRI KRISHNA NE"), ("उसका शीश माँग लिया।", "USKA SHEESH MAANG LIYA.")], 0.4),
-            ("ask", [("क्यों?", "KYUN?")])]},
+     "vo": [("tell", [("सोचो...", "SOCHO..."), ("एक ऐसा योद्धा,", "EK AISA YODDHA,"), ("जिसके पास बस तीन बाण थे।", "JISKE PAAS BAS 3 BAAN THE."),
+                      ("और वो तीन बाण,", "AUR WO 3 BAAN,"), ("पूरा महाभारत एक पल में", "POORA MAHABHARAT EK PAL MEIN"),
+                      ("खत्म कर देते!", "KHATAM KAR DETE!"), ("पर युद्ध से पहले ही...", "PAR YUDH SE PEHLE HI..."),
+                      ("श्री कृष्ण ने", "SHRI KRISHNA NE"), ("उसका शीश माँग लिया।", "USKA SHEESH MAANG LIYA."),
+                      ("आख़िर क्यों?", "AAKHIR KYUN?")])]},
     {"key": "who", "text": "BARBARIK",
      "visual": "Barbarik in full colour with a name ribbon; Kailash and a glowing trishul rise behind him; three "
                "arrows fall from the sky into his quiver; '3 ACHOOK BAAN'",
-     "vo": [("tell", [("उसका नाम था—", "USKA NAAM THA—")], 0.3),
-            ("punch", [("बर्बरीक।", "BARBARIK.")], 0.35),
-            ("tell", [("भीम का पोता,", "BHEEM KA POTA,"), ("घटोत्कच का बेटा।", "GHATOTKACH KA BETA.")], 0.35),
-            ("low", [("कहते हैं,", "KEHTE HAIN,"), ("महादेव की तपस्या से", "MAHADEV KI TAPASYA SE")], 0.25),
-            ("awe", [("उसे मिले", "USE MILE"), ("तीन अचूक बाण!", "3 ACHOOK BAAN!")])]},
+     "vo": [("tell", [("उसका नाम था...", "USKA NAAM THA..."), ("बर्बरीक।", "BARBARIK."), ("भीम का पोता,", "BHEEM KA POTA,"),
+                      ("घटोत्कच का बेटा।", "GHATOTKACH KA BETA."), ("कहते हैं,", "KEHTE HAIN,"),
+                      ("महादेव की तपस्या से,", "MAHADEV KI TAPASYA SE,"), ("उसे मिले थे...", "USE MILE THE..."),
+                      ("तीन अचूक बाण!", "3 ACHOOK BAAN!")])]},
     {"key": "vow", "text": "VACHAN",
      "visual": "Lamp-lit room: his mother blesses him; a gold balance tips (JEET down, HAAR up) and a divine arrow "
                "points to the HAAR side",
-     "vo": [("low", [("युद्ध में जाने से पहले,", "YUDH MEIN JAANE SE PEHLE,"), ("माँ ने बस एक बात कही—", "MAA NE BAS EK BAAT KAHI—")], 0.4),
-            ("maa", [("बेटा,", "BETA,"), ("जो हार रहा हो,", "JO HAAR RAHA HO,"), ("उसका साथ देना।", "USKA SAATH DENA.")], 0.4),
-            ("tell", [("और बर्बरीक ने", "AUR BARBARIK NE"), ("वचन दे दिया।", "VACHAN DE DIYA.")])]},
+     "vo": [("tell", [("युद्ध में जाने से पहले,", "YUDH MEIN JAANE SE PEHLE,"), ("माँ ने बस एक बात कही...", "MAA NE BAS EK BAAT KAHI...")], 0.35),
+            ("maa", [("बेटा,", "BETA,"), ("जो हार रहा हो...", "JO HAAR RAHA HO..."), ("उसका साथ देना।", "USKA SAATH DENA.")], 0.4),
+            ("tell", [("और बर्बरीक ने,", "AUR BARBARIK NE,"), ("वचन दे दिया।", "VACHAN DE DIYA.")])]},
     {"key": "test", "text": "1 BAAN = HAR PATTA",
      "visual": "Dawn meadow: a brahmin asks 'EK BAAN SE?'; Barbarik draws and looses one arrow that zips through "
                "the peepal tree, marking every leaf",
-     "vo": [("tell", [("रस्ते में मिला", "RASTE MEIN MILA"), ("एक बूढ़ा ब्राह्मण।", "EK BOODHA BRAHMAN.")], 0.3),
-            ("char", [("बोला— भाई,", "BOLA— BHAI,"), ("तीन बाण से युद्ध लड़ेगा?", "3 BAAN SE YUDH LADEGA?")], 0.4),
-            ("build", [("बर्बरीक ने एक बाण", "BARBARIK NE EK BAAN"), ("पीपल की ओर छोड़ा—", "PEEPAL KI OR CHHODA—")], 0.12),
-            ("fast", [("बाण घूमा, घूमा...", "BAAN GHOOMA, GHOOMA...")], 0.15),
-            ("punch", [("और पेड़ का", "AUR PED KA"), ("एक-एक पत्ता छेद दिया!", "EK-EK PATTA CHHED DIYA!")])]},
+     "vo": [("tell", [("रास्ते में मिला,", "RAASTE MEIN MILA,"), ("एक बूढ़ा ब्राह्मण।", "EK BOODHA BRAHMAN."), ("बोला...", "BOLA...")], 0.3),
+            ("char", [("भाई...", "BHAI..."), ("तीन बाण से युद्ध लड़ेगा?", "3 BAAN SE YUDH LADEGA?")], 0.35),
+            ("tell", [("बर्बरीक ने एक बाण,", "BARBARIK NE EK BAAN,"), ("पीपल की ओर छोड़ा।", "PEEPAL KI OR CHHODA."),
+                      ("बाण घूमा, घूमा, घूमा...", "BAAN GHOOMA, GHOOMA, GHOOMA..."), ("और पेड़ का", "AUR PED KA"),
+                      ("एक एक पत्ता छेद दिया!", "EK-EK PATTA CHHED DIYA!")])]},
     {"key": "foot", "text": "PAIR KE NEECHE",
      "visual": "Close on the brahmin: a leaf slides under his foot; the arrow circles the foot and stops over it",
-     "vo": [("whisper", [("पर एक पत्ता...", "PAR EK PATTA...")], 0.35),
-            ("low", [("ब्राह्मण ने चुपके से", "BRAHMAN NE CHUPKE SE"), ("पैर के नीचे दबा रखा था।", "PAIR KE NEECHE DABA RAKHA THA.")], 0.3),
-            ("build", [("बाण आया...", "BAAN AAYA..."), ("और उसके पैर के", "AUR USKE PAIR KE"),
-                       ("चारों ओर घूमने लगा!", "CHAARON OR GHOOMNE LAGA!")], 0.3),
-            ("punch", [("जैसे कह रहा हो—", "JAISE KEH RAHA HO—"), ("पैर हटाओ!", "PAIR HATAO!")])]},
+     "vo": [("tell", [("पर एक पत्ता...", "PAR EK PATTA..."), ("ब्राह्मण ने चुपके से,", "BRAHMAN NE CHUPKE SE,"),
+                      ("पैर के नीचे दबा रखा था।", "PAIR KE NEECHE DABA RAKHA THA."), ("बाण आया...", "BAAN AAYA..."),
+                      ("और उसके पैर के चारों ओर", "AUR USKE PAIR KE CHAARON OR"), ("घूमने लगा।", "GHOOMNE LAGA."),
+                      ("जैसे कह रहा हो,", "JAISE KEH RAHA HO,"), ("पैर हटाओ!", "PAIR HATAO!")])]},
     {"key": "reveal", "text": "SHRI KRISHNA",
      "visual": "The brahmin glows blue, a white flash, and Shri Krishna stands in his place with halo and petals",
-     "vo": [("low", [("ब्राह्मण मुस्कुराया...", "BRAHMAN MUSKURAYA...")], 0.35),
-            ("whisper", [("क्योंकि वो कोई ब्राह्मण नहीं था—", "KYUNKI WO KOI BRAHMAN NAHI THA—")], 0.45),
-            ("punch", [("वो खुद", "WO KHUD"), ("श्री कृष्ण थे!", "SHRI KRISHNA THE!")])]},
+     "vo": [("tell", [("ब्राह्मण मुस्कुराया...", "BRAHMAN MUSKURAYA..."), ("क्योंकि वो कोई ब्राह्मण नहीं था।", "KYUNKI WO KOI BRAHMAN NAHI THA."),
+                      ("वो खुद...", "WO KHUD..."), ("श्री कृष्ण थे!", "SHRI KRISHNA THE!")])]},
     {"key": "logic", "text": "SIRF BARBARIK",
      "visual": "Two armies; little Barbarik hops to whichever side is losing, faster and faster, both armies shrink "
                "away until only he stands in a spotlight",
-     "vo": [("tell", [("कृष्ण सब समझ गए।", "KRISHNA SAB SAMAJH GAYE.")], 0.3),
-            ("build", [("बर्बरीक जिधर लड़ेगा,", "BARBARIK JIDHAR LADEGA,"), ("वो जीतने लगेगा।", "WO JEETNE LAGEGA.")], 0.2),
-            ("fast", [("फिर दूसरा हारेगा,", "PHIR DOOSRA HAAREGA,"), ("तो ये पाला बदलेगा,", "TO YE PAALA BADLEGA,"),
-                      ("फिर बदलेगा...", "PHIR BADLEGA...")], 0.3),
-            ("low", [("और आखिर में", "AUR AAKHIR MEIN"), ("मैदान में बचेगा कौन?", "MAIDAN MEIN BACHEGA KAUN?")], 0.5),
-            ("punch", [("सिर्फ बर्बरीक!", "SIRF BARBARIK!")])]},
+     "vo": [("tell", [("कृष्ण सब समझ गए।", "KRISHNA SAB SAMAJH GAYE."), ("बर्बरीक जिधर लड़ेगा,", "BARBARIK JIDHAR LADEGA,"),
+                      ("वो जीतने लगेगा।", "WO JEETNE LAGEGA."), ("फिर दूसरा हारेगा,", "PHIR DOOSRA HAAREGA,"),
+                      ("तो ये पाला बदलेगा,", "TO YE PAALA BADLEGA,"), ("फिर बदलेगा...", "PHIR BADLEGA..."),
+                      ("और आख़िर में,", "AUR AAKHIR MEIN,"), ("मैदान में बचेगा कौन?", "MAIDAN MEIN BACHEGA KAUN?"),
+                      ("सिर्फ़ बर्बरीक!", "SIRF BARBARIK!")])]},
     {"key": "daan", "text": "SHEESH KA DAAN",
      "visual": "Twilight: Krishna holds out his hand; Barbarik, palms joined, smiles and dissolves into golden light "
                "that rises as a glowing orb; petals fall (no graphic imagery)",
-     "vo": [("tell", [("तब कृष्ण ने हाथ फैलाया,", "TAB KRISHNA NE HAATH PHAILAYA,"), ("और दान में माँगा—", "AUR DAAN MEIN MAANGA—")], 0.5),
+     "vo": [("tell", [("तब कृष्ण ने हाथ फैलाया,", "TAB KRISHNA NE HAATH PHAILAYA,"), ("और दान में माँगा...", "AUR DAAN MEIN MAANGA...")], 0.45),
             ("deva", [("तेरा शीश।", "TERA SHEESH.")], 0.6),
-            ("whisper", [("एक पल को", "EK PAL KO"), ("सब थम गया...", "SAB THAM GAYA...")], 0.35),
-            ("awe", [("पर बर्बरीक के चेहरे पे", "PAR BARBARIK KE CHEHRE PE"), ("डर नहीं था।", "DAR NAHI THA.")], 0.3),
-            ("punch", [("हँसते-हँसते", "HANSTE-HANSTE"), ("उसने शीश दान कर दिया।", "USNE SHEESH DAAN KAR DIYA.")])]},
+            ("tell", [("एक पल को...", "EK PAL KO..."), ("सब थम गया।", "SAB THAM GAYA."),
+                      ("पर बर्बरीक के चेहरे पे,", "PAR BARBARIK KE CHEHRE PE,"), ("डर नहीं था।", "DAR NAHI THA."),
+                      ("हँसते हँसते,", "HANSTE-HANSTE,"), ("उसने शीश दान कर दिया।", "USNE SHEESH DAAN KAR DIYA.")])]},
     {"key": "khatu", "text": "KHATU SHYAM",
      "visual": "The sheesh watches the war from a hilltop; Krishna appears in the sky to bless; the sheesh becomes the "
                "Khatu Shyam roop with garlands, 'KHATU SHYAM / HAARE KA SAHARA'",
-     "vo": [("tell", [("शीश ने ऊँची पहाड़ी से", "SHEESH NE OONCHI PAHADI SE"), ("पूरा युद्ध देखा।", "POORA YUDH DEKHA.")], 0.4),
-            ("tell", [("और कृष्ण ने वरदान दिया—", "AUR KRISHNA NE VARDAAN DIYA—")], 0.2),
-            ("deva", [("कलयुग में तू", "KALYUG MEIN TU"), ("मेरे नाम से पूजा जाएगा।", "MERE NAAM SE POOJA JAYEGA.")], 0.45),
-            ("awe", [("आज दुनिया उसे कहती है—", "AAJ DUNIYA USE KEHTI HAI—")], 0.3),
-            ("punch", [("खाटू श्याम!", "KHATU SHYAM!")], 0.3),
-            ("punch", [("हारे का सहारा!", "HAARE KA SAHARA!")])]},
+     "vo": [("tell", [("शीश ने ऊँची पहाड़ी से,", "SHEESH NE OONCHI PAHADI SE,"), ("पूरा युद्ध देखा।", "POORA YUDH DEKHA."),
+                      ("और कृष्ण ने वरदान दिया...", "AUR KRISHNA NE VARDAAN DIYA...")], 0.35),
+            ("deva", [("कलयुग में तू,", "KALYUG MEIN TU,"), ("मेरे नाम से पूजा जाएगा।", "MERE NAAM SE POOJA JAYEGA.")], 0.45),
+            ("tell", [("आज दुनिया उसे कहती है...", "AAJ DUNIYA USE KEHTI HAI..."), ("खाटू श्याम!", "KHATU SHYAM!"),
+                      ("हारे का सहारा!", "HAARE KA SAHARA!")])]},
     {"key": "cta", "text": "JAI SHRI SHYAM",
      "visual": "Shyam roop above a comment card that types 'JAI SHRI SHYAM'; an arrow points at the comment button",
-     "vo": [("warm", [("ऐसा दानी,", "AISA DAANI,"), ("ऐसा वीर...", "AISA VEER...")], 0.3),
-            ("warm", [("घणा कम मिलता है भाई।", "GHANA KAM MILTA HAI BHAI.")], 0.35),
-            ("cta", [("कमेंट में लिखो—", "COMMENT MEIN LIKHO—")], 0.2),
-            ("punch", [("जय श्री श्याम!", "JAI SHRI SHYAM!")])]},
+     "vo": [("warm", [("ऐसा दानी,", "AISA DAANI,"), ("ऐसा वीर...", "AISA VEER..."), ("घणा कम मिलता है भाई।", "GHANA KAM MILTA HAI BHAI."),
+                      ("कमेंट में लिखो...", "COMMENT MEIN LIKHO..."), ("जय श्री श्याम!", "JAI SHRI SHYAM!")])]},
 ]
+KIKI_TEMPO = {"narrator": 1.0, "maa": 1.0, "char": 1.0, "devta": 1.0}   # raise a voice to 1.05-1.12 if it reads slow
+MAX_GAP = 0.6      # keep KikiVoice's own "..." beats inside a paragraph
 
 DELIVERY, SCRIPT, NARRATION = script_of(SPEC)   # kathavachak tones + held pauses (katha.TONES)
 

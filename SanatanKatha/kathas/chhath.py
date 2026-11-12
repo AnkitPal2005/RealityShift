@@ -12,7 +12,7 @@ The baby is shown asleep, never anything distressing; the devi's touch wakes him
 Output: output/shorts/chhath_short.mp4 (+ .json scene log, thumbnail, upload kit)
 """
 
-from katha import *  # noqa: F401,F403  (engine helpers, devta as dv, scenery, Cued, story defaults)
+from core.katha import *  # noqa: F401,F403  (engine helpers, devta as dv, scenery, Cued, story defaults)
 
 TOPIC = "CHHATH DOOBTA SURAJ ARGHYA"
 OUTPUTS = {"edge": "chhath_short.mp4"}

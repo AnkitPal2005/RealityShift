@@ -1,0 +1,49 @@
+{
+  "order": [
+    "reality_shift",
+    "reality_shift_defense",
+    "reality_shift_kusha",
+    "reality_shift_weapons",
+    "dark_store",
+    "popcorn",
+    "leetcode_two_sum",
+    "leetcode_two_sum_2min",
+    "chabahar",
+    "maldives",
+    "rupee",
+    "lithium",
+    "chickens_neck",
+    "zorawar",
+    "malacca",
+    "brahmos_lego",
+    "brahmos",
+    "s400_kusha",
+    "prithvi",
+    "agni",
+    "siachen",
+    "nyoma"
+  ],
+  "grandfathered": [
+    "reality_shift",
+    "reality_shift_defense",
+    "reality_shift_kusha",
+    "reality_shift_weapons",
+    "dark_store",
+    "popcorn",
+    "leetcode_two_sum",
+    "leetcode_two_sum_2min",
+    "chabahar",
+    "maldives",
+    "rupee",
+    "lithium"
+  ],
+  "titles": {
+    "chickens_neck": "India vs China: 22 KM Ka Chicken's Neck Kyun Ahem Hai?",
+    "brahmos_lego": "Aawaz Se 3 Guna Tez: BrahMos Ko Rokna Kyun Mushkil?",
+    "s400_kusha": "Kya India Ne S-400 Cancel Kiya? Project Kusha Ka Sach",
+    "prithvi": "1988 Me Udi Bharat Ki Pehli Desi Missile: Prithvi",
+    "agni": "Agni 1 Se Agni 5: 700 Se 5,000 KM Tak Ka Safar",
+    "siachen": "T-Shirt Me Siachen? Ek Raat Tik Paoge?",
+    "nyoma": "Nyoma Airbase: China Se Sirf 25 KM Door"
+  }
+}

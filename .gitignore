@@ -1,5 +1,16 @@
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+.venv/
+venv/
+
+# Renders, previews and KikiVoice work files (per channel)
 output/
 render_*/
-.venv/
+
+# Secrets and editor/OS noise
+.env
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
