@@ -43,19 +43,33 @@ def folder(name):
     return engine.WORK_DIR / name / "files"
 
 
+def kiki_pause(ms):
+    """KikiVoice's pause tag, as its pause menu inserts it: ((⏱=1000)) = 1 s of silence."""
+    return f"((⏱={int(ms)}))"
+
+
 def export(name):
+    """KIKI_PAUSE_MS on the story puts a pause tag between lines (a sure gap for split to cut at);
+    KIKI_BEATS = {"phrase": ms} adds a held beat right after that phrase inside a line."""
     story = importlib.import_module(f"shorts.{name}")
     d = folder(name)
     d.mkdir(parents=True, exist_ok=True)
+    gap = getattr(story, "KIKI_PAUSE_MS", 0)
+    beats = getattr(story, "KIKI_BEATS", {})
     by = {}
     for _, _, who, text in lines_of(story):
+        for phrase, ms in beats.items():
+            text = text.replace(phrase, f"{phrase} {kiki_pause(ms)}", 1)
         by.setdefault(who, []).append(text)
     print(f"Folder: {d}\n")
+    sep = f"\n{kiki_pause(gap)}\n" if gap else "\n\n"
     for who, texts in by.items():
         p = d / f"kiki_{who}.txt"
-        p.write_text("\n\n".join(texts) + "\n", encoding="utf-8")
+        body = sep.join(texts)
+        p.write_text(body + "\n", encoding="utf-8")
+        print(f"    {len(body)} characters (KikiVoice limit 1000)")
         print(f"--- {who}: {len(texts)} lines -> {p.name}  (save the voice as {who}.mp3)")
-        print("\n\n".join(texts), "\n")
+        print(body, "\n")
 
 
 def speech_frames(a, hop):

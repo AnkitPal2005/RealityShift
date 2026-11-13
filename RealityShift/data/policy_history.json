@@ -21,7 +21,9 @@
     "prithvi",
     "agni",
     "siachen",
-    "nyoma"
+    "nyoma",
+    "su30",
+    "great_nicobar"
   ],
   "grandfathered": [
     "reality_shift",
@@ -44,6 +46,8 @@
     "prithvi": "1988 Me Udi Bharat Ki Pehli Desi Missile: Prithvi",
     "agni": "Agni 1 Se Agni 5: 700 Se 5,000 KM Tak Ka Safar",
     "siachen": "T-Shirt Me Siachen? Ek Raat Tik Paoge?",
-    "nyoma": "Nyoma Airbase: China Se Sirf 25 KM Door"
+    "nyoma": "Nyoma Airbase: China Se Sirf 25 KM Door",
+    "su30": "Su-30MKI Me 'I' Ka Matlab INDIA: Russia Ne Bhi Liya",
+    "great_nicobar": "Great Nicobar: China Ka 'Unsinkable Aircraft Carrier' Nightmare"
   }
 }
