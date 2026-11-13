@@ -14,9 +14,16 @@ applies equally to all, even to God himself.
 """
 
 import math
+from pathlib import Path
 import sys
+
+_ROOT = Path(__file__).resolve().parent.parent
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
+
 import cairo
 
+from core import engine, katha, upload_kit
 from core.katha import *  # noqa: F401,F403
 import core.devta as dv
 from core.devta import group, place, halo, smooth, ink, ell, gem, limb, hand, sheen, eye, shade
@@ -744,8 +751,20 @@ def thumbnail(ctx):
 
 
 def main() -> None:
-    from core import upload_kit
     story = sys.modules[__name__]
+    story.__name__ = "kathas.krishna_bali"
+
+    if "--check" in sys.argv:
+        from core import policy
+        policy.check(story, "krishna_bali")
+        print("[policy] OK - all checks passed!")
+        return
+
+    if "--preview" in sys.argv:
+        import make
+        make.preview("krishna_bali")
+        return
+
     engine.make_frame = katha.frame_maker(story)
     eng = sys.argv[sys.argv.index("--engine") + 1] if "--engine" in sys.argv else "files"
     final = engine.render(story, eng)
