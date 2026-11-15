@@ -3,12 +3,14 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+.cache/
 
 # Renders, previews and KikiVoice work files (per channel)
 output/
 render_*/
 
 # Secrets and editor/OS noise
+*.log
 .env
 .vscode/
 .idea/

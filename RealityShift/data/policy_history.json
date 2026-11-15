@@ -23,7 +23,10 @@
     "siachen",
     "nyoma",
     "su30",
-    "great_nicobar"
+    "great_nicobar",
+    "pinaka",
+    "imec",
+    "arihant"
   ],
   "grandfathered": [
     "reality_shift",
@@ -48,6 +51,9 @@
     "siachen": "T-Shirt Me Siachen? Ek Raat Tik Paoge?",
     "nyoma": "Nyoma Airbase: China Se Sirf 25 KM Door",
     "su30": "Su-30MKI Me 'I' Ka Matlab INDIA: Russia Ne Bhi Liya",
-    "great_nicobar": "Great Nicobar: China Ka 'Unsinkable Aircraft Carrier' Nightmare"
+    "great_nicobar": "Great Nicobar: China Ka 'Unsinkable Aircraft Carrier' Nightmare",
+    "pinaka": "Pinaka Rocket System: 44 Second Mein 12 Rocket Ka Danka",
+    "imec": "IMEC Corridor vs Suez Canal: Red Sea Crisis Ka Desi Tod",
+    "arihant": "INS Arihant: Deep Sea Nuclear Deterrence & India's 2nd Strike Explained"
   }
 }

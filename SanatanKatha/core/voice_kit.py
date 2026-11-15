@@ -65,6 +65,15 @@ _WHISPER = None
 WHISPER_MODEL = "medium" if "--model" in sys.argv and "medium" in sys.argv else "small"
 
 
+def _whisper_cache_dir():
+    """Shared root cache (.cache/whisper) preferred, with fallback to channel-local cache."""
+    shared = engine.ROOT.parent / ".cache" / "whisper"
+    local = engine.ROOT / ".cache" / "whisper"
+    target = shared if (shared.exists() or not local.exists()) else local
+    target.mkdir(parents=True, exist_ok=True)
+    return target
+
+
 def _norm(w):
     return "".join(ch for ch in w if ch.isalnum() or "ऀ" <= ch <= "ॿ").replace("़", "")
 
@@ -76,10 +85,14 @@ def _align(audio, texts):
     global _WHISPER
     import difflib
     import warnings
-    import whisper
+    try:
+        import whisper
+    except ImportError:
+        return [], [], {}
     warnings.filterwarnings("ignore")
+    cache_dir = _whisper_cache_dir()
     if _WHISPER is None:
-        _WHISPER = whisper.load_model(WHISPER_MODEL)
+        _WHISPER = whisper.load_model(WHISPER_MODEL, download_root=str(cache_dir))
     # the script as Whisper's prompt: it then hears our words (and number words) instead of guessing,
     # which keeps the anchors right even when the voice runs scenes together with hardly a pause
     res = _WHISPER.transcribe(audio.astype(np.float32) if engine.SR == 16000 else
@@ -271,7 +284,8 @@ def split(name, check=False):
         import warnings
         import whisper
         warnings.filterwarnings("ignore")
-        m = whisper.load_model("small")
+        cache_dir = _whisper_cache_dir()
+        m = whisper.load_model("small", download_root=str(cache_dir))
         print("\nWhisper check (expected -> heard):")
         for out, text in sorted(clips):
             heard = m.transcribe(str(out), language="hi", fp16=False)["text"].strip()

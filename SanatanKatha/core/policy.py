@@ -66,7 +66,7 @@ OFF_PLATFORM = re.compile(r"(डीएम|\bDM\b|इनबॉक्स|\binbox\b
 CLICKBAIT = re.compile(r"(ILLEGAL|इलीगल|गैरकानूनी|GUARANTEED|गारंटी|100% SURE|BANNED|बैन|SECRET|सीक्रेट|"
                        r"HACK|हैक|FREE MONEY)", re.IGNORECASE)
 # Advertiser-friendly guidelines: graphic violence / gore and shocking words get limited or no ads.
-GRAPHIC = re.compile(r"(खून|लाश|लाशें|कत्ल|क़त्ल|मार डाल|नरसंहार|धमाके में मारे|सिर काट|"
+GRAPHIC = re.compile(r"((?<!ना)खून|(?<!कै)लाश|लाशें|कत्ल|क़त्ल|मार डाल|नरसंहार|धमाके में मारे|सिर काट|"
                      r"\bBLOOD\b|\bGORE\b|\bKILL(ED|ING)?\b|\bDEAD BODIES\b|\bMASSACRE\b|\bBEHEAD)", re.IGNORECASE)
 # Hate / harassment: demeaning labels for a people, nation or religion are never allowed.
 DEROGATORY = re.compile(r"(भिखारी|कुत्ते|कीड़े|सूअर|\bBEGGARS?\b|\bDOGS\b|\bCOCKROACH|\bPIGS\b|\bTERRORIST NATION\b)",
