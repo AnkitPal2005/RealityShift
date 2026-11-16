@@ -79,4 +79,16 @@
     - **No Repetitive Horns**: NEVER use the loud conch horn ("shankh" / "pooooooo") repeatedly across shorts.
     - **Music Variety**: Use cinematic devotional ambient pads (`MUSIC_STYLE = "ambient"`, 80–92 BPM, `MUSIC_VOLUME = 0.10–0.12`) so every short sounds fresh, modern, and distinct.
 
+11. **Target Duration & Script Calibration (30 to 35 Seconds Rule)**:
+    - **MANDATORY DURATION**: All YouTube Shorts (for both RealityShift and Divya Rahasya) must be strictly **30 to 35 seconds** long.
+    - **Script Word Count**: 80 to 105 spoken Hindi words.
+    - **Character Limit for KikiVoice**: Strictly **500 to 650 characters** in `kiki_narrator.txt` (including `((⏱=400))` pause tags). NEVER write 900+ or 1,000 character scripts unless explicitly requested.
+    - **High-Retention Pacing Arc**:
+      - `00:00 - 00:03`: Instant curiosity / shock hook.
+      - `00:03 - 00:12`: High-stakes premise / conflict.
+      - `00:12 - 00:24`: Core action / secret weapon / pivotal twist.
+      - `00:24 - 00:30`: Climactic impact / victory.
+      - `00:30 - 00:35`: Punchy CTA + subscribe prompt.
+    - **Shorts Algorithm Advantage**: 30–35s length delivers maximal Average Percentage Viewed (APV > 100%), triggering YouTube's viral recommendation engine.
+
 
