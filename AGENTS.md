@@ -91,4 +91,15 @@
       - `00:30 - 00:35`: Punchy CTA + subscribe prompt.
     - **Shorts Algorithm Advantage**: 30–35s length delivers maximal Average Percentage Viewed (APV > 100%), triggering YouTube's viral recommendation engine.
 
+12. **Mid-Video Pacing & Re-Hook (The 15–18s Anti-Drop Rule)**:
+    - **Never Plateau at Reveal**: When the secret weapon, deity name, or turning point is revealed around 15–18s, NEVER transition into slow theoretical explanations or backstory lectures (which caused the 17s drop in KALI 5000).
+    - **Deliver Immediate Impact**: Immediately follow the reveal with high-impact visual action, firing, screen shake, explosion, or shock fact to hold viewers through the second half.
+    - **Limit Explanation**: Keep technical/lore breakdown strictly under 1–2 punchy, vivid sentences.
+
+13. **Outro & CTA Velocity (The 3-Second Snap & Loop Rule)**:
+    - **No 6-7 Second Drag**: Outros/CTAs must NEVER drag for 6–7 seconds at the end. Viewers swipe the second they realize the story is over.
+    - **Tight 3-Second Snap**: Keep the engagement prompt and subscribe ask strictly within **3 to 4 seconds** (e.g. `Comment mein 'JAI HIND' likhein aur subscribe karein Reality Shift!`).
+    - **Seamless Loop**: Keep the background visuals active so the end snaps directly back to the opening hook for automatic replay bonus.
+
+
 
