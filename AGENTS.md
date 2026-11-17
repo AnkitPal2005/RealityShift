@@ -79,27 +79,32 @@
     - **No Repetitive Horns**: NEVER use the loud conch horn ("shankh" / "pooooooo") repeatedly across shorts.
     - **Music Variety**: Use cinematic devotional ambient pads (`MUSIC_STYLE = "ambient"`, 80–92 BPM, `MUSIC_VOLUME = 0.10–0.12`) so every short sounds fresh, modern, and distinct.
 
-11. **Target Duration & Script Calibration (30 to 35 Seconds Rule)**:
-    - **MANDATORY DURATION**: All YouTube Shorts (for both RealityShift and Divya Rahasya) must be strictly **30 to 35 seconds** long.
+11. **Target Duration & Script Calibration (30 to 35 Seconds Rule - Strict for BOTH Channels)**:
+    - **APPLIES TO BOTH CHANNELS**: Strictly enforced for **Divya Rahasya (@DivyaRahasya / Sanatan Katha)** AND **RealityShift (@RealityShiftByAnkit)**.
+    - **MANDATORY DURATION**: All YouTube Shorts must be strictly **30 to 35 seconds** long.
     - **Script Word Count**: 80 to 105 spoken Hindi words.
-    - **Character Limit for KikiVoice**: Strictly **500 to 650 characters** in `kiki_narrator.txt` (including `((⏱=400))` pause tags). NEVER write 900+ or 1,000 character scripts unless explicitly requested.
+    - **Character Limit for KikiVoice**: Strictly **500 to 650 characters** in `kiki_narrator.txt` (including `((⏱=400))` pause tags). NEVER write 800+ or 1,000 character scripts.
     - **High-Retention Pacing Arc**:
       - `00:00 - 00:03`: Instant curiosity / shock hook.
       - `00:03 - 00:12`: High-stakes premise / conflict.
-      - `00:12 - 00:24`: Core action / secret weapon / pivotal twist.
+      - `00:12 - 00:24`: Core action / secret reveal / pivotal twist.
       - `00:24 - 00:30`: Climactic impact / victory.
       - `00:30 - 00:35`: Punchy CTA + subscribe prompt.
-    - **Shorts Algorithm Advantage**: 30–35s length delivers maximal Average Percentage Viewed (APV > 100%), triggering YouTube's viral recommendation engine.
+    - **Shorts Algorithm Advantage**: 30–35s length delivers maximal Average Percentage Viewed (APV > 70–100%), triggering YouTube's viral recommendation engine.
 
-12. **Mid-Video Pacing & Re-Hook (The 15–18s Anti-Drop Rule)**:
-    - **Never Plateau at Reveal**: When the secret weapon, deity name, or turning point is revealed around 15–18s, NEVER transition into slow theoretical explanations or backstory lectures (which caused the 17s drop in KALI 5000).
-    - **Deliver Immediate Impact**: Immediately follow the reveal with high-impact visual action, firing, screen shake, explosion, or shock fact to hold viewers through the second half.
-    - **Limit Explanation**: Keep technical/lore breakdown strictly under 1–2 punchy, vivid sentences.
+12. **Mid-Video Pacing & Re-Hook (The 15–18s Anti-Drop Rule - BOTH Channels)**:
+    - **Never Plateau at Reveal**: When the secret weapon, turning point, or deity leela is revealed around 15–18s, NEVER transition into slow theoretical explanations, philosophical lectures, or textbook backstory (which caused the 17s drop in KALI 5000).
+    - **Deliver Immediate Impact**:
+      - **Divya Rahasya**: Follow the reveal immediately with divine miracle shock, golden aura pulse, Sudarshan Chakra spin, lightning thunder, or bowstring release.
+      - **RealityShift**: Follow the reveal immediately with firing, supersonic dash, screen shake, radar alert, or explosion shock.
+    - **Limit Explanation**: Keep technical or lore breakdown strictly under 1–2 punchy, vivid sentences.
 
-13. **Outro & CTA Velocity (The 3-Second Snap & Loop Rule)**:
-    - **No 6-7 Second Drag**: Outros/CTAs must NEVER drag for 6–7 seconds at the end. Viewers swipe the second they realize the story is over.
-    - **Tight 3-Second Snap**: Keep the engagement prompt and subscribe ask strictly within **3 to 4 seconds** (e.g. `Comment mein 'JAI HIND' likhein aur subscribe karein Reality Shift!`).
-    - **Seamless Loop**: Keep the background visuals active so the end snaps directly back to the opening hook for automatic replay bonus.
+13. **Outro & CTA Velocity (The 3-Second Snap & Loop Rule - BOTH Channels)**:
+    - **No 6-7 Second Drag**: Outros/CTAs must NEVER drag for 6–7 seconds at the end. Viewers swipe the exact second they realize the core story is over.
+    - **Tight 3-Second Snap**: Keep the engagement prompt and subscribe ask strictly within **3 to 4 seconds**:
+      - **Divya Rahasya**: `Comment mein 'JAI SHRI KRISHNA' / 'HAR HAR MAHADEV' likhein aur subscribe karein Divya Rahasya!`
+      - **RealityShift**: `Comment mein 'JAI HIND' likhein aur subscribe karein Reality Shift!`
+    - **Seamless Loop**: Keep background visuals and dynamic animation running during CTA so the video snaps seamlessly back into the opening hook for automatic replay bonus.
 
 
 
