@@ -33,7 +33,25 @@ WORK_DIR = ROOT / "output" / "work" / "project_kusha" / "files"
 OUT_DIR = ROOT / "output" / "documentary"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# Helper functions
+ROMAN_SCRIPTS = [
+    # Scene 1
+    "AGAR KAL SUBAH LAC PAR EK SATH 50 STEALTH FIGHTERS AUR SUPERSONIC CRUISE MISSILES LAUNCH HO JAYEIN, TOH KYA HAMARA AAKASH UNHE ROK PAYEGA? PICHHLE KUCH SAALON MEIN BHARAT NE APNE AAKASH KO SURAKSHIT KARNE KE LIYE DUNIYA KA SABSE LETHAL AIR DEFENSE SYSTEM S-400 TRIUMF DEPLOY KIYA HAI. LEKIN PARDE KE PEECHE DRDO EK AISI SECRET TECHNOLOGY PAR KAAM KAR RAHA HAI JO S-400 SE BHI ZYADA ADVANCED AUR GHATAK HAI — ISKA NAAM HAI PROJECT KUSHA! EK AISA ULTRA LONG-RANGE AIR DEFENSE SHIELD JO DUSHMAN KE STEALTH JETS, BALLISTIC MISSILES AUR DRONE SWARMS KO 350 SE 400 KILOMETER DOOR HI HAWA MEIN RAAKH BANA DEGA. LEKIN SAWAL YEH HAI — JAB HAMARE PAAS ALREADY S-400 MAUJOOD HAI, TOH BHARAT KO PROJECT KUSHA KI ZAROORAT KYUN PADI? AAJ HUM JAANENGE BHARAT KE SABSE BADE AIR DEFENSE SECRET KO.",
+    # Scene 2
+    "S-400 TRIUMF KO AAJ DUNIYA KA SABSE TAAQATWAR AIR DEFENSE SYSTEM MAANA JAATA HAI. BHARAT NE SAAL 2018 MEIN RUSSIA KE SAATH LAGBHAG 40 HAZAAR CRORE RUPEES KI DEAL KARKE S-400 KE 5 SQUADRONS KHAREEDE THE, JINMEIN SE 3 SQUADRONS CHINA AUR PAKISTAN BORDER PAR POORI TARAH DEPLOYED HAIN. S-400 KI SABSE BADI TAAQAT HAI ISKA BIG BIRD RADAR, JO EK SATH 300 TARGETS KO TRACK KAR SAKTA HAI AUR 600 KILOMETER DOOR TAK AAKASH PAR NAZAR RAKHTA HAI. ISKE SAATH AATI HAIN CHAAR ALAG-ALAG RANGE KI MISSILES — 40 KILOMETER SE LEKAR 400 KILOMETER TAK MAAR KARNE WALI 40N6 MISSILE. YEH SYSTEM AAWAAZ SE 14 GUNA TEZ AANE WALI BALLISTIC MISSILES KO BHI HAWA MEIN NASHT KAR SAKTA HAI. YAHI WAJAH HAI KI S-400 KE SAAMNE DUSHMAN KE BADE AWACS AIRCRAFT BORDER KE PAAS AANE SE BHI KAAMPTE HAIN.",
+    # Scene 3
+    "LEKIN YAHIN SE SHURU HOTI HAI ASLI KAHANI. S-400 KITNA BHI TAAQATWAR HO, RUSSIA-UKRAINE YUDH NE EK KADWA SACH DUNIYA KE SAAMNE LAA DIYA. RUSSIA KHUD SUPPLY SANKAT SE JOOJH RAHA HAI, JISKI WAJAH SE BHARAT KE BAAKI 2 SQUADRONS KI DELIVERY MEIN DERI HUI. DOOSRA BADA KHATRA HAI FOREIGN DEPENDENCY — AGAR YUDH KE WAQT SPARE PARTS YA MISSILES KI SUPPLY RUK JAYE, TOH HAMARA AAKASH KAMZOR PAD SAKTA HAI. AUR TEESRA SABSE BADA KHATRA HAI CHINA KE CHENGDU J-20 STEALTH FIGHTERS. IN STEALTH JETS KO TRACK KARNE KE LIYE PURANE RADAR SYSTEMS KAAFI NAHI HAIN. BHARAT KO CHAHIYE THA EK AISA SWADESHI HATHIYAR JISKA REMOTE CONTROL KISI DOOSRE DESH KE HAATH MEIN NA HO, AUR JO BHARAT KE APNE SATELLITES AUR RADARS KE SAATH SEAMLESSLY BAAT KAR SAKE. ISI ZAROORAT SE JANAM HUA DRDO KE PROJECT KUSHA KA!",
+    # Scene 4
+    "PROJECT KUSHA KO MINISTRY OF DEFENCE NE OCTOBER 2023 MEIN 21 HAZAAR 700 CRORE RUPEES KE BUDGET KE SAATH MANZOORI DI THI. YEH SIRF EK MISSILE NAHI HAI, BALKI EK THREE-TIER MOBILE SURFACE-TO-AIR MISSILE SYSTEM HAI. KUSHA KE PAAS TEEN ALAG-ALAG INTERCEPTOR MISSILES HONGI — PEHLI 150 KILOMETER RANGE KI, DOOSRI 250 KILOMETER RANGE KI, AUR TEESRI 350 SE 400 KILOMETER RANGE WALI MAHA-VINASHAK MISSILE. YEH SYSTEM DUSHMAN KE FIGHTER JETS, STEALTH JETS, AWACS, CRUISE MISSILES AUR AIR REFUELING TANKERS KO MEELON DOOR HI KHATAM KARNE KE LIYE DESIGN KIYA JA RAHA HAI. SABSE KHAAS BAAT YEH HAI KI ISKA FIRING REACTION TIME S-400 SE BHI TEZ BANAYA GAYA HAI, TAAKI DUSHMAN KE EK SAATH KIYE GAYE SATURATION ATTACKS KO TURANT NAKAAM KIYA JA SAKE.",
+    # Scene 5
+    "AB AATE HAIN ASLI MUQABALE PAR — KYA PROJECT KUSHA S-400 SE BEHTAR HAI? PEHLA FARQ HAI RADAR TECHNOLOGY MEIN. S-400 PESA RADAR PAR CHALTA HAI, JABKI PROJECT KUSHA MEIN DRDO GALLIUM NITRIDE YAANI GaN AESA RADAR USE KAR RAHA HAI. YEH RADAR ITNI POWERFUL MICRO-BEAMS PHENKTA HAI JO J-20 JAISE STEALTH VIMANON KI COATING KO BHEED KAR UNHE INSTANTLY LOCK KAR LETI HAI. DOOSRA BADA FARQ HAI MAARNE KI TECHNIQUE MEIN. S-400 TARGET KE PAAS JAAKAR PHAT-TA HAI AUR CHHARRO'N SE NUKSAAN PAHUNCHATA HAI. LEKIN PROJECT KUSHA HIT-TO-KILL KINETIC INTERCEPTION PAR KAAM KARTA HAI — YAANI HAWA MEIN UDTI HUI GOLI SE DOOSRI GOLI KO SEEDHA TAKRANA! ISSE PAIDA HONE WALI BHAARI KINETIC ENERGY DUSHMAN KE NUCLEAR WARHEAD YA HYPERSONIC MISSILE KO HAWA MEIN HI BHAAP BANA DETI HAI.",
+    # Scene 6
+    "TEESRA SABSE BADA FAYDA HAI NETWORK WARFARE. PROJECT KUSHA SEEDHA BHARAT KE IACCS — INTEGRATED AIR COMMAND SYSTEM SE JUDA HOGA. ISKA MATLAB NETRA AWACS, INS VIKRANT KA RADAR AUR ZAMEEN KE SAARE SENSORS EK HI SECOND MEIN KUSHA KO REAL-TIME DATA BHEJ SAKENGE. AUR YEH SYSTEM BHARAT KE 5-LAYER SURAKSHA GHERE KA SABSE MAZBOOTH HISSA HAI. PEHLI LAYER PAR KHADA HAI PROJECT KUSHA AUR S-400, JO 400 KILOMETER DOOR HI DUSHMAN KE COMMAND VIMANON KO MAAR GIRAENGE. AGAR KOI SUPERSONIC JET ISE CHAKMA DE BHI DE, TOH DOOSRI LAYER PAR 70 SE 100 KILOMETER MEIN MRSAM BARAK-8 KHADI HAI. AUR TEESRI LAYER PAR AATI HAIN BHARAT KI AKASH PRIME AUR AKASH-NG MISSILES, JO 30 SE 45 KILOMETER KE DAYARE MEIN CRUISE MISSILES AUR DRONE ATTACKS KO PALAK JHAPAKTE HI DHER KAR DETI HAIN.",
+    # Scene 7
+    "ISKE BAAD SHURU HOTI HAI CHAUTHI LAYER — YAANI POINT DEFENSE. YAHAN DEPLOY HOTI HAI QRSAM — QUICK REACTION SURFACE-TO-AIR MISSILE. YEH SYSTEM BHAARI TRUCKS PAR CHALTA HAI AUR HAMARE TANKON AUR SENA KE KAAFILON KO BATTLEFIELD MEIN CONTINUOUS ABHEDYA SURAKSHA DETA HAI. ISKA REACTION TIME SIRF KUCH HI SECONDS KA HOTA HAI. AUR SABSE AAKHRI GHERE MEIN AATI HAI PAANCHVI LAYER — THE TERMINAL IRON FIST! ZERO SE 6 KILOMETER KI RANGE MEIN DEPLOY HAI VSHORADS AUR AUTO-CANNONS. AGAR KOI SUICIDE KAMIKAZE DRONE YA GUIDED BOMB BASE KE BILKUL KAREEB PAHUNCH BHI JAYE, TOH LASERS AUR MICRO-MISSILES AAKHRI 5 SECONDS KE ANDAR USE AAKASH MEIN HI BHASM KAR DETI HAIN. YEH 5 LAYERS MILKAR BHARAT KE AAKASH KO EK UNBREAKABLE FORTRESS BANA DETI HAIN.",
+    # Scene 8
+    "PROJECT KUSHA SIRF EK MISSILE SYSTEM NAHI HAI, BALKI YEH BHARAT KI STRATEGIC AATMANIRBHARTA KA SABSE BADA AILAAN HAI. EK ZAMANA THA JAB HUMEIN HAR HATHIYAR KE LIYE MOSCOW YA WASHINGTON KI TARAF DEKHNA PADTA THA. LEKIN 2028 TAK JAB PROJECT KUSHA POORI TARAH SE SENA MEIN SHAMIL HOGA, TOH SEEMA PAR TAAQAT KA BALANCE HAMESHA KE LIYE BADAL JAYEGA — KYUNKI AB HAMARE AAKASH KI CHAABI SIRF HAMARE APNE HAATHON MEIN HOGI! LEKIN AB SABSE BADA SAWAL AAP SABHI KE LIYE: KYA BHARAT KO FUTURE MEIN AUR FOREIGN AIR DEFENSE SYSTEMS KHAREEDNE CHAHIYE, YA HUMEIN POORA BUDGET KEVAL PROJECT KUSHA JAISE SWADESHI HATHIYARON PAR LAGANA CHAHIYE? APNI RAYE COMMENT BOX MEIN ZAROOR BATAYEIN. AGAR BHARAT KE IS SWADESHI SURAKSHA CHAKRA PAR GARV MEHSOOS HUA HO, TOH REALITY SHIFT KO SUBSCRIBE ZAROOR KAREIN. JAI HIND, VANDE MATARAM!"
+]
+
 def clamp(v, lo=0.0, hi=1.0):
     return max(lo, min(hi, v))
 
@@ -101,7 +119,6 @@ def draw_bg_grid(ctx, t):
     ctx.set_source_rgb(*BG_DARK)
     ctx.paint()
     
-    # Subtle moving radar / telemetry grid
     ctx.set_line_width(1)
     for x in range(0, W, 80):
         alpha = 0.08 if x % 240 == 0 else 0.03
@@ -110,7 +127,6 @@ def draw_bg_grid(ctx, t):
         alpha = 0.08 if y % 240 == 0 else 0.03
         line(ctx, [(0, y), (W, y)], BG_GRID, 1, alpha)
         
-    # Vignette
     vg = cairo.RadialGradient(W / 2, H / 2, 400, W / 2, H / 2, 1100)
     vg.add_color_stop_rgba(0, 0, 0, 0, 0.0)
     vg.add_color_stop_rgba(1, 0, 0, 0, 0.65)
@@ -118,7 +134,6 @@ def draw_bg_grid(ctx, t):
     ctx.paint()
 
 def draw_hud_header(ctx, chapter_num, chapter_title, t):
-    # Top bar background
     rrect(ctx, 40, 24, W - 80, 56, 8)
     rgba(ctx, (0.05, 0.07, 0.12), 0.85)
     ctx.fill()
@@ -127,14 +142,9 @@ def draw_hud_header(ctx, chapter_num, chapter_title, t):
     ctx.set_line_width(1.5)
     ctx.stroke()
     
-    # Left channel tag
     draw_text(ctx, "REALITY SHIFT // STRATEGIC DEFENSE REPORT", 70, 52, size=18, c=CYAN, font="Impact", anchor="l")
-    
-    # Center Chapter title
     title_str = f"CHAPTER 0{chapter_num}: {chapter_title.upper()}"
     draw_text(ctx, title_str, W / 2, 52, size=20, c=GOLD, font="Impact", anchor="c")
-    
-    # Right telemetry tag
     sec_str = f"SEC: {int(t//60):02d}:{int(t%60):02d} // DEFCON 1"
     draw_text(ctx, sec_str, W - 70, 52, size=18, c=AMBER, font="Impact", anchor="r")
 
@@ -151,7 +161,7 @@ def draw_subtitles(ctx, sub_text):
     rgba(ctx, (0.02, 0.03, 0.05), 0.90)
     ctx.fill()
     rrect(ctx, W / 2 - pw / 2, py - ph / 2, pw, ph, 12)
-    rgba(ctx, CYAN, 0.35)
+    rgba(ctx, CYAN, 0.4)
     ctx.set_line_width(1.5)
     ctx.stroke()
     
@@ -159,7 +169,6 @@ def draw_subtitles(ctx, sub_text):
     draw_text(ctx, sub_text, W / 2 + 2, py + 2, size=36, c=(0, 0, 0), font="Impact", anchor="c")
     draw_text(ctx, sub_text, W / 2, py, size=36, c=WHITE, font="Impact", anchor="c")
 
-# Scene drawing routines
 def draw_scene_1(ctx, t, d):
     draw_bg_grid(ctx, t)
     draw_hud_header(ctx, 1, "The 50-Stealth Threat at LAC", t)
@@ -670,172 +679,41 @@ def load_timeline():
     for i, f in enumerate(files):
         cmd = ['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', f]
         dur = float(subprocess.run(cmd, capture_output=True, text=True).stdout.strip())
-        w_json = WORK_DIR / f"scene_{i+1:02d}_words.json"
-        words = []
-        if w_json.exists():
-            with open(w_json, encoding='utf-8') as jf:
-                words = json.load(jf)
         scenes_meta.append({
             "index": i,
             "start": t_acc,
             "dur": dur,
             "end": t_acc + dur,
-            "words": words,
         })
         t_acc += dur
     
-    # Subtitle cues
+    # Subtitle cues from ROMAN_SCRIPTS
     subtitles = []
     for sc in scenes_meta:
-        words = sc["words"]
+        i = sc["index"]
+        text_full = ROMAN_SCRIPTS[i]
+        words = text_full.split()
+        
+        # Split into chunks of 4-6 words
+        chunks = []
         idx = 0
         while idx < len(words):
-            chunk = words[idx:idx + 6]
-            text = " ".join(w["word"].strip() for w in chunk)
-            start_t = sc["start"] + chunk[0]["start"]
-            end_t = sc["start"] + chunk[-1]["end"]
-            subtitles.append({"start": start_t, "end": end_t, "text": text})
-            idx += 6
+            sz = 5
+            chunks.append(" ".join(words[idx:idx + sz]))
+            idx += sz
+            
+        n_chunks = len(chunks)
+        chunk_dur = (sc["dur"] - 0.4) / max(n_chunks, 1)
+        for k, chk in enumerate(chunks):
+            c_start = sc["start"] + 0.2 + k * chunk_dur
+            c_end = c_start + chunk_dur
+            subtitles.append({
+                "start": c_start,
+                "end": c_end,
+                "text": chk
+            })
             
     return scenes_meta, subtitles, t_acc
-
-def render_thumbnail():
-    thumb_path = OUT_DIR / "project_kusha_thumbnail.png"
-    surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, 1920, 1080)
-    ctx = cairo.Context(surf)
-    
-    # High-contrast tactical background
-    draw_bg_grid(ctx, 0)
-    
-    # Split glow: Left Red/Orange (S-400), Right Cyan/Gold (Kusha)
-    g_left = cairo.RadialGradient(400, 540, 50, 400, 540, 600)
-    g_left.add_color_stop_rgba(0, 0.8, 0.2, 0.1, 0.35)
-    g_left.add_color_stop_rgba(1, 0, 0, 0, 0)
-    ctx.set_source(g_left)
-    ctx.paint()
-    
-    g_right = cairo.RadialGradient(1520, 540, 50, 1520, 540, 600)
-    g_right.add_color_stop_rgba(0, 0.1, 0.7, 0.9, 0.35)
-    g_right.add_color_stop_rgba(1, 0, 0, 0, 0)
-    ctx.set_source(g_right)
-    ctx.paint()
-    
-    # Left Card: S-400
-    rrect(ctx, 80, 240, 760, 560, 20)
-    rgba(ctx, (0.05, 0.05, 0.08), 0.9)
-    ctx.fill()
-    rrect(ctx, 80, 240, 760, 560, 20)
-    rgba(ctx, RED, 0.8)
-    ctx.set_line_width(4)
-    ctx.stroke()
-    
-    draw_text(ctx, "RUSSIAN TITAN", 460, 310, size=32, c=RED, font="Impact", anchor="c")
-    draw_text(ctx, "S-400 TRIUMF", 460, 380, size=64, c=WHITE, font="Impact", anchor="c")
-    draw_text(ctx, "• 400 KM HEAVY MISSILE", 460, 470, size=32, c=STEEL, font="Impact", anchor="c")
-    draw_text(ctx, "• PESA RADAR TRACKING", 460, 530, size=32, c=STEEL, font="Impact", anchor="c")
-    draw_text(ctx, "• FOREIGN SUPPLY RISKS", 460, 590, size=32, c=RED, font="Impact", anchor="c")
-    
-    # Right Card: PROJECT KUSHA
-    rrect(ctx, 1080, 240, 760, 560, 20)
-    rgba(ctx, (0.04, 0.07, 0.12), 0.9)
-    ctx.fill()
-    rrect(ctx, 1080, 240, 760, 560, 20)
-    rgba(ctx, GOLD, 0.8)
-    ctx.set_line_width(4)
-    ctx.stroke()
-    
-    draw_text(ctx, "DRDO'S SECRET SHIELD", 1460, 310, size=32, c=GOLD, font="Impact", anchor="c")
-    draw_text(ctx, "PROJECT KUSHA", 1460, 380, size=64, c=GOLD, font="Impact", anchor="c")
-    draw_text(ctx, "• GaN AESA STEALTH KILLER", 1460, 470, size=32, c=CYAN, font="Impact", anchor="c")
-    draw_text(ctx, "• HIT-TO-KILL KINETIC TECH", 1460, 530, size=32, c=GREEN, font="Impact", anchor="c")
-    draw_text(ctx, "• 100% ATMANIRBHAR BHARAT", 1460, 590, size=32, c=GOLD, font="Impact", anchor="c")
-    
-    # Center VS Badge
-    circle(ctx, 960, 520, 80, (0.02, 0.03, 0.05), 1.0)
-    circle(ctx, 960, 520, 80, GOLD, 0.9, fill=False, w=4)
-    draw_text(ctx, "VS", 960, 520, size=52, c=WHITE, font="Impact", anchor="c")
-    
-    # Top Eye-Catching Banner
-    rrect(ctx, 120, 60, W - 240, 130, 16)
-    rgba(ctx, (0.05, 0.08, 0.16), 0.95)
-    ctx.fill()
-    rrect(ctx, 120, 60, W - 240, 130, 16)
-    rgba(ctx, GOLD, 0.9)
-    ctx.set_line_width(3)
-    ctx.stroke()
-    draw_text(ctx, "S-400 SE BHI DANGEROUS?", W / 2, 125, size=68, c=GOLD, font="Impact", anchor="c")
-    
-    # Bottom Badge
-    rrect(ctx, 400, 850, 1120, 120, 16)
-    rgba(ctx, (0.85, 0.15, 0.15), 0.95)
-    ctx.fill()
-    draw_text(ctx, "BHARAT KA 400 KM AIR SHIELD!", W / 2, 910, size=56, c=WHITE, font="Impact", anchor="c")
-    
-    surf.write_to_png(str(thumb_path))
-    print(f"Thumbnail created: {thumb_path}")
-    return thumb_path
-
-def generate_upload_kit(total_dur):
-    kit_path = OUT_DIR / "project_kusha_upload_kit.md"
-    content = f"""# YouTube Upload Kit: Project Kusha vs S-400
-
-## 1. Title Options (Choose one)
-- **Option 1 (Highest CTR)**: Project Kusha vs S-400: Inside India's Ultra Long-Range Air Defense Shield 🔥
-- **Option 2 (Curiosity & Tech)**: S-400 से भी खतरनाक? DRDO का Project Kusha Air Defense Secret Revealed!
-- **Option 3 (Documentary)**: How India Is Building an Unbreakable 5-Layer Iron Dome Shield (Project Kusha)
-
----
-
-## 2. Description & Chapters (Copy-Paste Ready)
-```text
-Kya India ka Project Kusha Russian S-400 Triumf se zyada powerful aur dangerous hai? 
-
-October 2023 mein Cabinet Committee on Security (CCS) ne ₹21,700 Crore ke budget ke sath DRDO ke Project Kusha ko manzoori di thi. Yeh ultra long-range surface-to-air missile system 350 se 400 kilometer door dushman ke 5th generation stealth fighters (Chengdu J-20), AWACS command aircraft, hypersonic glide vehicles aur cruise missiles ko hawa mein hi raakh banane ke liye design kiya gaya hai.
-
-Is detailed documentary mein hum decode karenge:
-- S-400 Triumf vs Project Kusha ka Tech Duel (GaN AESA vs PESA Radar)
-- Hit-to-Kill kinetic interception mechanism
-- Bharat ka 5-Layer Iron Dome Network (Kusha, MRSAM, Akash, QRSAM, VSHORADS)
-- 2028 deployment timeline aur LAC par strategic power shift.
-
-📌 CHAPTER TIMESTAMPS:
-00:00 - The 50-Stealth Threat at LAC
-00:46 - The Russian Titan: S-400 in India
-01:33 - Why India Needs Kusha (Foreign Supply Crisis)
-02:16 - DRDO Project Kusha Revealed (₹21,700 Cr Budget)
-03:00 - Tech Duel: GaN AESA Radar & Hit-to-Kill
-03:44 - IACCS & Bharat's 5-Layer Air Defense (Layers 1-3)
-04:30 - Point Defense & Terminal Iron Fist (Layers 4-5)
-05:11 - Strategic Sovereignty & The Road to 2028
-
-🔔 Subscribe to RealityShift for high-voltage Indian Defense & Geopolitics deep dives!
-Jai Hind! Vande Mataram!
-
-#ProjectKusha #S400 #IndianDefense #DRDO #AirDefense #RealityShift #IndianAirForce #MakeInIndia
-```
-
----
-
-## 3. SEO Tags
-```text
-Project Kusha, S400 air defense, Project Kusha vs S400, Indian air defense shield, DRDO Project Kusha, India long range missile, S400 Triumf India, GaN AESA radar, Hit to kill missile, Indian Iron Dome, Akash Prime, MRSAM Barak 8, QRSAM, VSHORADS, RealityShift, RealityShiftByAnkit, Indian Defense news, LAC defense shield, Chengdu J20 vs Kusha
-```
-
----
-
-## 4. Pinned Comment (High-Engagement Debate)
-```text
-👇 Aapke hisab se Bharat ki strategic policy kya honi chahiye:
-[A] Hume emergency cover ke liye Russia se aur foreign S-400 squadrons lene chahiye.
-[B] Hume 100% budget aur priority DRDO ke Project Kusha jaise indigenous weapons par lagani chahiye.
-
-Apna vote aur raye comment mein zaroor batayein! 🇮🇳
-```
-"""
-    with open(kit_path, "w", encoding="utf-8") as f:
-        f.write(content)
-    print(f"Upload kit generated: {kit_path}")
-    return kit_path
 
 def render_full_video():
     scenes_meta, subtitles, total_dur = load_timeline()
@@ -843,9 +721,9 @@ def render_full_video():
     out_video = OUT_DIR / "project_kusha_documentary.mp4"
     
     print(f"Total video duration: {total_dur:.2f}s (~{total_dur/60:.2f} mins)")
+    print(f"Total subtitle cues: {len(subtitles)}")
     print(f"Total frames at 30 FPS: {int(total_dur * FPS)}")
     
-    # FFmpeg pipe setup
     cmd = [
         "ffmpeg", "-y",
         "-f", "rawvideo",
@@ -874,12 +752,10 @@ def render_full_video():
     t0 = time.time()
     
     current_scene_idx = 0
-    sub_idx = 0
     
     for f_idx in range(total_frames):
         t = f_idx / FPS
         
-        # Determine current scene
         while current_scene_idx < len(scenes_meta) - 1 and t >= scenes_meta[current_scene_idx]["end"]:
             current_scene_idx += 1
             
@@ -887,10 +763,8 @@ def render_full_video():
         local_t = t - sc["start"]
         drawer = SCENE_DRAWERS[sc["index"]]
         
-        # Draw visual scene
         drawer(ctx, local_t, sc["dur"])
         
-        # Determine active subtitle
         active_sub = ""
         for s in subtitles:
             if s["start"] <= t <= s["end"]:
@@ -902,11 +776,11 @@ def render_full_video():
         buf = surf.get_data()
         proc.stdin.write(buf)
         
-        if f_idx % 300 == 0:
+        if f_idx % 600 == 0:
             elapsed = time.time() - t0
             fps_rend = (f_idx + 1) / max(elapsed, 0.001)
             eta = (total_frames - f_idx) / max(fps_rend, 0.001)
-            print(f"Render progress: {f_idx}/{total_frames} frames ({f_idx/total_frames*100:.1f}%) | Speed: {fps_rend:.1f} FPS | ETA: {eta:.1f}s")
+            print(f"Render: {f_idx}/{total_frames} ({f_idx/total_frames*100:.1f}%) | {fps_rend:.1f} FPS | ETA: {eta:.1f}s")
             
     proc.stdin.close()
     proc.wait()
@@ -917,12 +791,6 @@ def render_full_video():
     return out_video
 
 if __name__ == "__main__":
-    action = sys.argv[1] if len(sys.argv) > 1 else "--all"
-    scenes_meta, subtitles, total_dur = load_timeline()
-    
-    if action in ("--thumb", "--all"):
-        render_thumbnail()
-    if action in ("--kit", "--all"):
-        generate_upload_kit(total_dur)
+    action = sys.argv[1] if len(sys.argv) > 1 else "--render"
     if action in ("--render", "--all"):
         render_full_video()
