@@ -35,8 +35,8 @@ OUTPUTS = {"edge": "karna_short.mp4"}
 MUSIC_STYLE = "tension"   # Dramatic mythological conflict & mystery
 MUSIC_BPM = 82            # Focused tension pulse
 MUSIC_VOLUME = 0.12       # Voiceover clarity
-TAIL_PAD = 0.04           # Snappy pacing
-MAX_GAP = 0.04            # Zero awkward pauses
+TAIL_PAD = 0.0            # Zero gap between scenes - seamless flow
+MAX_GAP = None            # Keep audio 100% natural, uncut and continuous (no syllable chopping!)
 
 WHITE = (1.0, 1.0, 1.0)
 GOLD_HI = hexc("#FFE066")
@@ -61,21 +61,21 @@ SPEC = [
     {"key": "shraap", "text": "INDRA AUR PARASHURAM",
      "visual": "Left: trembling Indra receiving golden kavach; Right: Parashurama with blazing fiery eyes and Parashu axe",
      "vo": [("tell", [("जब दान में कुंडल कटे,", "JAB DAAN MEIN KUNDAL KATE,"),
-                      ("तब इंद्र भी कांप उठे!", "TAB INDRA BHI KAANP UTHE!")]),
-            ("build", [("लेकिन सबसे बड़ा वार तब हुआ", "LEKIN SABSE BADA WAAR TAB HUA"),
-                       ("जब गुरु परशुराम के श्राप ने", "JAB GURU PARASHURAM KE SHRAAP NE"),
-                       ("ब्रह्मास्त्र की विद्या ही छीन ली!", "BRAHMASTRA KI VIDYA HI CHHEEN LI!")])]},
+                      ("तब इंद्र भी कांप उठे!", "TAB INDRA BHI KAANP UTHE!"),
+                      ("लेकिन सबसे बड़ा वार तब हुआ", "LEKIN SABSE BADA WAAR TAB HUA"),
+                      ("जब गुरु परशुराम के श्राप ने", "JAB GURU PARASHURAM KE SHRAAP NE"),
+                      ("ब्रह्मास्त्र की विद्या ही छीन ली!", "BRAHMASTRA KI VIDYA HI CHHEEN LI!")])]},
     {"key": "climax", "text": "KURUKSHETRA CHHAL",
      "visual": "Kurukshetra mud: Chariot wheel sunk; Arjuna drawing Gandiva; Krishna pointing; unarmed Karna lifting wheel",
      "vo": [("fast", [("कुरुक्षेत्र में धंसा पहिया", "KURUKSHETRA MEIN DHANSA PAHIYA"),
-                      ("और आखिरी श्राप जाग उठा!", "AUR AAKHIRI SHRAAP JAAG UTHA!")]),
-            ("punch", [("निहत्थे कर्ण पर बाण चला,", "NIHATTHE KARNA PAR BAAN CHALA,"),
-                       ("फिर भी दुनिया जानती है...", "PHIR BHI DUNIYA JAANTI HAI...")])]},
+                      ("और आखिरी श्राप जाग उठा!", "AUR AAKHIRI SHRAAP JAAG UTHA!"),
+                      ("निहत्थे कर्ण पर बाण चला,", "NIHATTHE KARNA PAR BAAN CHALA,"),
+                      ("फिर भी दुनिया जानती है...", "PHIR BHI DUNIYA JAANTI HAI...")])]},
     {"key": "loop", "text": "ASLI YODDHA KAUN?",
      "visual": "Invincible Karna close-up with golden eyes and calm smile; question card: ARJUN YA KARNA?",
      "vo": [("whisper", [("कि अगर छल का यह खेल", "KI AGAR CHHAL KA YEH KHEL"),
-                         ("न रचा गया होता,", "NA RACHA GAYA HOTA,")]),
-            ("punch", [("तो...", "TO...")])]},
+                         ("न रचा गया होता,", "NA RACHA GAYA HOTA,"),
+                         ("तो...", "TO...")])]},
 ]
 
 DELIVERY, SCRIPT, NARRATION = script_of(SPEC)
