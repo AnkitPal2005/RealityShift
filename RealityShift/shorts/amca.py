@@ -74,22 +74,21 @@ SPEC = [
      "visual": "China J-20 and US F-35 tactical silhouettes on radar HUD, AMCA emerges aggressively through clouds with glowing gold canopy",
      "vo": [("tell", [("चीन के पास जे-20 है,", "CHINA KE PAAS J-20 HAI,"),
                       ("अमेरिका के पास एफ-35...", "AMERICA KE PAAS F-35..."),
-                      ("पर भारत का फिफ्थ जनरेशन स्टेल्थ फाइटर अमका", "PAR BHARAT KA 5TH GEN STEALTH FIGHTER AMCA"),
-                      ("उनसे अलग क्यों है?", "UNSE ALAG KYUN HAI?")])]},
+                      ("लेकिन भारत का अमका फाइटर", "LEKIN BHARAT KA AMCA FIGHTER"),
+                      ("सबसे अलग क्यों है?", "SABSE ALAG KYUN HAI?")])]},
 
     # Scene 2: Radar Cross Section Bird Comparison
     {"key": "radar_rcs", "accent": GOLD, "text": "RADAR INVISIBILITY",
      "visual": "Green military radar scope scanning sky, bird RCS comparison, radar waves deflection by faceted stealth airframe, zero blip detected",
      "vo": [("tell", [("इसका रडार क्रॉस सेक्शन", "ISKA RADAR CROSS SECTION"),
-                      ("एक छोटी चिड़िया जितना है,", "EK CHHOTI CHIDIYA JITNA HAI,"),
+                      ("एक छोटी चिड़िया जितना है —", "EK CHHOTI CHIDIYA JITNA HAI —"),
                       ("यानी दुश्मन के रडार पर", "YAANI DUSHMAN KE RADAR PAR"),
-                      ("ये गायब रहता है!", "YE GAYAB REHTA HAI!")])]},
+                      ("ये बिल्कुल गायब रहता है!", "YE BILKUL GAYAB REHTA HAI!")])]},
 
     # Scene 3: Mach 2 Supercruise & Internal Weapons Bay (15-18s Anti-Drop)
     {"key": "supercruise_bay", "accent": CYAN, "text": "MACH 2 SUPERCRUISE",
      "visual": "Supersonic vapor cone forming around AMCA wings at Mach 2, twin engine shock diamonds, belly bay door opens to reveal Astra missile",
-     "vo": [("tell", [("बिना आफ्टरबर्नर के", "BINA AFTERBURNER KE"),
-                      ("सुपरसोनिक स्पीड,", "SUPERSONIC SPEED,"),
+     "vo": [("tell", [("बिना आफ्टरबर्नर के सुपरसोनिक स्पीड,", "BINA AFTERBURNER KE SUPERSONIC SPEED,"),
                       ("और अंदर छुपे", "AUR ANDAR CHHUPE"),
                       ("घातक अस्त्र मिसाइल!", "GHATAK ASTRA MISSILE!")])]},
 
@@ -101,12 +100,11 @@ SPEC = [
                       ("अमका उसका खेल", "AMCA USKA KHEL"),
                       ("खत्म कर देगा!", "KHATAM KAR DEGA!")])]},
 
-    # Scene 5: 3-Second Snap CTA
+    # Scene 5: Infinite Grammatical Loop
     {"key": "cta_poll", "accent": SAFFRON, "text": "MISSION AMCA 2030",
      "visual": "AMCA climbing into twilight sky with orange afterburner glow, Indian Air Force tricolor roundel, crisp engagement prompt",
-     "vo": [("tell", [("क्या भारत को अमका जल्द तैनात करना चाहिए?", "KYA BHARAT KO AMCA JALD TAINAAT KARNA CHAHIYE?"),
-                      ("कमेंट में जय हिंद लिखें", "COMMENT MEIN JAI HIND LIKHEIN"),
-                      ("और सब्सक्राइब करें रियलिटी शिफ्ट!", "AUR SUBSCRIBE KAREIN REALITY SHIFT!")])]},
+     "vo": [("tell", [("और इसीलिए आज पूरी दुनिया", "AUR ISILIYE AAJ POORI DUNIYA"),
+                      ("पूछ रही है...", "POOCHH RAHI HAI...")])]},
 ]
 
 DELIVERY = delivery.build(SPEC)

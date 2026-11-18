@@ -658,8 +658,6 @@ SPEC = [
             ("ask", [
                 ("हनुमान जी ने पंचमुखी", "HANUMAN JI NE PANCHMUKHI"),
                 ("अवतार क्यों लिया था?", "AVATAAR KYUN LIYA THA?"),
-                ("इसके पीछे पाताल लोक का", "ISKE PEECHHE PAATAAL LOK KA"),
-                ("सबसे बड़ा रहस्य छुपा है!", "SABSE BADA RAHASYA CHHUPA HAI!"),
             ], 0.04),
         ],
     },
@@ -669,11 +667,8 @@ SPEC = [
         "visual": "Shri Ram and Lakshman in maya-sleep sink into Patala; Ahiravan laughs, ropes bind them",
         "vo": [
             ("tell", [
-                ("रामायण युद्ध में,", "RAMAYAN YUDDH MEIN,"),
-                ("अहिरावण ने श्री राम और लक्ष्मण का", "AHIRAVAN NE SHRI RAM AUR LAKSHMAN KA"),
-                ("अपहरण करके", "APHARAN KARKE"),
-                ("पाताल लोक में", "PAATAAL LOK MEIN"),
-                ("बंदी बना लिया था!", "BANDI BANA LIYA THA!"),
+                ("जब अहिरावण ने श्री राम", "JAB AHIRAVAN NE SHRI RAM"),
+                ("और लक्ष्मण को पाताल में बंदी बनाया,", "AUR LAKSHMAN KO PAATAAL MEIN BANDI BANAYA,"),
             ], 0.04),
         ],
     },
@@ -683,10 +678,8 @@ SPEC = [
         "visual": "Five lamps light up one by one, life-threads to Ahiravan's heart-gem; Hanuman Ji puzzled",
         "vo": [
             ("build", [
-                ("अहिरावण की जान", "AHIRAVAN KI JAAN"),
-                ("पांच अलग-अलग दिशाओं में", "PAANCH ALAG-ALAG DISHAON MEIN"),
-                ("जल रहे पांच दीपकों में बसी थी,", "JAL RAHE PAANCH DEEPAKON MEIN BASI THI,"),
-                ("जिन्हें एक साथ बुझाना था!", "JINHEN EK SAATH BUJHANA THA!"),
+                ("तब उसकी जान पांच अलग दिशाओं के", "TAB USKI JAAN PAANCH ALAG DISHAON KE"),
+                ("दीपकों में थी — जिन्हें एक साथ बुझाना था!", "DEEPAKON MEIN THI — JINHEN EK SAATH BUJHANA THA!"),
             ], 0.04),
         ],
     },
@@ -696,11 +689,8 @@ SPEC = [
         "visual": "Hanuman Ji takes five faces in a golden blast, blows out all five lamps, Ahiravan falls",
         "vo": [
             ("punch", [
-                ("तब बजरंगबली ने", "TAB BAJRANGBALI NE"),
-                ("पांच दिव्य मुख धारण किए,", "PAANCH DIVYA MUKH DHAARAN KIYE,"),
-                ("और एक ही सांस में", "AUR EK HI SAANS MEIN"),
-                ("पांचों दीपक बुझाकर", "PAANCHON DEEPAK BUJHAKAR"),
-                ("अहिरावण का वध कर दिया!", "AHIRAVAN KA VADH KAR DIYA!"),
+                ("तब बजरंगबली ने पांच दिव्य मुख धारण कर,", "TAB BAJRANGBALI NE PAANCH DIVYA MUKH DHAARAN KAR,"),
+                ("एक ही सांस में पांचों दीपक बुझा दिए!", "EK HI SAANS MEIN PAANCHON DEEPAK BUJHA DIYE!"),
             ], 0.04),
         ],
     },
@@ -709,16 +699,12 @@ SPEC = [
         "text": "JAI BAJRANGBALI",
         "visual": "Freed Shri Ram (Abhaya) and Lakshman (namaste) beside Panchmukhi Hanuman; petals; pointer arrow",
         "vo": [
-            ("cta", [
-                ("क्या आप पंचमुखी", "KYA AAP PANCHMUKHI"),
-                ("हनुमान जी के भक्त हैं?", "HANUMAN JI KE BHAKT HAIN?"),
-                ("कमेंट में जय बजरंगबली लिखें", "COMMENT MEIN JAI BAJRANGBALI LIKHEN"),
-                ("और सब्सक्राइब करें दिव्य रहस्य!", "AUR SUBSCRIBE KAREIN DIVYA RAHASYA!"),
+            ("whisper", [
+                ("और इसीलिए आज भी दुनिया पूछती है...", "AUR ISILIYE AAJ BHI DUNIYA PUCHHTI HAI..."),
             ], 0.04),
         ],
     },
 ]
-
 DELIVERY, SCRIPT, NARRATION = script_of(SPEC)
 
 HOT = hot_words({
