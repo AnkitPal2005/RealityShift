@@ -339,7 +339,7 @@ class KurukshetraClimaxScene(katha.Cued):
 
     def events(self, d):
         b = self.beats(d)
-        return [(b["kurukshetra"], "whoosh"), (b["pahiya"], "boom"), (b["nihatthe"], "zap"), (b["duniya"], "shankh")]
+        return [(b["kurukshetra"], "whoosh"), (b["pahiya"], "boom"), (b["nihatthe"], "zap"), (b["duniya"], "whoosh")]
 
     def draw(self, ctx, t, d):
         kurukshetra_dusk_bg(ctx, t, smoke=True)
@@ -405,7 +405,7 @@ class LoopEndingScene(katha.Cued):
         ctx.set_line_width(5)
         ctx.stroke()
         text(ctx, "ARJUN YA KARNA: ASLI YODDHA KAUN?", 540, 345, 34, WHITE, font=CAPTION_FONT, stroke=(0, 0, 0), stroke_w=6)
-        text(ctx, "COMMENT MEIN APNI RAYE DEIN 👇", 540, 400, 38, GOLD_HI, font=CAPTION_FONT, stroke=(0, 0, 0), stroke_w=8)
+        text(ctx, "COMMENT MEIN APNI RAYE DEIN", 540, 400, 38, GOLD_HI, font=CAPTION_FONT, stroke=(0, 0, 0), stroke_w=8)
 
         # Animated pointer arrow pointing to the YouTube Shorts comment button
         arrow_y = 1260 + math.sin(t * 8.0) * 12
