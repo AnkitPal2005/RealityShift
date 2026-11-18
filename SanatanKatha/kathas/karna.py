@@ -199,32 +199,141 @@ def parashurama(ctx, x, y, s, t, flip=False, a=1.0):
     group(ctx, a, draw)
 
 
-def sunken_chariot_wheel(ctx, x, y, s, t):
-    """The cursed heavy wooden chariot wheel sinking deep into Kurukshetra mud."""
+def karna_kneeling_at_wheel(ctx, x, y, s, t, hit=0.0):
+    """Maharathi Karna kneeling in the mud gripping the sunken chariot wheel with both hands,
+    hit by Arjuna's arrow directly in the neck with dramatic crimson blood spray."""
     ctx.save()
     ctx.translate(x, y)
     ctx.scale(s, s)
 
-    # Mud crater mound
-    smooth(ctx, [(-150, 40), (150, 40), (130, -20), (50, -50), (-60, -45), (-140, -10)])
+    skin = dv.KARNA_SKIN
+    hair = hexc("#1A100A")
+    dhoti = dv.SAFFRON
+
+    # 1. Mud Crater Ground beneath him
+    smooth(ctx, [(-220, 30), (220, 30), (180, -20), (80, -40), (-40, -45), (-190, -10)])
     ink(ctx, MUD_BROWN)
 
-    # Wheel tilted at 18 degrees, half buried in mud
-    ctx.rotate(math.radians(-18))
-    circle(ctx, 0, 0, 110, hexc("#5D4037"))
-    circle(ctx, 0, 0, 92, hexc("#271C19"))
+    # 2. Kneeling Legs on the ground (knees planted in the earth)
+    for kx in (-120, -50):
+        limb(ctx, [(kx, -260), (kx - 40, -130), (kx - 80, -20)], skin, 52)
+        ell(ctx, kx - 80, -15, 45, 20)
+        ink(ctx, skin)
+    # Saffron Dhoti draped over bent thighs and ground
+    smooth(ctx, [(-180, -280), (20, -280), (40, -150), (-10, -30), (-180, -20), (-210, -160)])
+    ink(ctx, dhoti)
+    line(ctx, [(-180, -20), (10, -20)], GOLD, 8)
+
+    # 3. Torso: Leaning forward towards the wheel at an angle
+    ctx.save()
+    ctx.translate(-40, -280)
+    ctx.rotate(math.radians(16))  # Straining forward lean
+
+    # Muscular bare torso (no armor)
+    smooth(ctx, [(-125, -240), (105, -240), (95, -60), (75, 40), (-85, 40), (-115, -60)])
+    ink(ctx, skin)
+
+    # Waist sash
+    rrect(ctx, -100, 20, 190, 24, 8)
+    ink(ctx, hexc("#7A1424"))
+
+    # Long dark locks of hair flowing down back
+    for side in (-1, 1):
+        smooth(ctx, [(side * 60 - 30, -380), (side * 95 - 40, -280), (side * 80 - 30, -180)])
+        ink(ctx, hair, 12)
+
+    # Straining Arms: extending forward to grip the wheel
+    limb(ctx, [(-90, -220), (-40, -120), (90, -90)], skin, 46)
+    hand(ctx, 90, -90, skin, 28)
+    limb(ctx, [(70, -220), (120, -140), (180, -110)], skin, 46)
+    hand(ctx, 180, -110, skin, 28)
+
+    # Gold armlets & wrist kadas
+    for ax, ay in [(-40, -120), (120, -140), (70, -90), (160, -110)]:
+        circle(ctx, ax, ay, 20, GOLD)
+        circle(ctx, ax, ay, 14, skin)
+
+    # 4. Head, Face & Warrior Mukut (tilted back in exertion)
+    head_y = -330
+    ell(ctx, 0, head_y, 66, 75)
+    ink(ctx, skin)
+
+    # Royal Warrior Mukut (golden crown)
+    smooth(ctx, [(-65, head_y - 25), (65, head_y - 25), (45, head_y - 120), (0, head_y - 150), (-45, head_y - 120)])
+    ink(ctx, GOLD)
+    gem(ctx, 0, head_y - 80, 10, hexc("#D32F2F"))
+    line(ctx, [(-62, head_y - 25), (62, head_y - 25)], GOLD_HI, 8)
+
+    # Face details: Straining expression, wide eyes, gritted teeth
+    line(ctx, [(0, head_y - 45), (0, head_y - 15)], hexc("#D32F2F"), 4)
+    for ex in (-24, 24):
+        eye(ctx, ex, head_y - 10, 11, 7, t, look=(0.3, -0.2), iris=hexc("#3E2723"), seed=1)
+    line(ctx, [(-18, head_y + 35), (18, head_y + 35)], hexc("#5D4037"), 4)
+
+    ctx.restore()  # End leaning torso
+
+    # 5. The Sunken Heavy Wooden Chariot Wheel (clasped by his hands)
+    wheel_cx, wheel_cy = 110, -140
+    ctx.save()
+    ctx.translate(wheel_cx, wheel_cy)
+    ctx.rotate(math.radians(-16))
+    circle(ctx, 0, 0, 115, hexc("#5D4037"))
+    circle(ctx, 0, 0, 95, hexc("#271C19"))
     circle(ctx, 0, 0, 32, GOLD_HI)
-
-    # 12 heavy wooden spokes
-    for i in range(12):
-        ang = i * (2 * math.pi / 12) + math.sin(t * 1.5) * 0.05
-        line(ctx, [(28 * math.cos(ang), 28 * math.sin(ang)), (90 * math.cos(ang), 90 * math.sin(ang))], hexc("#8D6E63"), 7)
-
-    # Mud splatters over the wheel
-    ctx.rotate(math.radians(18))
+    for wi in range(12):
+        w_ang = wi * (2 * math.pi / 12)
+        line(ctx, [(28 * math.cos(w_ang), 28 * math.sin(w_ang)), (92 * math.cos(w_ang), 92 * math.sin(w_ang))], hexc("#8D6E63"), 7)
+    # Mud on wheel rim
+    ctx.rotate(math.radians(16))
     for mi in (-70, -20, 30, 80):
-        ell(ctx, mi, 10, 24, 14)
+        ell(ctx, mi, 40, 24, 14)
         ink(ctx, hexc("#1B0000"))
+    ctx.restore()
+
+    # Hands visibly clamped around the wheel rim
+    hand(ctx, 40, -190, skin, 28)
+    hand(ctx, 160, -170, skin, 28)
+
+    # 6. Arrow Piercing Neck & Blood Spray (if hit > 0)
+    if hit > 0.0:
+        neck_x, neck_y = -35, -450  # Neck location
+
+        # Impact shockwave rings
+        ring_r = 25 + hit * 50
+        circle(ctx, neck_x, neck_y, ring_r, BLOOD_RED, max(0.0, 0.7 - hit * 0.4))
+        circle(ctx, neck_x, neck_y, ring_r * 0.6, GOLD_HI, max(0.0, 0.9 - hit * 0.5))
+
+        # Crescent-Headed Anjalika Arrow lodged directly in the neck!
+        ctx.save()
+        ctx.translate(neck_x, neck_y)
+        ctx.rotate(math.radians(-15))
+        # Arrow shaft
+        line(ctx, [(-15, 0), (160, 0)], hexc("#8D6E63"), 7)
+        # Golden crescent arrowhead lodged in neck
+        ctx.move_to(-15, -16)
+        ctx.curve_to(-35, -25, -45, 0, -35, 25)
+        ctx.curve_to(-25, 10, -15, 0, -15, -16)
+        ctx.close_path()
+        ink(ctx, GOLD_HI, 4)
+        # Golden Fletching (feathers) at rear of arrow
+        for fy in (-14, 14):
+            line(ctx, [(140, 0), (170, fy)], GOLD_HI, 5)
+            line(ctx, [(125, 0), (155, fy)], FIRE_ORANGE, 5)
+        ctx.restore()
+
+        # Dramatic Blood Arc & Splatters
+        for bi in range(14):
+            b_ang = -math.pi * 0.4 + bi * (math.pi / 10.0) + math.sin(bi * 1.5) * 0.2
+            b_dist = (35 + bi * 16) * min(1.5, hit * 1.4)
+            bx = neck_x + b_dist * math.cos(b_ang)
+            by = neck_y + b_dist * math.sin(b_ang) + (bi * 6)  # gravity drop
+            b_rad = 5 + (bi % 4) * 3
+            circle(ctx, bx, by, b_rad, BLOOD_RED, 0.92)
+            circle(ctx, bx, by, b_rad * 0.6, hexc("#FF1744"), 0.95)
+
+        # Blood running down his neck, chest, and wheel
+        line(ctx, [(neck_x, neck_y), (neck_x - 10, neck_y + 80), (neck_x - 5, neck_y + 160)], BLOOD_RED, 8, 0.88)
+        line(ctx, [(neck_x + 8, neck_y), (neck_x + 25, neck_y + 70), (neck_x + 60, neck_y + 140)], hexc("#D50000"), 6, 0.85)
 
     ctx.restore()
 
@@ -344,22 +453,28 @@ class KurukshetraClimaxScene(katha.Cued):
     def draw(self, ctx, t, d):
         kurukshetra_dusk_bg(ctx, t, smoke=True)
 
-        # Left: Sunken Chariot Wheel in the deep mud
-        sunken_chariot_wheel(ctx, 290, 1100, 1.15, t)
+        # Hit calculation: arrow strikes at 38% of scene duration
+        hit_t = d * 0.38
+        is_hit = t >= hit_t
+        hit_factor = min(1.0, (t - hit_t) * 2.8) if is_hit else 0.0
 
-        # Karna on left: Unarmed, struggling in mud to lift the sunken wheel
-        # Using custom bent pose trying to heave wheel
-        dv.karna(ctx, 330, 1170, 0.74, t, pose="stand", kavach=0.0, mood="calm", flip=False)
+        # Center-Right: Shri Krishna commanding Arjuna
+        dv.krishna(ctx, 600, 1170, 0.70, t, pose="bless", flip=True, a=0.92)
 
-        # Center-Right: Shri Krishna as divine charioteer pointing forward with decisive authority
-        dv.krishna(ctx, 620, 1170, 0.72, t, pose="bless", flip=True, a=0.95)
+        # Far Right: Arjuna with Gandiva bow
+        pose_arj = "shoot" if not is_hit else "stand"
+        dv.barbarik(ctx, 840, 1170, 0.74, t, pose=pose_arj, mood="fierce", draw_amt=0.9 if not is_hit else 0.0, arrows=1, flip=True)
 
-        # Far Right: Arjuna drawing Gandiva bow with glowing divine arrow
-        dv.barbarik(ctx, 850, 1170, 0.74, t, pose="shoot", mood="fierce", draw_amt=0.85, arrows=1, flip=True)
+        # Arrow flight before hit:
+        if not is_hit:
+            u_arr = min(1.0, t / hit_t)
+            arr_x = 760 - u_arr * 480
+            arr_y = 860 - math.sin(u_arr * math.pi) * 35
+            dv.divine_arrow(ctx, arr_x, arr_y, math.pi, 90, t, a=0.95, trail=0.8)
 
-        # Glowing arrow flying or aimed towards Karna
-        arrow_tip_x = 760 - (t * 80) % 220
-        dv.divine_arrow(ctx, arrow_tip_x, 830, math.pi, 90, t, a=0.9, trail=0.6)
+        # Left: Karna kneeling in the mud, gripping the sunken wheel with both hands!
+        # When hit > 0, the arrow strikes directly into his neck with crimson blood spray!
+        karna_kneeling_at_wheel(ctx, 310, 1170, 0.74, t, hit=hit_factor)
 
         # Tension ribbon
         rrect(ctx, 160, 310, 760, 85, 14)
