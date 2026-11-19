@@ -37,77 +37,33 @@ SOURCES = [
 # their own lines (and their own KikiVoice voice): "maa" = mother, "char" = the old brahmin, "deva" = Shri Krishna.
 # The 3rd element is the silence after a line, kept between voices. No dashes and no hyphenated words (TTS trips).
 SPEC = [
-    {"key": "hook", "text": "SHEESH KYUN?",
-     "visual": "Dusk Kurukshetra, Barbarik on a rock, three divine arrows light up above him; a shockwave wipes both "
-               "armies; Krishna's blue glow enters; 'SHEESH KYUN?' ribbon",
-     "vo": [("tell", [("सोचो...", "SOCHO..."), ("एक ऐसा योद्धा,", "EK AISA YODDHA,"), ("जिसके पास बस तीन बाण थे।", "JISKE PAAS BAS 3 BAAN THE."),
-                      ("और वो तीन बाण,", "AUR WO 3 BAAN,"), ("पूरा महाभारत एक पल में", "POORA MAHABHARAT EK PAL MEIN"),
-                      ("खत्म कर देते!", "KHATAM KAR DETE!"), ("पर युद्ध से पहले ही...", "PAR YUDH SE PEHLE HI..."),
-                      ("श्री कृष्ण ने", "SHRI KRISHNA NE"), ("उसका शीश माँग लिया।", "USKA SHEESH MAANG LIYA."),
-                      ("आख़िर क्यों?", "AAKHIR KYUN?")])]},
-    {"key": "who", "text": "BARBARIK",
-     "visual": "Barbarik in full colour with a name ribbon; Kailash and a glowing trishul rise behind him; three "
-               "arrows fall from the sky into his quiver; '3 ACHOOK BAAN'",
-     "vo": [("tell", [("उसका नाम था...", "USKA NAAM THA..."), ("बर्बरीक।", "BARBARIK."), ("भीम का पोता,", "BHEEM KA POTA,"),
-                      ("घटोत्कच का बेटा।", "GHATOTKACH KA BETA."), ("कहते हैं,", "KEHTE HAIN,"),
-                      ("महादेव की तपस्या से,", "MAHADEV KI TAPASYA SE,"), ("उसे मिले थे...", "USE MILE THE..."),
-                      ("तीन अचूक बाण!", "3 ACHOOK BAAN!")])]},
-    {"key": "vow", "text": "VACHAN",
-     "visual": "Lamp-lit room: his mother blesses him; a gold balance tips (JEET down, HAAR up) and a divine arrow "
-               "points to the HAAR side",
-     "vo": [("tell", [("युद्ध में जाने से पहले,", "YUDH MEIN JAANE SE PEHLE,"), ("माँ ने बस एक बात कही...", "MAA NE BAS EK BAAT KAHI...")], 0.35),
-            ("maa", [("बेटा,", "BETA,"), ("जो हार रहा हो...", "JO HAAR RAHA HO..."), ("उसका साथ देना।", "USKA SAATH DENA.")], 0.4),
-            ("tell", [("और बर्बरीक ने,", "AUR BARBARIK NE,"), ("वचन दे दिया।", "VACHAN DE DIYA.")])]},
-    {"key": "test", "text": "1 BAAN = HAR PATTA",
-     "visual": "Dawn meadow: a brahmin asks 'EK BAAN SE?'; Barbarik draws and looses one arrow that zips through "
-               "the peepal tree, marking every leaf",
-     "vo": [("tell", [("रास्ते में मिला,", "RAASTE MEIN MILA,"), ("एक बूढ़ा ब्राह्मण।", "EK BOODHA BRAHMAN."), ("बोला...", "BOLA...")], 0.3),
-            ("char", [("भाई...", "BHAI..."), ("तीन बाण से युद्ध लड़ेगा?", "3 BAAN SE YUDH LADEGA?")], 0.35),
-            ("tell", [("बर्बरीक ने एक बाण,", "BARBARIK NE EK BAAN,"), ("पीपल की ओर छोड़ा।", "PEEPAL KI OR CHHODA."),
-                      ("बाण घूमा, घूमा, घूमा...", "BAAN GHOOMA, GHOOMA, GHOOMA..."), ("और पेड़ का", "AUR PED KA"),
-                      ("एक एक पत्ता छेद दिया!", "EK-EK PATTA CHHED DIYA!")])]},
-    {"key": "foot", "text": "PAIR KE NEECHE",
-     "visual": "Close on the brahmin: a leaf slides under his foot; the arrow circles the foot and stops over it",
-     "vo": [("tell", [("पर एक पत्ता...", "PAR EK PATTA..."), ("ब्राह्मण ने चुपके से,", "BRAHMAN NE CHUPKE SE,"),
-                      ("पैर के नीचे दबा रखा था।", "PAIR KE NEECHE DABA RAKHA THA."), ("बाण आया...", "BAAN AAYA..."),
-                      ("और उसके पैर के चारों ओर", "AUR USKE PAIR KE CHAARON OR"), ("घूमने लगा।", "GHOOMNE LAGA."),
-                      ("जैसे कह रहा हो,", "JAISE KEH RAHA HO,"), ("पैर हटाओ!", "PAIR HATAO!")])]},
-    {"key": "reveal", "text": "SHRI KRISHNA",
-     "visual": "The brahmin glows blue, a white flash, and Shri Krishna stands in his place with halo and petals",
-     "vo": [("tell", [("ब्राह्मण मुस्कुराया...", "BRAHMAN MUSKURAYA..."), ("क्योंकि वो कोई ब्राह्मण नहीं था।", "KYUNKI WO KOI BRAHMAN NAHI THA."),
-                      ("वो खुद...", "WO KHUD..."), ("श्री कृष्ण थे!", "SHRI KRISHNA THE!")])]},
-    {"key": "logic", "text": "SIRF BARBARIK",
-     "visual": "Two armies; little Barbarik hops to whichever side is losing, faster and faster, both armies shrink "
-               "away until only he stands in a spotlight",
-     "vo": [("tell", [("कृष्ण सब समझ गए।", "KRISHNA SAB SAMAJH GAYE."), ("बर्बरीक जिधर लड़ेगा,", "BARBARIK JIDHAR LADEGA,"),
-                      ("वो जीतने लगेगा।", "WO JEETNE LAGEGA."), ("फिर दूसरा हारेगा,", "PHIR DOOSRA HAAREGA,"),
-                      ("तो ये पाला बदलेगा,", "TO YE PAALA BADLEGA,"), ("फिर बदलेगा...", "PHIR BADLEGA..."),
-                      ("और आख़िर में,", "AUR AAKHIR MEIN,"), ("मैदान में बचेगा कौन?", "MAIDAN MEIN BACHEGA KAUN?"),
-                      ("सिर्फ़ बर्बरीक!", "SIRF BARBARIK!")])]},
-    {"key": "daan", "text": "SHEESH KA DAAN",
-     "visual": "Twilight: Krishna holds out his hand; Barbarik, palms joined, smiles and dissolves into golden light "
-               "that rises as a glowing orb; petals fall (no graphic imagery)",
-     "vo": [("tell", [("तब कृष्ण ने हाथ फैलाया,", "TAB KRISHNA NE HAATH PHAILAYA,"), ("और दान में माँगा...", "AUR DAAN MEIN MAANGA...")], 0.45),
-            ("deva", [("तेरा शीश।", "TERA SHEESH.")], 0.6),
-            ("tell", [("एक पल को...", "EK PAL KO..."), ("सब थम गया।", "SAB THAM GAYA."),
-                      ("पर बर्बरीक के चेहरे पे,", "PAR BARBARIK KE CHEHRE PE,"), ("डर नहीं था।", "DAR NAHI THA."),
-                      ("हँसते हँसते,", "HANSTE-HANSTE,"), ("उसने शीश दान कर दिया।", "USNE SHEESH DAAN KAR DIYA.")])]},
-    {"key": "khatu", "text": "KHATU SHYAM",
-     "visual": "The sheesh watches the war from a hilltop; Krishna appears in the sky to bless; the sheesh becomes the "
-               "Khatu Shyam roop with garlands, 'KHATU SHYAM / HAARE KA SAHARA'",
-     "vo": [("tell", [("शीश ने ऊँची पहाड़ी से,", "SHEESH NE OONCHI PAHADI SE,"), ("पूरा युद्ध देखा।", "POORA YUDH DEKHA."),
-                      ("और कृष्ण ने वरदान दिया...", "AUR KRISHNA NE VARDAAN DIYA...")], 0.35),
-            ("deva", [("कलयुग में तू,", "KALYUG MEIN TU,"), ("मेरे नाम से पूजा जाएगा।", "MERE NAAM SE POOJA JAYEGA.")], 0.45),
-            ("tell", [("आज दुनिया उसे कहती है...", "AAJ DUNIYA USE KEHTI HAI..."), ("खाटू श्याम!", "KHATU SHYAM!"),
-                      ("हारे का सहारा!", "HAARE KA SAHARA!")])]},
-    {"key": "cta", "text": "JAI SHRI SHYAM",
-     "visual": "Shyam roop above a comment card that types 'JAI SHRI SHYAM'; an arrow points at the comment button",
-     "vo": [("warm", [("ऐसा दानी,", "AISA DAANI,"), ("ऐसा वीर...", "AISA VEER..."), ("घणा कम मिलता है भाई।", "GHANA KAM MILTA HAI BHAI."),
-                      ("कमेंट में लिखो...", "COMMENT MEIN LIKHO..."), ("जय श्री श्याम!", "JAI SHRI SHYAM!")])]},
-]
-KIKI_TEMPO = {"narrator": 1.0, "maa": 1.0, "char": 1.0, "devta": 1.0}   # raise a voice to 1.05-1.12 if it reads slow
-MAX_GAP = 0.6      # keep KikiVoice's own "..." beats inside a paragraph
+    {"key": "hook", "text": "3 BAAN SE YUDDH KHATAM",
+     "visual": "Dusk Kurukshetra: Barbarik on rock with 3 divine glowing arrows; Shri Krishna appears asking the question",
+     "vo": [("punch", [("महाभारत का वो अजेय योद्धा,", "MAHABHARAT KA WO AJEYA YODDHA,"),
+                       ("जिसके तीन बाण एक मिनट में", "JISKE TEEN BAAN EK MINUTE MEIN"),
+                       ("युद्ध खत्म कर सकते थे,", "YUDDH KHATAM KAR SAKTE THE,"),
+                       ("वो थे बर्बरीक!", "WO THE BARBARIK!"),
+                       ("लेकिन श्रीकृष्ण ने उनसे", "LEKIN SHRI KRISHNA NE UNSE"),
+                       ("शीश क्यों मांग लिया?", "SHEESH KYUN MAANG LIYA?")], 0.04)]},
 
+    {"key": "who", "text": "MATA KA VACHAN",
+     "visual": "Barbarik remembering mother's vow with folded hands and glowing aura",
+     "vo": [("tell", [("क्योंकि उन्हें माता का वचन था,", "KYUN KI UNHE MATA KA VACHAN THA,"),
+                      ("हारे हुए का साथ देना!", "HAARE HUE KA SAATH DENA!")], 0.04)]},
+
+    {"key": "daan", "text": "DONO SENAON KA SARVANASH",
+     "visual": "Battlefield dilemma: armies in balance, cosmic destruction prevented by divine sacrifice",
+     "vo": [("build", [("अगर कौरव हारते, तो बर्बरीक", "AGAR KAURAV HAARTE, TO BARBARIK"),
+                       ("उनकी तरफ लड़ते,", "UNKI TARAF LADTE,"),
+                       ("और दोनों सेनाओं का सर्वनाश हो जाता!", "AUR DONO SENAON KA SARVANASH HO JAATA!")], 0.04)]},
+
+    {"key": "khatu", "text": "KHATU SHYAM JI",
+     "visual": "Khatu Shyam Ji divine darshan; golden halo, floral rain, Haare Ka Sahara",
+     "vo": [("awe", [("इसीलिए कृष्ण ने शीश दान लेकर", "ISI LIYE KRISHNA NE SHEESH DAAN LEKAR"),
+                     ("उन्हें वरदान दिया,", "UNHE VARDAAN DIYA,"),
+                     ("कलयुग के खाटू श्याम,", "KALYUG KE KHATU SHYAM,"),
+                     ("हारे का सहारा!", "HAARE KA SAHARA!")], 0.04)]},
+]
 DELIVERY, SCRIPT, NARRATION = script_of(SPEC)   # kathavachak tones + held pauses (katha.TONES)
 
 HOT = hot_words({"3": DIVINE, "BAAN": DIVINE, "BAAN!": DIVINE, "SHEESH": GOLD_HI, "KRISHNA": BLUE, "BARBARIK": SAFF,
@@ -125,13 +81,13 @@ HOT = hot_words({"3": DIVINE, "BAAN": DIVINE, "BAAN!": DIVINE, "SHEESH": GOLD_HI
 class Hook(Cued):
     def beats(self, d):
         c = self.cue
-        return {"arrows": c("3", d * 0.22), "yudh": c("POORA", d * 0.4), "krishna": c("KRISHNA", d * 0.6),
-                "sheesh": c("SHEESH", d * 0.8)}
+        return {"arrows": c("TEEN", d * 0.22), "yudh": c("YUDDH", d * 0.4), "krishna": c("KRISHNA", d * 0.65),
+                "sheesh": c("SHEESH", d * 0.85)}
 
     def events(self, d):
         b = self.beats(d)
         return [(0.02, "boom"), (b["arrows"], "shimmer"), (b["arrows"] + 0.2, "arrow"), (b["yudh"] + 0.4, "boom"),
-                (b["krishna"], "shankh"), (b["sheesh"], "thud")]
+                (b["krishna"], "ghanti"), (b["sheesh"], "thud")]
 
     def draw(self, ctx, t, d):
         b = self.beats(d)
@@ -159,7 +115,6 @@ class Hook(Cued):
             glow(ctx, 1000, 700, 500, BLUE, 0.5 * clamp(u / 0.5))
             dv.krishna(ctx, lerp(1200, 920, ease_out_cubic(u / 0.8)), GROUND - 40, 0.55, t, pose="flute",
                        a=clamp(u / 0.4), look=(-0.6, 0))
-        dv.ribbon(ctx, "SHEESH KYUN?", 540, 215, t - b["sheesh"], size=84)
 
 
 class Who(Cued):
@@ -187,15 +142,12 @@ class Who(Cued):
             if 0 < u < 1:
                 y = lerp(-120, tip[1] - 40, ease_in_out(u))
                 dv.divine_arrow(ctx, tip[0] + (k - 1) * 14, y, math.pi / 2, 160, t, trail=1.0)
-        if t < b["shiv"]:
-            dv.ribbon(ctx, "BARBARIK", 540, 300, t - self.cue("BARBARIK", 1.0), size=88, sub="BHEEM KA POTA • GHATOTKACH KA BETA")
-        dv.ribbon(ctx, "3 ACHOOK BAAN", 540, 300, t - b["baan"] - 0.9, size=80)
 
 
 class Vow(Cued):
     def beats(self, d):
         c = self.cue
-        return {"haar": c("HAAR", d * 0.45), "ladu": c("VACHAN", d * 0.8)}
+        return {"haar": c("HAARE", d * 0.5), "ladu": c("VACHAN", d * 0.3)}
 
     def events(self, d):
         b = self.beats(d)
@@ -232,7 +184,6 @@ class Vow(Cued):
                 bob = 10 * math.sin(t * 6)
                 dv.divine_arrow(ctx, px, lerp(py + 300, py + 70, ease_out_back(clamp(v / 0.4))) + bob, -math.pi / 2,
                                 150, t)
-                dv.ribbon(ctx, "HAARNE WALE KA SAATH", 540, 300, v - 0.3, size=64)
 
 
 HIDDEN = 12                  # the leaf the brahmin keeps under his foot
@@ -351,7 +302,7 @@ class Reveal(Cued):
 
     def events(self, d):
         b = self.beats(d)
-        return [(0.02, "soft_thud"), (b["koi"], "shimmer"), (b["khud"], "boom"), (b["khud"] + 0.05, "shankh")]
+        return [(0.02, "soft_thud"), (b["koi"], "shimmer"), (b["khud"], "boom")]
 
     def draw(self, ctx, t, d):
         b = self.beats(d)
@@ -386,7 +337,7 @@ class Reveal(Cued):
 class Logic(Cued):
     def beats(self, d):
         c = self.cue
-        return {"jidhar": c("JIDHAR", d * 0.2), "paala": c("PAALA", d * 0.5), "aakhir": c("AAKHIR", d * 0.72)}
+        return {"jidhar": c("KAURAV", d * 0.15), "paala": c("BARBARIK", d * 0.4), "aakhir": c("SARVANASH", d * 0.75)}
 
     def jumps(self, d):
         b = self.beats(d)
@@ -424,8 +375,6 @@ class Logic(Cued):
             mine = (k == 0) == on_left and t > b["jidhar"]
             if mine and ending < 1:
                 glow(ctx, (x0 + x1) / 2, GROUND - 120, 300, GOLD, 0.35)
-                text(ctx, "JEET", (x0 + x1) / 2, GROUND - 330, 64, GOLD_HI, font=CAPTION_FONT, bold=False,
-                     stroke=dv.OUTLINE, stroke_w=8)
             dv.army(ctx, x0, x1, GROUND - 70, max(n, 0), hexc("#160A0A"), t, flag, seed=k + 1,
                     a=1 - ending)
         if ending > 0:
@@ -443,7 +392,6 @@ class Logic(Cued):
             ctx.fill()
         s = lerp(0.34, 0.6, ending)
         dv.barbarik(ctx, x, y, s, t, pose="stand", arrows=3)
-        dv.ribbon(ctx, "SIRF BARBARIK", 540, 300, t - self.cue("SIRF", d * 0.88), size=80)
 
 
 class Daan(Cued):
@@ -476,7 +424,6 @@ class Daan(Cued):
             circle(ctx, 300, oy, 34, (1, 1, 0.92))
             dv.petals(ctx, v, 44, seed=7)
         flash(ctx, u - 0.9, c=(1, 0.93, 0.7), dur=0.7)
-        dv.ribbon(ctx, "SHEESH KA DAAN", 540, 300, u - 1.1, size=80)
 
 
 class Khatu(Cued):
@@ -486,7 +433,7 @@ class Khatu(Cued):
 
     def events(self, d):
         b = self.beats(d)
-        return [(0.02, "soft_thud"), (b["vardaan"], "shimmer"), (b["khatu"], "shankh"), (b["khatu"] + 0.1, "ghanti"),
+        return [(0.02, "soft_thud"), (b["vardaan"], "shimmer"), (b["khatu"], "ghanti"),
                 (b["sahara"], "ghanti")]
 
     def draw(self, ctx, t, d):
@@ -510,7 +457,6 @@ class Khatu(Cued):
         dv.shyam(ctx, sx, sy, lerp(0.38, 0.78, grow), t, garland=grow, aura=lerp(0.5, 1.0, grow))
         if u > 0:
             dv.petals(ctx, u, 40, seed=9)
-        dv.ribbon(ctx, "KHATU SHYAM", 540, 1080, u - 0.6, size=96, sub="HAARE KA SAHARA")
 
 
 class Cta(Cued):
@@ -563,8 +509,12 @@ class Cta(Cued):
             ctx.fill()
 
 
-SCENE_CLASSES = {"hook": Hook, "who": Who, "vow": Vow, "test": Test, "foot": Foot, "reveal": Reveal, "logic": Logic,
-                 "daan": Daan, "khatu": Khatu, "cta": Cta}
+SCENE_CLASSES = {
+    "hook": Hook,
+    "who": Vow,
+    "daan": Logic,
+    "khatu": Khatu,
+}
 
 
 # ============================================================ upload kit (see upload_kit.py)

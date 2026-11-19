@@ -357,42 +357,24 @@ def cosmic_ganga_torrent(ctx, t, a=1.0):
 # -----------------------------------------------------------------------------
 SPEC = [
     {
-        "key": "hook",
-        "text": "GANGA KA AHANKAAR?",
-        "visual": "Cosmic river Ganga cascading from heaven; Lord Shiva standing serene on Himalayan summit",
-        "vo": [
-            ("ask", [("स्वर्ग की पावन कथा,", "SWARG KI PAWAN KATHA,")], 0.02),
-            ("tell", [("जब गंगा स्वर्ग से धरती पर आ रही थीं...", "JAB GANGA SWARG SE DHARTI PAR AA RAHI THIN...")], 0.02),
-            ("punch", [("तो उन्हें लगा वो महादेव को भी बहा ले जाएंगी?", "TO UNHEIN LAGA WO MAHADEV KO BHI BAHA LE JAAYENGI?")], 0.04),
-        ],
-    },
-    {
-        "key": "tapasya",
-        "text": "BHAGIRATH KI TAPASYA",
-        "visual": "Suryavanshi King Bhagirath performing severe tapasya standing on one foot",
-        "vo": [
-            ("tell", [("राजा भगीरथ ने अपने पूर्वजों के उद्धार के लिए,", "RAJA BHAGIRATH NE APNE POORVAJON KE UDDHAR KE LIYE,")], 0.02),
-            ("build", [("हज़ारों साल तक घोर तपस्या की थी.", "HAZARON SAAL TAK GHOR TAPASYA KI THI.")], 0.04),
-        ],
-    },
-    {
         "key": "veg",
-        "text": "PRALAYANKARI VEG",
-        "visual": "Furious raging cosmic torrent threatening to shatter the earth in two halves",
+        "text": "PRACHAND VEG",
+        "visual": "Cosmic river Ganga cascading from heaven; threatening earth until Mahadev opens his divine jatas",
         "vo": [
-            ("low", [("लेकिन गंगा का वेग इतना प्रचंड था,", "LEKIN GANGA KA VEG ITNA PRACHAND THA,")], 0.02),
-            ("punch", [("कि अगर वो सीधे धरती पर गिरतीं...", "KI AGAR WO SEEDHE DHARTI PAR GIRTIN...")], 0.02),
-            ("awe", [("तो पूरी पृथ्वी दो टुकड़ों में फट जाती!", "TO POORI PRITHVI DO TUKDON MEIN PHAT JAATI!")], 0.04),
+            ("punch", [("गंगा के प्रचंड वेग से", "GANGA KE PRACHAND VEG SE"),
+                       ("पूरी पृथ्वी पाताल में समा जाती,", "POORI PRITHVI PAATAAL MEIN SAMA JAATI,"),
+                       ("अगर महादेव ने अपनी", "AGAR MAHADEV NE APNI"),
+                       ("जटाएं ना खोली होतीं!", "JATAAYEIN NA KHOLI HOTEEN!")], 0.04),
         ],
     },
     {
-        "key": "jata",
-        "text": "MAHADEV NE KHOLI JATA",
-        "visual": "Devadhidev Mahadev stepping forward, spreading his divine matted locks across the sky",
+        "key": "hook",
+        "text": "GANGA KA AHANKAAR",
+        "visual": "Raging cosmic torrent rushing toward Kailash summit where Shiva stands serene",
         "vo": [
-            ("build", [("तब भगीरथ की पुकार पर...", "TAB BHAGIRATH KI PUKAAR PAR...")], 0.02),
-            ("punch", [("देवाधिदेव महादेव आगे आए!", "DEVADHIDEV MAHADEV AAGE AAYE!")], 0.02),
-            ("awe", [("और उन्होंने अपनी दिव्य जटाएं पूरे आकाश में फैला दीं!", "AUR UNHONE APNI DIVYA JATAAYEIN POORE AAKASH MEIN PHAILA DEEN!")], 0.04),
+            ("tell", [("गंगा को अभिमान था कि", "GANGA KO ABHIMAAN THA KI"),
+                      ("वो शिव जी को भी बहा ले जाएंगी!", "WO SHIV JI KO BHI BAHA LE JAAYENGI!"),
+                      ("लेकिन जैसे ही वो कैलाश पर गिरीं...", "LEKIN JAISE HI WO KAILASH PAR GIREEN...")], 0.04),
         ],
     },
     {
@@ -400,30 +382,20 @@ SPEC = [
         "text": "32 DIN KA RAHASYA",
         "visual": "Furious Ganga plunging into Shiva's locks, trapped in an inescapable cosmic labyrinth",
         "vo": [
-            ("fast", [("जैसे ही गंगा महादेव के शीश पर गिरीं,", "JAISE HI GANGA MAHADEV KE SHEESH PAR GIRTIN,")], 0.02),
-            ("tell", [("शिव जी ने उन्हें अपनी जटाओं में समेट लिया!", "SHIV JI NE UNHEIN APNI JATAON MEIN SAMET LIYA!")], 0.02),
-            ("punch", [("बत्तीस दिन तक गंगा को बाहर निकलने का एक बूँद रास्ता नहीं मिला!", "BATTEES DIN TAK GANGA KO BAHAR NIKALNE KA EK BOOND RASTA NAHI MILA!")], 0.04),
+            ("build", [("महादेव की एक-एक लट में", "MAHADEV KI EK-EK LAT MEIN"),
+                       ("पूरी गंगा बत्तीस दिनों तक भटकती रह गईं,", "POORI GANGA BATTEES DINON TAK BHATAKTI RAH GAYEEN,"),
+                       ("पर बाहर निकलने की एक बूंद जगह नहीं मिली!", "PAR BAAHAR NIKALNE KI EK BOOND JAGAH NAHI MILI!")], 0.04),
         ],
     },
     {
         "key": "sharan",
-        "text": "AHANKAAR KA VINASH",
+        "text": "PAAP NAASHINI MAA GANGA",
         "visual": "Humbled Ganga bowing in repentance; Shiva releasing a gentle, sanctifying stream",
         "vo": [
-            ("warm", [("जब गंगा का सारा घमंड चूर-चूर हो गया...", "JAB GANGA KA SAARA GHAMAND CHOOR-CHOOR HO GAYA...")], 0.02),
-            ("whisper", [("और उन्होंने क्षमा मांगी,", "AUR UNHONE KSHAMA MAANGI,")], 0.02),
-            ("awe", [("तब भोलेनाथ ने एक छोटी सी पवित्र धार छोड़कर पृथ्वी को नया जीवन दिया.", "TAB BHOLENATH NE EK CHHOTI SI PAVITRA DHAAR CHHODKAR PRITHVI KO NAYA JEEVAN DIYA.")], 0.04),
-        ],
-    },
-    {
-        "key": "cta",
-        "text": "HAR HAR MAHADEV",
-        "visual": "Mahadev blessing Bhagirath and sacred Ganga flowing into the world; Top comment CTA",
-        "vo": [
-            ("tell", [("महादेव ने सिखाया कि चाहे कितनी भी शक्ति हो,", "MAHADEV NE SIKHAYA KI CHAHE KITNI BHI SHAKTI HO,")], 0.02),
-            ("punch", [("अहंकार का अंत निश्चित है!", "AHANKAAR KA ANT NISHCHIT HAI!")], 0.02),
-            ("cta", [("भोले के सच्चे भक्त कमेंट में लिखें—", "BHOLE KE SACCHE BHAKT COMMENT MEIN LIKHEIN—")], 0.02),
-            ("punch", [("हर हर महादेव!", "HAR HAR MAHADEV!")], 0.04),
+            ("awe", [("जब घमंड चूर हुआ,", "JAB GHAMAND CHOOR HUA,"),
+                     ("तो महादेव ने शांत धारा बनाकर", "TO MAHADEV NE SHAANT DHAARA BANAKAR"),
+                     ("धरती पर छोड़ा—", "DHARTI PAR CHHODA—"),
+                     ("पाप-नाशिनी माँ गंगा!", "PAAP-NAASHINI MAA GANGA!")], 0.04),
         ],
     },
 ]
@@ -472,9 +444,6 @@ class Hook(Cued):
 
         # Mahadev standing majestic and serene on Himalayan ridge
         mahadev(ctx, 540, GROUND - 10, 0.72, t, pose="stand", jata_open=False, flip=False)
-
-        # Single sleek ribbon (Zero clutter)
-        ribbon(ctx, 540, 300, "GANGA KA AHANKAAR?", RED_GEM, 1.0)
 
 
 class Tapasya(Cued):
@@ -563,9 +532,6 @@ class Veg(Cued):
         # Bhagirath on left looking up in fear and awe
         bhagirath(ctx, 240, GROUND - 10, 0.68, t, pose="pray", flip=True)
 
-        # Single sleek ribbon
-        ribbon(ctx, 540, 300, "PRALAYANKARI VEG", hexc("#FF4444"), 1.0)
-
 
 class Jata(Cued):
     def beats(self, d):
@@ -629,9 +595,6 @@ class Qaid(Cued):
             circle(ctx, 0, 0, r, CYAN_WATER, 0.3)
         ctx.restore()
 
-        # Single sleek ribbon
-        ribbon(ctx, 540, 300, "32 DIN TAK QAID!", GOLD_HI, 1.0)
-
 
 class Sharan(Cued):
     def beats(self, d):
@@ -668,9 +631,6 @@ class Sharan(Cued):
         # Center/Right: Mahadev giving Abhaya blessing
         mahadev(ctx, 620, GROUND - 10, 0.72, t, pose="bless", jata_open=False, flip=False)
 
-        # Single sleek ribbon
-        ribbon(ctx, 540, 300, "AHANKAAR KA VINASH", GOLD, 1.0)
-
 
 class Cta(Cued):
     def beats(self, d):
@@ -701,13 +661,10 @@ class Cta(Cued):
 
 
 SCENE_CLASSES = {
-    "hook": Hook,
-    "tapasya": Tapasya,
     "veg": Veg,
-    "jata": Jata,
+    "hook": Hook,
     "qaid": Qaid,
     "sharan": Sharan,
-    "cta": Cta,
 }
 
 UPLOAD = {

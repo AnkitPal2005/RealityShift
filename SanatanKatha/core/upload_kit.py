@@ -29,7 +29,7 @@ TAG_LIMIT = 500        # YouTube: total characters across all tags
 MAX_TAGS = 15          # yt-seo: past this it's stuffing
 DESC_LIMIT = 5000
 SHOWN_HASHTAGS = 3     # the first three show above the title
-SHORTS_MAX = 180       # YouTube counts uploads up to 3 minutes as Shorts
+SHORTS_MAX = 25        # LENGTH LOCK (user, 19 Nov 2026): Divya Rahasya Shorts must be <= 25 s
 
 
 def title_checker():

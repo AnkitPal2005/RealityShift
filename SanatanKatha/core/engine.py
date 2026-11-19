@@ -687,15 +687,9 @@ def sfx_bank() -> dict[str, np.ndarray]:
                     for f, a, d, p in ((880, 1.0, 1.1, 0), (2042, 0.55, 1.7, 0.4), (3744, 0.3, 2.6, 1.1),
                                        (5830, 0.16, 3.6, 2.0), (886, 0.5, 1.3, 0.9)))
     bank["ghanti"] = bell_ring * np.minimum(1, t / 0.002) + 0.4 * _soft_lowpass(_noise(n, 11), 5000) * _env(n, 0.0005, 90)
-    # shankh: conch - scoops up into its note, swells, slight vibrato, breath on top
+    # shankh: muted / gentle bell tone to avoid synthetic horn "poo" artifacts
     n = int(2.6 * SR)
-    t = np.arange(n) / SR
-    f = 233.0 * (1 - 0.06 * np.exp(-t * 4)) * (1 + 0.004 * np.sin(2 * np.pi * 4.6 * t))
-    ph = 2 * np.pi * np.cumsum(f) / SR
-    horn = _soft_lowpass(sum(np.sin(k * ph) / k ** 1.15 for k in range(1, 11)), 2400)
-    air = _soft_lowpass(_noise(n, 12), 3000) - _soft_lowpass(_noise(n, 12), 700)
-    swell = np.minimum(1, t / 0.35) * np.minimum(1, np.maximum(0, 2.6 - t) / 0.7) * (0.85 + 0.15 * np.minimum(1, t / 1.2))
-    bank["shankh"] = (horn + 0.18 * air) * swell
+    bank["shankh"] = bank["ghanti"][:n] * 0.35
     # arrow: thin rising whistle riding on a burst of air
     n = int(0.6 * SR)
     u = np.arange(n) / n

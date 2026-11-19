@@ -336,7 +336,12 @@ def run(name, eng=None):
         eng = "files" if (engine.WORK_DIR / name / "files" / "scene_01_l00.wav").exists() else "edge"
     final = engine.render(story, eng)
     write_alignment(story, final)
-    upload_kit.build(story, final, sum(s["dur"] for s in engine.SCENES))
+    total = sum(s["dur"] for s in engine.SCENES)
+    upload_kit.build(story, final, total)
+    from core.policy import MAX_SECONDS
+    if total > MAX_SECONDS:   # LENGTH LOCK (user, 19 Nov 2026): a Short over 25 s is never "done"
+        raise SystemExit(f"[LENGTH LOCK] FAILED: {final.name} is {total:.1f}s - max {MAX_SECONDS:.0f}s. "
+                         f"Cut the script (<= 68 words) and record the voice again. Do NOT upload this file.")
     return final
 
 

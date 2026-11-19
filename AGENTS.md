@@ -79,18 +79,14 @@
     - **No Repetitive Horns**: NEVER use the loud conch horn ("shankh" / "pooooooo") repeatedly across shorts.
     - **Music Variety**: Use cinematic devotional ambient pads (`MUSIC_STYLE = "ambient"`, 80–92 BPM, `MUSIC_VOLUME = 0.10–0.12`) so every short sounds fresh, modern, and distinct.
 
-11. **Target Duration & Script Calibration (30 to 35 Seconds Rule - Strict for BOTH Channels)**:
-    - **APPLIES TO BOTH CHANNELS**: Strictly enforced for **Divya Rahasya (@DivyaRahasya / Sanatan Katha)** AND **RealityShift (@RealityShiftByAnkit)**.
-    - **MANDATORY DURATION**: All YouTube Shorts must be strictly **30 to 35 seconds** long.
-    - **Script Word Count**: 80 to 105 spoken Hindi words.
-    - **Character Limit for KikiVoice**: Strictly **500 to 650 characters** in `kiki_narrator.txt` (including `((⏱=400))` pause tags). NEVER write 800+ or 1,000 character scripts.
-    - **High-Retention Pacing Arc**:
-      - `00:00 - 00:03`: Instant curiosity / shock hook.
-      - `00:03 - 00:12`: High-stakes premise / conflict.
-      - `00:12 - 00:24`: Core action / secret reveal / pivotal twist.
-      - `00:24 - 00:30`: Climactic impact / victory.
-      - `00:30 - 00:35`: Punchy CTA + subscribe prompt.
-    - **Shorts Algorithm Advantage**: 30–35s length delivers maximal Average Percentage Viewed (APV > 70–100%), triggering YouTube's viral recommendation engine.
+11. **Target Duration & Script Calibration (25-Second HARD LOCK - BOTH Channels)**:
+    - **🔒 HARD LENGTH LOCK (user, 19 Nov 2026)**: NO Short may be longer than **25 seconds**. Ever. Target 20-24 s, 55-68 spoken Hindi words, 320-450 KikiVoice characters (pause tags included), 5-6 scenes. Enforced in code (SanatanKatha): `core/policy.py` blocks scripts over 68 words, `core/katha.py` fails any render over 25 s.
+    - **Old 30-35 s rule is CANCELLED** (user, 19 Nov 2026). Never write 80-105 word / 500-650 character scripts again.
+    - **High-Retention Pacing Arc (<= 25 s)**:
+      - `00:00 - 00:03`: Instant shock / paradox hook (zero backstory).
+      - `00:03 - 00:12`: Conflict + the one line of "why" (no exposition cliff).
+      - `00:12 - 00:19`: Climax / turning point shown physically.
+      - `00:19 - 00:24`: Twist + grammatical loop back into the hook (no slow CTA; the comment ask goes in the pinned comment).
 
 12. **Mid-Video Pacing & Re-Hook (The 15–18s Anti-Drop Rule - BOTH Channels)**:
     - **Never Plateau at Reveal**: When the secret weapon, turning point, or deity leela is revealed around 15–18s, NEVER transition into slow theoretical explanations, philosophical lectures, or textbook backstory (which caused the 17s drop in KALI 5000).
@@ -101,7 +97,7 @@
 
 13. **Outro & CTA Velocity (The 3-Second Snap & Loop Rule - BOTH Channels)**:
     - **No 6-7 Second Drag**: Outros/CTAs must NEVER drag for 6–7 seconds at the end. Viewers swipe the exact second they realize the core story is over.
-    - **Tight 3-Second Snap**: Keep the engagement prompt and subscribe ask strictly within **3 to 4 seconds**:
+    - **Tight Snap (only if it fits inside 25 s)**: Prefer the loop ending; if a CTA is used keep it under **2 seconds**:
       - **Divya Rahasya**: `Comment mein 'JAI SHRI KRISHNA' / 'HAR HAR MAHADEV' likhein aur subscribe karein Divya Rahasya!`
       - **RealityShift**: `Comment mein 'JAI HIND' likhein aur subscribe karein Reality Shift!`
     - **Seamless Loop**: Keep background visuals and dynamic animation running during CTA so the video snaps seamlessly back into the opening hook for automatic replay bonus.

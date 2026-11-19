@@ -246,13 +246,21 @@ def _krishna_arms(pose, t):
         return [(L, (-165, -390), (-152, -302)), (R, (200, -425), (178 + 3 * math.sin(t * 2), -565))]
     if pose == "ask":
         return [(L, (-165, -390), (-152, -302)), (R, (215, -415), (305, -440 + 4 * math.sin(t * 2.4)))]
+    if pose == "dance":
+        wL = 8 * math.sin(t * 6.0)
+        wR = 8 * math.cos(t * 6.0)
+        return [(L, (-170, -560), (-145 + wL, -750)), (R, (170, -560), (145 - wR, -750))]
     return [(L, (-160, -395), (-150, -305)), (R, (160, -395), (150, -305))]
 
 
 def krishna(ctx, x, y, s, t, pose="flute", look=(0.0, 0.0), smile=1.0, flip=False, a=1.0, aura=True):
     """Shri Krishna, cartoon: blue skin, mor-pankh mukut, pitambar, vaijayanti mala, bansuri."""
     def draw():
-        place(ctx, x, y, s, t, flip)
+        dance_y = 16 * abs(math.sin(t * 6.0)) if pose == "dance" else 0.0
+        dance_rot = 0.05 * math.sin(t * 6.0) if pose == "dance" else 0.0
+        place(ctx, x, y - dance_y, s, t, flip)
+        if pose == "dance":
+            ctx.rotate(dance_rot)
         if aura:
             halo(ctx, 0, -650, 175, t)
         _krishna_body(ctx, t, pose, look, smile)
@@ -350,6 +358,9 @@ def _krishna_body(ctx, t, pose, look, smile):
         lh = arms[0][2]
         _flute(ctx, lh[0] - 6, lh[1] - 150, lh[0] + 6, lh[1] + 120)
         hand(ctx, *lh, skin)
+    elif pose == "dance":
+        palm(ctx, arms[0][2][0], arms[0][2][1], skin, ang=-0.15, s=0.95)
+        palm(ctx, arms[1][2][0], arms[1][2][1], skin, ang=0.15, s=0.95)
     else:
         for _, _, hd in arms:
             hand(ctx, *hd, skin)
@@ -1581,6 +1592,10 @@ def _karna_body(ctx, t, pose, kavach, look, mood, pour):
         arms = [(L, (-170, -420), (-60, -410)), (R, (170, -420), (60, -410))]
     elif pose == "namaste":
         arms = [(L, (-118, -420), (-14, -480)), (R, (118, -420), (14, -480))]
+    elif pose == "raise":    # screen-right hand lifted high above the shoulder (holding a spear / shakti)
+        arms = [(L, (-200, -420), (-212, -330)), (R, (250, -660), (215, -810))]
+    elif pose == "throw":    # follow-through: screen-right arm whipped across towards screen-left
+        arms = [(L, (-200, -420), (-212, -330)), (R, (60, -620), (-175, -650))]
     else:
         arms = [(L, (-200, -420), (-212, -330)), (R, (200, -420), (190, -330))]
     if pose == "stand":
