@@ -1,0 +1,7 @@
+# Both pipelines (RealityShift/, SanatanKatha/). Python 3.14; ffmpeg must be on PATH.
+pycairo==1.29.2          # every frame is drawn in code
+numpy==2.4.6             # music, SFX, mixing
+moviepy==2.2.1           # frame + audio -> MP4
+edge-tts==7.3.1          # fallback / preview narration
+requests==2.34.2
+openai-whisper==20250625 # KikiVoice clip alignment (--kiki-split, --check-voice); pulls in torch
