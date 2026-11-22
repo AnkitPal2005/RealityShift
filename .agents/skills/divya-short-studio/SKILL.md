@@ -41,14 +41,14 @@ Also read both of these before Phase 2:
    and props (army, petals, bow, divine_arrow). Custom characters from other kathas can be imported
    (`from kathas.ghatotkach import arjuna`).
 
-## Phase 1 - Script: a COMPLETE story, not half - in <= 25 seconds
+## Phase 1 - Script: a COMPLETE story, not half - in 22-30 seconds
 
 The user rejected a 22-second version with "ye to adhi script hai". A Short must answer every "why" the viewer has.
 Checklist before you show the script:
 
 - [ ] **Hook (0-3s)**: the most shocking result first, zero backstory. ("मरते मरते भी, घटोत्कच ने, कौरवों की पूरी एक अक्षौहिणी कुचल दी!")
 - [ ] **Who / why it matters** in ONE punchy line (or skip it if the hook already says it).
-  With only 55-68 words, merge beats: every line must be action or stakes. No slow backstory, no
+  With only 60-80 words, merge beats: every line must be action or stakes. No slow backstory, no
   'maa ke garbh mein suna tha' style exposition - the user called that script 'bekar'.
 - [ ] **Action** (fast, no pauses): growth, fire, army fleeing.
 - [ ] **Conflict voice**: a character screams/commands (Duryodhan: "कर्ण, वो शक्ति चलाओ!").
@@ -58,9 +58,10 @@ Checklist before you show the script:
 - [ ] **Loop ending**: last words grammatically run into the first line ("...और" -> "मरते मरते भी...").
 
 Format rules:
-- 🔒 **HARD LOCK: never longer than 25 s.** 5-6 scenes, **20-24 s**, **55-68 spoken words**, **320-450 characters**
-  in the KikiVoice text (pause tags included). `core/policy.py` blocks > 68 words; `core/katha.py` fails a render
-  > 25 s. Count words BEFORE showing the script. (The old 30-35 s / 7-scene rule is cancelled.)
+- 🔒 **LOCK (user, 22 Nov 2026, YouTube Studio plan): 22-30 s, never longer than 30 s.** 5-7 scenes,
+  **60-80 spoken words**, **350-520 characters** in the KikiVoice text (pause tags included). The story must be
+  COMPLETE. `core/policy.py` blocks > 80 words; `core/katha.py` fails a render > 30 s. Count words BEFORE showing
+  the script.
 - Pure spoken Hindi, 4-8 word phrases, commas for breath, "..." for a held beat, "!" for shouts.
 - **Never a "?" in the middle of a line** (KikiVoice drops the next word). Numbers/acronyms spelled in Hindi words.
 - Folk/variant facts: note them in `SOURCES` and in the description ("kuch sanskaranon mein...").
@@ -151,7 +152,7 @@ Keep pause tags OUT of the SPEC text (they would break Whisper matching) - add t
    from core import katha;katha.run('<name>','files')"
    ```
    Then delete the leftover `*TEMP_MPY*` file.
-5. Verify: `ffprobe` duration <= 25 s (20-24 ideal), then grab a frame strip
+5. Verify: `ffprobe` duration <= 30 s (22-30), then grab a frame strip
    (`ffmpeg -i x.mp4 -vf "select='eq(n,30)+eq(n,330)+...',scale=270:480,tile=8x1" -frames:v 1 strip.png`) and LOOK
    at it - grow/throw/impact must land on their words.
 

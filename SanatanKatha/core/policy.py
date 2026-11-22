@@ -40,8 +40,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent   # the SanatanKatha folder
 HISTORY = ROOT / "data" / "policy_history.json"
 MAX_OVERLAP = 0.25   # share of this script's 4-word phrases allowed to appear in any other Short
-MAX_SECONDS = 25.0      # LENGTH LOCK (user, 19 Nov 2026): no Short longer than 25 s - ever
-MAX_WORDS = 68          # spoken Hindi words that fit in 25 s of KikiVoice
+MAX_SECONDS = 30.0      # LENGTH LOCK (user, 22 Nov 2026, YouTube Studio plan): 22-30 s so the story finishes; never over 30 s
+MAX_WORDS = 80          # spoken Hindi words that fit in 30 s of KikiVoice
 MAX_LAYOUT_RUN = 2   # Shorts in a row allowed on the same screen layout
 CTA_DEVICES = {"subscribe_badge", "cursor_click", "comment_bubble", "bell"}
 OPENING_WORDS = 4    # this many opening words may not match any of the last OPENING_LOOKBACK Shorts
@@ -300,7 +300,7 @@ def check(story, name: str) -> None:
                 problems.append(f"{overlap:.0%} of the narration repeats {mod} (limit {MAX_OVERLAP:.0%})")
 
     spoken = " ".join(narration(story))
-    # LENGTH LOCK (user, 19 Nov 2026): no Short may run longer than 25 s. ~2.9-3.2 spoken words/s on KikiVoice,
+    # LENGTH LOCK (user, 22 Nov 2026): no Short may run longer than 30 s. ~2.9-3.2 spoken words/s on KikiVoice,
     # so more than MAX_WORDS words cannot fit - block before any voice is spent.
     n_words = len(spoken.split())
     if n_words > MAX_WORDS:

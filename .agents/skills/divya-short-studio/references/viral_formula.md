@@ -33,8 +33,8 @@ Verify every date on Drik Panchang.
   composition of the whole Short and shows the hook line's emotion.
 - Title, thumbnail text and line 1 say the same thing.
 
-## 5. 25-second arc (HARD LOCK - see SKILL.md)
-0-3 s shock | 3-12 s conflict + ONE line of why | 12-19 s climax shown physically | 19-24 s twist + loop.
+## 5. 22-30 second arc (LOCK - see SKILL.md)
+0-2 s paradox hook | 2-12 s conflict + ONE line of why | 12-22 s climax shown physically | 22-29 s resolution + loop.
 Last words must grammatically run into the first line ("...tabhi to" -> "saat maharathi... dar gaye the!").
 
 ## 6. Retention mechanics
