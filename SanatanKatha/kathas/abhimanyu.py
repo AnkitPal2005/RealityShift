@@ -15,7 +15,7 @@ import core.devta as dv
 from core.devta import ell, gem, hand, ink, limb, sheen, smooth, eye, palm, rrect, line, lerp, clamp, ease_out_cubic, ease_out_back, rnd
 from kathas.ghatotkach_akshauhini import duryodhan, gada, soldier, kaurava_mob
 
-TOPIC = "ABHIMANYU CHAKRAVYUH VEERGATI"
+TOPIC = "CHAKRAVYUH SAAT DARWAZE ABHIMANYU"
 OUTPUTS = {"edge": "abhimanyu_short.mp4", "files": "abhimanyu_short.mp4"}
 MUSIC_STYLE = "tension"    # War tension & Chakravyuh siege
 MUSIC_BPM = 84             # Pacing 84 BPM (strictly within 80-92 range, distinct from ghatotkach 90)
@@ -55,16 +55,16 @@ SPEC = [
      "vo": [("punch", [("सात महारथी...", "SAAT MAHARATHI..."),
                        ("एक सोलह साल के", "EK SOLAH SAAL KE"),
                        ("बालक से, डर गए थे!", "BAALAK SE, DAR GAYE THE!")], 0.04)]},
-    {"key": "ghus", "text": "CHAKRAVYUH MEIN AKELA GHUSA",
-     "visual": "Abhimanyu enters the rotating 7-tier Chakravyuh alone; Kaurava soldiers scatter outward in panic",
-     "vo": [("build", [("चक्रव्यूह में अभिमन्यु", "CHAKRAVYUH MEIN ABHIMANYU"),
-                       ("अकेला घुसा, और", "AKELA GHUSA, AUR"),
+    {"key": "ghus", "text": "CHAKRAVYUH KE SAATON DARWAZE",
+     "visual": "Abhimanyu enters and breaches the rotating 7-tier Chakravyuh; Kaurava soldiers scatter in panic",
+     "vo": [("build", [("चक्रव्यूह के सातों दरवाज़े,", "CHAKRAVYUH KE SAATON DARWAZE,"),
+                       ("अभिमन्यु भेदता गया...", "ABHIMANYU BHEDTA GAYA..."),
                        ("कौरव सेना बिखर गई।", "KAURAV SENA BIKHAR GAYI.")], 0.04)]},
-    {"key": "dhanush", "text": "PEECHHE SE DHANUSH KAATO",
-     "visual": "Drona commands Karna from behind; treacherous arrow shatters Abhimanyu's bow, forcing him to one knee",
-     "vo": [("fast", [("द्रोण बोले, कर्ण...", "DRONA BOLE, KARNA..."),
-                      ("पीछे से इसका", "PEECHHE SE ISKA"),
-                      ("धनुष काटो!", "DHANUSH KAATO!")], 0.04)]},
+    {"key": "dhanush", "text": "YUDDHA KA NIYAM TODA",
+     "visual": "Drona commands Karna from behind; treacherous arrow shatters Abhimanyu's bow, violating warrior code",
+     "vo": [("fast", [("द्रोण ने युद्ध नियम तोड़ा...", "DRONA NE YUDDHA NIYAM TODA..."),
+                       ("बोले, कर्ण... पीछे से", "BOLE, KARNA... PEECHHE SE"),
+                       ("धनुष काटो!", "DHANUSH KAATO!")], 0.04)]},
     {"key": "pahiya", "text": "RATH KA PAHIYA UTHA LIYA",
      "visual": "Chariot shattered; Abhimanyu heaves a massive iron-studded chariot wheel overhead with blazing resolve",
      "vo": [("punch", [("धनुष टूटा, रथ टूटा...", "DHANUSH TOOTA, RATH TOOTA..."),
@@ -72,15 +72,15 @@ SPEC = [
                        ("पहिया उठा लिया!", "PAHIYA UTHA LIYA!")], 0.04)]},
     {"key": "akela", "text": "LADTA RAHA AAKHIRI SAANS TAK",
      "visual": "Seven surround the unarmed hero tightly; Abhimanyu fights valiantly, then peaceful veergati with floral rain",
-     "vo": [("tell", [("सातों ने, एक निहत्थे", "SAATON NE, EK NIHATTHE"),
-                      ("बालक को घेरा...", "BAALAK KO GHERA..."),
-                      ("और वो लड़ता रहा,", "AUR WO LADTA RAHA,"),
-                      ("आखिरी साँस तक।", "AAKHIRI SAANS TAK.")], 0.04)]},
-    {"key": "loop", "text": "HAAR MAANNA NAHIN... TABHI TO",
+     "vo": [("tell", [("सातों ने निहत्थे", "SAATON NE NIHATTHE"),
+                       ("बालक को घेरा...", "BAALAK KO GHERA..."),
+                       ("वो लड़ा,", "WO LADA,"),
+                       ("आखिरी साँस तक।", "AAKHIRI SAANS TAK.")], 0.04)]},
+    {"key": "loop", "text": "JHUKNA NAHIN... TABHI TO",
      "visual": "Solitary Abhimanyu looks back at the sealed labyrinth; seamless crossfade into frame 0 opening",
-     "vo": [("awe", [("उसे चक्रव्यूह से", "USE CHAKRAVYUH SE"),
-                     ("निकलना नहीं आता था...", "NIKALNA NAHIN AATA THA..."),
-                     ("पर हार मानना भी नहीं।", "PAR HAAR MAANNA BHI NAHIN."),
+     "vo": [("awe", [("उसे निकलना", "USE NIKALNA"),
+                     ("नहीं आता था...", "NAHIN AATA THA..."),
+                     ("पर झुकना भी नहीं।", "PAR JHUKNA BHI NAHIN."),
                      ("तभी तो", "TABHI TO")], 0.0)]},
 ]
 
@@ -88,12 +88,15 @@ DELIVERY, SCRIPT, NARRATION = script_of(SPEC)
 HOT = hot_words({
     "SAAT": FIRE_O, "MAHARATHI...": hexc("#FF5555"), "SOLAH": GOLD_HI, "SAAL": GOLD_HI,
     "BAALAK": FIRE_Y, "DAR": hexc("#FF5555"), "GAYE": hexc("#FF5555"), "THE!": hexc("#FF5555"),
-    "CHAKRAVYUH": hexc("#FF5555"), "ABHIMANYU": FIRE_Y, "AKELA": FIRE_Y, "GHUSA,": FIRE_Y,
-    "KAURAV": hexc("#82C4FF"), "SENA": hexc("#82C4FF"), "BIKHAR": FIRE_O, "GAYI.": FIRE_O,
-    "DRONA": dv.GOLD, "KARNA...": GOLD_HI, "PEECHHE": FIRE_O, "DHANUSH": GOLD_HI, "KAATO!": hexc("#FF5555"),
-    "TOOTA,": hexc("#FF5555"), "TOOTA...": hexc("#FF5555"), "RATH": FIRE_O, "PAHIYA": FIRE_Y, "UTHA": FIRE_Y, "LIYA!": FIRE_Y,
-    "SAATON": FIRE_O, "NIHATTHE": hexc("#FF5555"), "GHERA...": FIRE_O, "LADTA": FIRE_Y, "SAANS": GOLD_HI, "TAK.": GOLD_HI,
-    "NIKALNA": hexc("#FF5555"), "NAHIN": hexc("#FF5555"), "HAAR": hexc("#FF5555"), "MAANNA": hexc("#FF5555"), "TABHI": GOLD_HI, "TO": GOLD_HI,
+    "CHAKRAVYUH": hexc("#FF5555"), "SAATON": FIRE_Y, "DARWAZE,": FIRE_Y, "ABHIMANYU": FIRE_Y,
+    "BHEDTA": FIRE_O, "GAYA...": FIRE_O, "KAURAV": hexc("#82C4FF"), "SENA": hexc("#82C4FF"),
+    "BIKHAR": FIRE_O, "GAYI.": FIRE_O, "DRONA": dv.GOLD, "YUDDHA": hexc("#FF5555"), "NIYAM": hexc("#FF5555"),
+    "TODA...": hexc("#FF5555"), "BOLE,": dv.GOLD, "KARNA...": GOLD_HI, "PEECHHE": FIRE_O,
+    "DHANUSH": GOLD_HI, "KAATO!": hexc("#FF5555"), "TOOTA,": hexc("#FF5555"), "TOOTA...": hexc("#FF5555"),
+    "RATH": FIRE_O, "PAHIYA": FIRE_Y, "UTHA": FIRE_Y, "LIYA!": FIRE_Y, "SAATON": FIRE_O,
+    "NIHATTHE": hexc("#FF5555"), "GHERA...": FIRE_O, "LADA,": FIRE_Y, "SAANS": GOLD_HI, "TAK.": GOLD_HI,
+    "NIKALNA": hexc("#FF5555"), "NAHIN": hexc("#FF5555"), "AATA": hexc("#FF5555"), "THA...": hexc("#FF5555"),
+    "JHUKNA": FIRE_Y, "BHI": FIRE_Y, "TABHI": GOLD_HI, "TO": GOLD_HI,
 })
 
 def ease_in(u):
@@ -905,32 +908,32 @@ def thumbnail(ctx):
 
 
 UPLOAD = {
-    "thumb_text": "EK BAALAK SE DARE",
+    "thumb_text": "GUPT NIYAM TODA",
     "titles": [
+        "Chakravyuh Ke 7 Darwaze Aur Abhimanyu Vadh Ka Gupt Niyam #shorts",
         "16 Saal Ke Veer Se Kyun Dar Gaye 7 Maharathi? #shorts",
-        "Abhimanyu Ka Chakravyuh: Jab 7 Maharathiyon Ne Toda Niyam",
-        "Chakravyuh Mein 16 Saal Ka Akela Sher: Abhimanyu",
+        "Chakravyuh Mein 7 Maharathiyon Ne Toda Gupt Niyam! 😱 #shorts",
         "Dhanush Toota To Uthaya Rath Ka Pahiya: Veer Abhimanyu",
-        "Mahabharat Ka Sabse Bada Adharm: Abhimanyu Vadh Rahasya",
+        "Mahabharat Ka Sabse Bada Chhal: Abhimanyu Vadh Rahasya",
     ],
     "queries": [
+        "chakravyuh ke 7 darwaze abhimanyu vadh ka gupt niyam",
         "abhimanyu chakravyuh 7 maharathi kyun dare",
-        "abhimanyu rath ka pahiya mahabharat",
         "drona ne karna se dhanush kyun katwaya",
-        "abhimanyu vadh adharm drona parva",
+        "abhimanyu vadh dharmayuddha niyam mahabharat",
     ],
     "description": (
-        "Mahabharat ke 13ve din 16 saal ke veer Abhimanyu ne ajeya Chakravyuh mein akele pravesh kiya. "
-        "Kaurav sena bikhari to saat maharathi darr gaye!\n\n"
-        "Ant mein adharm karke peechhe se Abhimanyu ka dhanush kaata gaya. Fir bhi us veer ne rath ka "
+        "Mahabharat ke 13ve din 16 saal ke veer Abhimanyu ne Chakravyuh ke saaton darwaze akele tod diye. "
+        "Jab Kaurav sena kaanpne lagi, to 7 Maharathiyon ne Dharmayuddha ka gupt niyam tod diya!\n\n"
+        "Drona ke aadesh par Karna ne peechhe se Abhimanyu ka dhanush kaata. Fir bhi us veer ne rath ka "
         "pahiya uthakar aakhiri saans tak ladai ki!\n\n"
-        "Sources: Mahabharata, Drona Parva (Abhimanyu-badha Parva, KM Ganguli trans.).\n\n"
+        "Sources: Mahabharata, Drona Parva (Abhimanyu-badha Parva, KM Ganguli trans. sections 31-49).\n\n"
         "Comment mein likhiye: Jai Veer Abhimanyu! 🙏\n\n"
         "#Shorts #Mahabharat #Abhimanyu #Chakravyuh #DivyaRahasya #SanatanDharma"
     ),
     "tags": [
-        "abhimanyu", "chakravyuh", "mahabharat", "drona", "karna", "duryodhan",
-        "veer abhimanyu", "rath ka pahiya", "divya rahasya", "kurukshetra", "adharm"
+        "abhimanyu", "chakravyuh", "saat darwaze", "gupt niyam", "mahabharat", "drona",
+        "karna", "duryodhan", "veer abhimanyu", "rath ka pahiya", "divya rahasya", "adharm"
     ],
-    "hashtags": ["#Shorts", "#Mahabharat", "#Abhimanyu"],
+    "hashtags": ["#Shorts", "#Mahabharat", "#Abhimanyu", "#Chakravyuh"],
 }
