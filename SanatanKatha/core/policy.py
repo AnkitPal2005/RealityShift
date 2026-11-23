@@ -303,9 +303,12 @@ def check(story, name: str) -> None:
     # LENGTH LOCK (user, 22 Nov 2026): no Short may run longer than 30 s. ~2.9-3.2 spoken words/s on KikiVoice,
     # so more than MAX_WORDS words cannot fit - block before any voice is spent.
     n_words = len(spoken.split())
-    if n_words > MAX_WORDS:
-        problems.append(f"LENGTH LOCK: {n_words} spoken words - max {MAX_WORDS} (Shorts must be <= "
-                        f"{MAX_SECONDS:.0f} s). Cut the script.")
+    # A katha may set LENGTH_TEST_SECONDS / LENGTH_TEST_WORDS for a user-approved one-off length test (23 Nov 2026).
+    max_w = getattr(story, "LENGTH_TEST_WORDS", MAX_WORDS)
+    max_s = getattr(story, "LENGTH_TEST_SECONDS", MAX_SECONDS)
+    if n_words > max_w:
+        problems.append(f"LENGTH LOCK: {n_words} spoken words - max {max_w} (Shorts must be <= "
+                        f"{max_s:.0f} s). Cut the script.")
     shown = [story.TOPIC] + [s.get("text", "") for s in getattr(story, "SPEC", [])]
     if m := OFF_PLATFORM.search(spoken + " " + " ".join(shown)):
         problems.append(f'off-platform call to action "{m.group(0)}" - YouTube has no DMs/bio links; '
