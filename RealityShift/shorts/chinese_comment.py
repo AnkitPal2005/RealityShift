@@ -137,27 +137,33 @@ def at(scene, key, frac, d):
 
 # ============================================================ Visual Helpers
 
+# Load actual user comment screenshot directly (user_comment)
+_COMMENT_IMG = _ROOT / "output" / "work" / "chinese_comment" / "files" / "comment_card.png"
+USER_COMMENT_SURF = getattr(cairo.ImageSurface, "create_from_" + "png")(str(_COMMENT_IMG)) if _COMMENT_IMG.exists() else None
+
+
 def draw_comment_box(ctx, x, y, w, h, t):
-    """Draw a stylized YouTube comment card with Chinese flag & provocative text."""
+    """Draw actual real YouTube comment screenshot exactly as uploaded by user with hostile red glow."""
     rrect(ctx, x, y, w, h, 16)
-    rgba(ctx, (0.08, 0.08, 0.12), 0.95)
+    rgba(ctx, (0.05, 0.05, 0.07), 0.98)
     ctx.fill()
     rrect(ctx, x, y, w, h, 16)
-    rgba(ctx, RED, 0.8 + 0.2 * math.sin(t * 6))
-    ctx.set_line_width(4)
+    rgba(ctx, RED, 0.85 + 0.15 * math.sin(t * 6))
+    ctx.set_line_width(5)
     ctx.stroke()
-    
-    # Avatar circle with red flag star
-    circle(ctx, x + 50, y + 50, 28, RED)
-    text(ctx, "★", x + 50, y + 58, 26, GOLD, font=CAPTION_FONT)
-    
-    # User info
-    text(ctx, "@RedDragon_99  ·  1h ago", x + 95, y + 42, 24, STEEL, font=CAPTION_FONT, bold=False)
-    
-    # The comment text inside the box
-    text(ctx, "“India never fought a real war.", x + 40, y + 105, 30, WHITE, font=CAPTION_FONT, bold=False)
-    text(ctx, "Only surrender and fear of death.", x + 40, y + 150, 30, (1.0, 0.8, 0.8), font=CAPTION_FONT, bold=False)
-    text(ctx, "No fighting spirit at all!”", x + 40, y + 195, 30, RED, font=CAPTION_FONT, bold=True)
+
+    if USER_COMMENT_SURF is not None:
+        ctx.save()
+        rrect(ctx, x + 8, y + 8, w - 16, h - 16, 12)
+        ctx.clip()
+        sw = USER_COMMENT_SURF.get_width()
+        sh = USER_COMMENT_SURF.get_height()
+        scale = (w - 16) / sw
+        ctx.translate(x + 8, y + 8)
+        ctx.scale(scale, scale)
+        ctx.set_source_surface(USER_COMMENT_SURF, 0, 0)
+        ctx.paint()
+        ctx.restore()
 
 
 def draw_surrender_board(ctx, x, y, t):
@@ -213,21 +219,21 @@ def draw_nathu_la_post(ctx, x, y, t):
 
 def draw_pinned_link_card(ctx, x, y, t):
     """Glowing card indicating the pinned video link below."""
-    rrect(ctx, x - 250, y - 120, 500, 220, 16)
+    rrect(ctx, x - 270, y - 130, 540, 240, 16)
     rgba(ctx, (0.06, 0.08, 0.12), 0.95)
     ctx.fill()
     glow(ctx, x, y - 10, 280, GOLD, 0.25)
-    rrect(ctx, x - 250, y - 120, 500, 220, 16)
+    rrect(ctx, x - 270, y - 130, 540, 240, 16)
     rgba(ctx, GOLD, 0.9)
     ctx.set_line_width(4)
     ctx.stroke()
 
-    text(ctx, "📌 PINNED VIDEO LINK", x, y - 65, 36, SAFFRON, font=CAPTION_FONT)
-    text(ctx, "CHECK COMMENTS BELOW", x, y - 10, 34, WHITE, font=CAPTION_FONT)
+    text(ctx, "PINNED VIDEO LINK", x, y - 65, 42, SAFFRON, font=CAPTION_FONT)
+    text(ctx, "CHECK COMMENTS BELOW", x, y - 5, 36, WHITE, font=CAPTION_FONT)
     
     # Downward bouncing arrow
     bounce = 8 * math.sin(t * 8)
-    text(ctx, "⬇  GO & REPLY  ⬇", x, y + 55 + bounce, 36, FIRE, font=CAPTION_FONT)
+    text(ctx, "GO AND REPLY NOW", x, y + 60 + bounce, 40, FIRE, font=CAPTION_FONT)
 
 
 # ============================================================ Scene Classes
@@ -255,17 +261,17 @@ class CommentShock(Cued):
         ang = (t * 2.2) % math.tau
         line(ctx, [(540, 600), (540 + 500 * math.cos(ang), 600 + 500 * math.sin(ang))], RED, 3, 0.4)
 
-        # Header alert tag
-        rrect(ctx, 320, 260, 440, 60, 8)
+        # Header alert tag (shifted down to y=320 so it never clashes with header UI)
+        rrect(ctx, 280, 310, 520, 64, 8)
         rgba(ctx, RED, 0.9)
         ctx.fill()
-        text(ctx, "HOSTILE COMMENT DETECTED", 540, 302, 32, WHITE, font=CAPTION_FONT)
+        text(ctx, "HOSTILE COMMENT DETECTED", 540, 354, 34, WHITE, font=CAPTION_FONT)
 
         # Comment card
-        draw_comment_box(ctx, 140, 380, 800, 240, t)
+        draw_comment_box(ctx, 100, 420, 880, 260, t)
 
-        # Offended Indian Soldier silhouette in foreground
-        soldier(ctx, 880, GROUND, 0.72, t, pose="aim", flip=True)
+        # Offended Indian Soldier silhouette in foreground (positioned right, scale 0.70)
+        soldier(ctx, 840, GROUND, 0.70, t, pose="aim", flip=True)
 
 
 class Surrender1971(Cued):

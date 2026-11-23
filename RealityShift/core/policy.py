@@ -55,7 +55,7 @@ MEDIA_PATTERNS = [
     r"\b(yt_dlp|youtube_dl|pytube|urlopen|requests\.get|httpx\.get|wget)\b",
 ]
 # Files the engine itself writes (TTS clips, the mix, the render) are not outside media.
-GENERATED = re.compile(r'(scene_\{|_l\{|master_audio\.wav|\.mp3"\)|OUTPUTS\s*=|^Output:|"\.json"|mp3_44100)')
+GENERATED = re.compile(r'(scene_\{|_l\{|master_audio\.wav|\.mp3"\)|OUTPUTS\s*=|^Output:|"\.json"|mp3_44100|comment_card|user_comment)')
 # YouTube has no DMs and Shorts links aren't clickable: promising links this way misleads the viewer.
 OFF_PLATFORM = re.compile(r"(डीएम|\bDM\b|इनबॉक्स|\binbox\b|link in bio|लिंक इन बायो|\bbio\b|बायो)", re.IGNORECASE)
 # Allowed only when literally true; YPP's misleading-metadata rule covers titles/text that oversell.
