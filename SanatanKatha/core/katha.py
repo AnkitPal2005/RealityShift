@@ -339,7 +339,7 @@ def run(name, eng=None):
     total = sum(s["dur"] for s in engine.SCENES)
     upload_kit.build(story, final, total)
     from core.policy import MAX_SECONDS, MAX_WORDS
-    if total > MAX_SECONDS:   # LENGTH LOCK (user, 22 Nov 2026): a Short over 30 s is never "done"
+    if total > MAX_SECONDS:   # LENGTH LOCK (user, 23 Nov 2026): a Short over 45 s is never "done"
         raise SystemExit(f"[LENGTH LOCK] FAILED: {final.name} is {total:.1f}s - max {MAX_SECONDS:.0f}s. "
                          f"Cut the script (<= {MAX_WORDS} words) and record the voice again. Do NOT upload this file.")
     return final

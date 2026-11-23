@@ -1,5 +1,9 @@
 # Divya Rahasya & YouTube Agent Rules
 
+> **NOTE (23 Nov 2026):** the root `AGENTS.md` -> "Latest Decisions" section wins wherever this file disagrees
+> (length 30-45 s, no commas or pause tags in Kiki text, Multilingual voice processing, gaps).
+
+
 ## Voiceover & Shorts Creation Workflow
 
 1. **User Voiceover Preference**:

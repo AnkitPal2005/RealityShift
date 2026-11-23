@@ -40,8 +40,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent   # the SanatanKatha folder
 HISTORY = ROOT / "data" / "policy_history.json"
 MAX_OVERLAP = 0.25   # share of this script's 4-word phrases allowed to appear in any other Short
-MAX_SECONDS = 30.0      # LENGTH LOCK (user, 22 Nov 2026, YouTube Studio plan): 22-30 s so the story finishes; never over 30 s
-MAX_WORDS = 80          # spoken Hindi words that fit in 30 s of KikiVoice
+MAX_SECONDS = 45.0      # LENGTH LOCK (user, 23 Nov 2026): story must finish, no rushing; 30-45 s, never over 45 s
+MAX_WORDS = 120         # spoken Hindi words that fit in 45 s of KikiVoice
 MAX_LAYOUT_RUN = 2   # Shorts in a row allowed on the same screen layout
 CTA_DEVICES = {"subscribe_badge", "cursor_click", "comment_bubble", "bell"}
 OPENING_WORDS = 4    # this many opening words may not match any of the last OPENING_LOOKBACK Shorts

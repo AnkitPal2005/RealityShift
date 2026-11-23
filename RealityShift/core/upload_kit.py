@@ -148,7 +148,11 @@ def build(story, final: Path, duration: float) -> Path:
     md += ["", "## Thumbnail", "", f"Text: **{up['thumb_text']}**  ", f"File: `{thumb.name}` (1080x1920; feed preview "
            f"`{thumb.stem}_feed.png`)  ", "Upload it in the YouTube app: Short -> Edit -> Thumbnail.", "",
            "## Description", "", "```", up["description"].strip(), "", " ".join(up["hashtags"]), "```", "",
-           "## Tags", "", "```", ", ".join(up["tags"]), "```", "", "## Checks", "",
+           "## Tags", "", "```", ", ".join(up["tags"]), "```", ""]
+    pinned = up.get("pinned_comment") or up.get("pinned")
+    if pinned:   # post + pin within 30 minutes of upload
+        md += ["## Pinned comment", "", "```", pinned, "```", ""]
+    md += ["## Checks", "",
            "| | Check | Result |", "|---|---|---|"]
     md += [f"| {'OK' if ok else 'FIX'} | {label} | {detail} |" for ok, label, detail in rows]
     md += ["", "Ship it, or change it?", ""]

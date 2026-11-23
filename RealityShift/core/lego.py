@@ -22,6 +22,7 @@ Options (add one or two a week, see the content calendar):
   palette     intel  - teal-green HUD on near-black (Chicken's Neck)
               amber  - amber radar phosphor on warm black
               glacier - ice blue on deep night navy, warm yellow highlights (Siachen, 12 Nov)
+              khaki  - archival olive-khaki on dark field green, brick-red alerts (HF-24 Marut, 23 Nov)
   ending      poll   - HAAN / NAA poll card + COMMENT KARO bubble (Chicken's Neck)
               prompt - question card with a typing comment field and an arrow at the comment button
 """
@@ -47,6 +48,8 @@ PALETTES = {
               "ink": hexc("#FFF4E0")},
     "glacier": {"ui": hexc("#9FE3FF"), "panel": (0.01, 0.025, 0.055), "alert": hexc("#FF4D6D"), "hi": hexc("#FFD84D"),
                 "ink": (1, 1, 1)},
+    "khaki": {"ui": hexc("#CFC58A"), "panel": (0.022, 0.026, 0.016), "alert": hexc("#E2483A"), "hi": hexc("#FFD166"),
+              "ink": hexc("#F6F1E1")},
 }
 
 
