@@ -40,12 +40,23 @@
     translucent form in the hardest moment, at least one temple/aarti scene, Bhagwan in disguise revealed at the end,
     and the last frame on Bhagwan's smile/blessing. Balance: Bhagwan is WITH the hero, the hero does the hard work.
     Always respectful (never weak/comic). Reuse `home_altar()` / `kanha_light()` from `kathas/daadi_morpankh.py`.
+10b. **Hindi titles + thumbnails (user, 24 Nov - overrides #10 Hinglish)**: DR titles in Devanagari Hindi, thumbnail text in Devanagari via ffmpeg drawtext + Nirmala.ttc (Cairo/Impact = tofu); pick thumbnail words with no conjuncts (drawtext does not join them). Roman keywords stay in description/tags; video subtitles stay Roman.
 12. **Plan file**: the current day-by-day plan lives in `PLAN.md` (root). Read it before choosing a topic.
 13. **HF-24 Marut YouTube Studio Lessons (23 Nov 2026 RS Data)**:
     - 1,342 views in first 2h (typical 10-80, 15x jump), 66.2% viewed vs swiped away (benchmark 48-51%). Defense curiosity hook works.
     - **Midpoint drop issue**: 18s average view duration on 39s video (47.4% APV). Drop occurred at 0:18 transition into historical/engine backstory (Exposition Cliff).
     - **Direct Rule for RS Shorts (Kaveri / Defense sequels)**: Keep video tight (32-35s), NEVER do flat committee/bureaucracy exposition at 0:15-0:20. Use dynamic visual spec side-by-side callouts to hold attention.
     - **Comments trigger**: Always pin an active debate question in the first 30 mins to drive comment loop and distribution tier push.
+14. **Length tightened + comment test (24 Nov 2026, "Bees Baar Reject" 12 h data)** - OVERRIDES #1 length:
+    - Data: Bees Baar Reject (Mahadev, Karm Aur Kripa) 34.2 s -> 1,295 views, 60.2% viewed (typical 45-50%),
+      63 likes (typical 10-30), AVD 23 s = 66.1%, **0 comments**. Eklavya 36.8 s -> 23 s (62.7%), Marut 38.3 s -> 18 s,
+      Ghatotkach 20 s -> 79.8%. Viewers watch ~18-23 s whatever the length, so #8's trigger has fired.
+    - **New DR Shorts target: 28-32 s, ~75-85 spoken words, 5-6 scenes.** Hard max 35 s. The story still finishes:
+      cut beats and backstory, NEVER speed the voice past atempo 1.10 (user: "tez tez nahi bhagna").
+    - Turn/conflict by 0:08, payoff by ~0:26.
+    - **Comment test (2 Shorts, then compare)**: last spoken line = a short bhakti/debate prompt, e.g.
+      "जो मानता है वो लिखे हर हर महादेव।" (no promise of wishes). Pinned comment still goes up within 30 min.
+    - TEST 24-30 Nov (user): 2 modern faith Shorts a day, rules + stop rule in PLAN.md; review 30 Nov.
 
 ## Voiceover & Shorts Creation Workflow
 

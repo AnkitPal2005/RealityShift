@@ -462,6 +462,11 @@ def boy(ctx, x, y, s, t, pose="stand", mood="neutral", look=(0.0, 0.0), flip=Fal
             arms = [(L, (-110, -430), (110, -470)), (R, (150, -440), (160, -470))]
         elif pose == "ride":                                 # both hands forward on handlebars
             arms = [(L, (-90, -440), (150, -470)), (R, (160, -440), (210, -470))]
+        elif pose == "wash":                                 # scrubbing utensils in a tub (added for papa_karz)
+            arms = [(L, (-150, -420), (-40 + 24 * math.sin(t * 9), -330)),
+                    (R, (150, -420), (50 - 24 * math.sin(t * 9 + 1.3), -330))]
+        elif pose == "offer":                                # both hands forward holding a plate (papa_karz)
+            arms = [(L, (-60, -440), (110, -455)), (R, (170, -430), (200, -455))]
         else:
             arms = [(L, (-150, -420), (-150, -330)), (R, (150, -420), (150, -330))]
         for sh, el, hd in arms:
