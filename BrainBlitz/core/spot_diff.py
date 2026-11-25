@@ -23,6 +23,7 @@ PX, PW, PH = 60, 960, 640
 PA_Y, PB_Y = 250, 930
 PUZZLE_END = 10.0
 BEAT_NO = 1   # phonk beat for this Short - give every new Short its own number
+MAG_POS = (705, 300)   # panel-local centre of the magnifier lens on the hard difference
 FONT = "Impact"
 
 # (local x, local y, circle r, reveal time, label)
@@ -810,7 +811,7 @@ def draw_frame(ctx, t, sa, sb):
     if t >= MAG_T and fade > 0:
         ms = ease_out_back((t - MAG_T) / 0.4)
         hx, hy = DIFFS[2][0], DIFFS[2][1]
-        mlx, mly, mr, zoom = 705, 300, 92, 3.0
+        (mlx, mly), mr, zoom = MAG_POS, 92, 3.0
         for py, variant in ((PA_Y, "A"), (PB_Y, "B")):
             mx, my = PX + mlx, py + mly
             ctx.save()

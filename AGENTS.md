@@ -40,7 +40,7 @@
     translucent form in the hardest moment, at least one temple/aarti scene, Bhagwan in disguise revealed at the end,
     and the last frame on Bhagwan's smile/blessing. Balance: Bhagwan is WITH the hero, the hero does the hard work.
     Always respectful (never weak/comic). Reuse `home_altar()` / `kanha_light()` from `kathas/daadi_morpankh.py`.
-10b. **Hindi titles + thumbnails (user, 24 Nov - overrides #10 Hinglish)**: DR titles in Devanagari Hindi, thumbnail text in Devanagari via ffmpeg drawtext + Nirmala.ttc (Cairo/Impact = tofu); pick thumbnail words with no conjuncts (drawtext does not join them). Roman keywords stay in description/tags; video subtitles stay Roman.
+10b. **Hindi titles + thumbnails = DR LONG videos only (user, 24 Nov; clarified 25 Nov: "vo long video ke liye tha")**: DR SHORTS titles stay Hinglish/Roman (e.g. "Maa Ne Kangan Beche... Kanha Ne Phone Band Kar Diya #shorts"). DR long titles in Devanagari Hindi, thumbnail text in Devanagari via ffmpeg drawtext + Nirmala.ttc (Cairo/Impact = tofu); pick thumbnail words with no conjuncts (drawtext does not join them). Roman keywords stay in description/tags; video subtitles stay Roman.
 12. **Plan file**: the current day-by-day plan lives in `PLAN.md` (root). Read it before choosing a topic.
 13. **HF-24 Marut YouTube Studio Lessons (23 Nov 2026 RS Data)**:
     - 1,342 views in first 2h (typical 10-80, 15x jump), 66.2% viewed vs swiped away (benchmark 48-51%). Defense curiosity hook works.

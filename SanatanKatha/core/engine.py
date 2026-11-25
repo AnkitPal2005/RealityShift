@@ -1202,13 +1202,14 @@ def render(story, engine: str) -> Path:
         seed=getattr(story, "MUSIC_SEED", int(hashlib.md5(name.encode()).hexdigest()[:8], 16)))
     music = np.pad(music, (0, max(0, len(voice) - len(music))))[:len(voice)]
     mix = voice + getattr(story, "MUSIC_VOLUME", MUSIC_VOLUME) * music * duck
-    events = [(max(0.0, s["start"] - 0.2), "whoosh") for s in SCENES[1:]]
+    # SCENE_WHOOSH = False in a module drops the automatic whoosh on every cut; SFX_SCALE scales all SFX
+    events = [(max(0.0, s["start"] - 0.2), "whoosh") for s in SCENES[1:]] if getattr(story, "SCENE_WHOOSH", True) else []
     for s in SCENES:
         events += [(s["start"] + ev[0],) + tuple(ev[1:]) for ev in s["obj"].events(s["dur"])]
     for et, name, *extra in events:
         # an optional third element is the clip length for continuous sounds (engine)
         src = engine_sound(extra[0]) if name == "engine" else bank[name]
-        clip = src * SFX_GAIN[name]
+        clip = src * SFX_GAIN[name] * getattr(story, "SFX_SCALE", 1.0)
         i0 = int(et * SR)
         end = min(len(mix), i0 + len(clip))
         mix[i0:end] += clip[:end - i0]

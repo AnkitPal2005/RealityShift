@@ -43,6 +43,13 @@ CAM_MOVE = 0.6
 STAMP_T = [22.6, 23.1, 23.6, 24.1]
 END_T = 25.0
 
+# question text (lanes_02+ override these from their own module)
+Q = "3 + 3 x 3 = ?"
+PEEK = "18"                                  # wrong answer the copier sees
+STEPS = ("3 x 3 = 9", "9 + 3 = 12")          # thinker bubble, step 1 then step 2
+ANS_LINE = "SAHI JAWAB = 12"
+HOW_LINE = "PEHLE 3 x 3 = 9, PHIR 9 + 3"
+
 
 # ----------------------------------------------------------------- helpers
 def clamp(v, a=0.0, b=1.0):
@@ -449,7 +456,7 @@ def draw_lane(ctx, i, t):
     ctx.rectangle(bx, by, bw, bh)
     fill_outline(ctx, (0.14, 0.32, 0.24), 2)
     if t < END_T:
-        text(ctx, "3 + 3 x 3 = ?", bx + bw / 2, by + bh / 2, 40, (0.95, 0.97, 0.93))
+        text(ctx, Q, bx + bw / 2, by + bh / 2, 40, (0.95, 0.97, 0.93))
     else:
         s = ease_out_back((t - END_T - i * 0.12) / 0.35)
         pulse = 1 + 0.06 * math.sin(t * 6 + i)
@@ -520,7 +527,7 @@ def draw_lane(ctx, i, t):
             k = ease((t - 10.0) / 0.9)
             x = ax + 30 + (330 - ax - 30) * k
             y = ay + 10 + (120 - ay - 10) * k
-            text(ctx, "18", x, y, 34 + 20 * k, (1, 0.7, 0.1), stroke=INK, sw=6,
+            text(ctx, PEEK, x, y, 34 + 20 * k, (1, 0.7, 0.1), stroke=INK, sw=6,
                  alpha=clamp((t - 10.0) / 0.15) * clamp((11.75 - t) / 0.15))
     if i == 2:
         if 12.8 <= t < 14.0:
@@ -554,7 +561,7 @@ def draw_lane(ctx, i, t):
             rrect(ctx, -110, -34, 220, 68, 30)
             fill_outline(ctx, (1, 1, 1), 4)
             ctx.restore()
-            msg = "3 x 3 = 9" if t < 18.5 else "9 + 3 = 12"
+            msg = STEPS[0] if t < 18.5 else STEPS[1]
             text(ctx, msg, 420, 118, 40 * s, INK)
         if 19.6 <= t < 20.9:
             a = clamp((t - 19.6) / 0.15) * clamp((20.9 - t) / 0.3)
@@ -751,14 +758,14 @@ def draw_frame(ctx, t):
         ctx.save()
         ctx.translate(540, 120)
         ctx.scale(pulse, pulse)
-        text(ctx, "3 + 3 x 3 = ?", 0, 0, 118, INK)
+        text(ctx, Q, 0, 0, 118, INK)
         ctx.restore()
         text(ctx, "4 DIMAAG, 1 SAWAAL", 540, 228, 52, (0.88, 0.20, 0.25))
     elif t < END_T:
         k = ease_out_back((t - 22.3) / 0.35)
         highlighter(ctx, 540, 122, 820 * k, 104, col=(0.55, 0.95, 0.60))
-        text(ctx, "SAHI JAWAB = 12", 540, 120, 104 * k, INK)
-        text(ctx, "PEHLE 3 x 3 = 9, PHIR 9 + 3", 540, 228, 48, (0.88, 0.20, 0.25),
+        text(ctx, ANS_LINE, 540, 120, 104 * k, INK)
+        text(ctx, HOW_LINE, 540, 228, 48, (0.88, 0.20, 0.25),
              alpha=clamp((t - 22.5) / 0.3))
     else:
         k = ease_out_back((t - END_T) / 0.35)
