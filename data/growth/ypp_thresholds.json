@@ -1,0 +1,46 @@
+{
+  "_note": "Edit by hand after checking YouTube's official page (support.google.com/youtube/answer/72851). Reaching a threshold only means you MAY apply; YouTube reviews the channel by hand and can refuse.",
+  "last_checked": "2026-11-26",
+  "checked_against": "third-party 2026 guides (vidiq, creatoressentials, viewerboosts) - official help page still to be confirmed by the user",
+  "active_profile": "current",
+  "profiles": {
+    "current": {
+      "early": {
+        "label": "Early YPP (fan funding: memberships, Super Thanks, Shopping - no ad revenue)",
+        "subscribers": 500,
+        "public_uploads_90d": 3,
+        "watch_hours_365d": 3000,
+        "shorts_views_90d": 3000000
+      },
+      "full": {
+        "label": "Full YPP (ad revenue sharing, incl. Shorts feed)",
+        "subscribers": 1000,
+        "watch_hours_365d": 4000,
+        "shorts_views_90d": 10000000
+      }
+    },
+    "reported_2027": {
+      "_unverified": "Reported by a few outlets for NEW applicants from 2027-02-01. NOT confirmed on YouTube's own page. Do not plan on it until verified.",
+      "early": {
+        "label": "Early YPP (unchanged in reports)",
+        "subscribers": 500,
+        "public_uploads_90d": 3,
+        "watch_hours_365d": 3000,
+        "shorts_views_90d": 3000000
+      },
+      "full": {
+        "label": "Full YPP (reported 2027 bar, unverified)",
+        "subscribers": 1000,
+        "watch_hours_365d": 8000,
+        "shorts_views_90d": 20000000
+      }
+    }
+  },
+  "always_required": [
+    "No active Community Guidelines strike",
+    "2-Step Verification on the Google account",
+    "Live in a YPP-supported country",
+    "Follow YouTube monetization policies (incl. inauthentic / reused content)",
+    "Linked AdSense account"
+  ]
+}

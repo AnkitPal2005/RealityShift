@@ -60,7 +60,13 @@ def export(name):
     for _, _, who, text in lines_of(story):
         for phrase, ms in beats.items():
             text = text.replace(phrase, f"{phrase} {kiki_pause(ms)}", 1)
-        by.setdefault(who, []).append(text)
+        texts = by.setdefault(who, [])
+        # a sentence split across two scenes (no "।" yet) stays ONE KikiVoice line: Kiki pauses at every line
+        # break, and the splitter cuts a pause-less scene break at the Whisper word anchor (AGENTS.md #18)
+        if texts and not texts[-1].rstrip().endswith(("।", "?", "!", ".", "॥")):
+            texts[-1] = texts[-1].rstrip() + " " + text
+        else:
+            texts.append(text)
     print(f"Folder: {d}\n")
     sep = f"\n{kiki_pause(gap)}\n" if gap else "\n\n"
     for who, texts in by.items():

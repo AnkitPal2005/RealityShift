@@ -44,7 +44,13 @@ def export(name):
     d.mkdir(parents=True, exist_ok=True)
     by = {}
     for _, _, who, text in lines_of(story):
-        by.setdefault(who, []).append(text)
+        texts = by.setdefault(who, [])
+        # a sentence split across two scenes (no "।" yet) stays ONE KikiVoice line: Kiki pauses at every line
+        # break, and cut_points() already cuts a pause-less scene break at the Whisper word anchor
+        if texts and not texts[-1].rstrip().endswith(("।", "?", "!", ".", "॥")):
+            texts[-1] = texts[-1].rstrip() + " " + text
+        else:
+            texts.append(text)
     print(f"Folder: {d}\n")
     for who, texts in by.items():
         p = d / f"kiki_{who}.txt"

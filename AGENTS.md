@@ -45,7 +45,8 @@
 13. **HF-24 Marut YouTube Studio Lessons (23 Nov 2026 RS Data)**:
     - 1,342 views in first 2h (typical 10-80, 15x jump), 66.2% viewed vs swiped away (benchmark 48-51%). Defense curiosity hook works.
     - **Midpoint drop issue**: 18s average view duration on 39s video (47.4% APV). Drop occurred at 0:18 transition into historical/engine backstory (Exposition Cliff).
-    - **Direct Rule for RS Shorts (Kaveri / Defense sequels)**: Keep video tight (32-35s), NEVER do flat committee/bureaucracy exposition at 0:15-0:20. Use dynamic visual spec side-by-side callouts to hold attention.
+    - **Direct Rule for RS Shorts (Kaveri / Defense sequels)**: Keep video tight (**22-28 s, ~60-75 spoken words - user, 26 Nov 2026**; was 32-35 s), NEVER do flat committee/bureaucracy exposition at 0:15-0:20. Use dynamic visual spec side-by-side callouts to hold attention.
+    - **RS length data (26 Nov, 32 public Shorts, Analytics API)**: under 25 s = 67% APV / median 524 views (n=4); 25-35 s = 52-54% / 282-348 (n=6); 36-60 s = 48% / 224 (n=22). Viewers watch ~19 s whatever the length. Never under 20 s (the story must finish). Re-check in the 30 Nov review (`python growth.py dashboard rs --fetch`).
     - **Comments trigger**: Always pin an active debate question in the first 30 mins to drive comment loop and distribution tier push.
 14. **Length tightened + comment test (24 Nov 2026, "Bees Baar Reject" 12 h data)** - OVERRIDES #1 length:
     - Data: Bees Baar Reject (Mahadev, Karm Aur Kripa) 34.2 s -> 1,295 views, 60.2% viewed (typical 45-50%),
@@ -57,6 +58,24 @@
     - **Comment test (2 Shorts, then compare)**: last spoken line = a short bhakti/debate prompt, e.g.
       "जो मानता है वो लिखे हर हर महादेव।" (no promise of wishes). Pinned comment still goes up within 30 min.
     - TEST 24-30 Nov (user): 2 modern faith Shorts a day, rules + stop rule in PLAN.md; review 30 Nov.
+
+(Rules 15-17 live in the root `AGENTS.md` - read it too.)
+
+18. **KikiVoice line-writing rules (user-tested, 26 Nov 2026, Hanuman Cycle + Nathu La)** - apply to EVERY DR/RS script:
+    1. **Every line = one complete mini-event: action -> "तो"/"कि" -> result** ("मुड़कर देखा तो सड़क खाली थी।").
+       A line that only describes a scene ("सड़क पर साइकिल दौड़ा रहा था।", "एक आदमी खड़ा था।") makes Kiki drag
+       the last word ("थाआआ"). Rewrite it as "...दौड़ा रहा था कि तभी चेन टूट गई।" / "...पहुंचा तो एक आदमी खड़ा मिला।"
+    2. **Plain, grammatical word order.** Never invert or drop verbs to change the line ending ("टूट गई चेन",
+       "माँ कर रही इंतज़ार") - Kiki then pauses and speeds up at random.
+    3. **No 1-2 word lines** ("बंकर नहीं।" / "आड़ नहीं।"): Kiki pauses ~1 s after every "।". Merge them into one line
+       ("हमारे जवान खुले मैदान में थे ना कोई बंकर ना कोई आड़।").
+    4. **No nukta words** (ज़, फ़ ...): "ज़मीन" stumbled. Use a plain word ("सड़क पर", "नीचे").
+    5. **No same-sound clusters** ("चालीसा चलती", "होठों पर"): write "हनुमान चालीसा पढ़ता रहा।".
+    Style learned from a reference voiceover (user sample, 26 Nov; style only, never copy its lines): calm, even
+    loudness - emphasis by slowing down, never shouting; ~6 words a line; build tension step by step and keep the
+    big moment (tope / darshan / reveal) for the last story line (payoff in the last 2 s, #2). A sentence that spans
+    two scenes stays ONE Kiki line (no "।" at the scene break): `make.py --kiki-export` now joins it and
+    `--kiki-split` cuts it at the Whisper word anchor. Save Kiki downloads as WAV (lossless for cutting).
 
 ## Voiceover & Shorts Creation Workflow
 

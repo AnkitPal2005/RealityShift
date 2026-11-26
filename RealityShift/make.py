@@ -76,6 +76,58 @@ def preview(name):
         print(f"         {thumb_path}")
 
 
+def run_qc(name):
+    """Render each scene at 1080x1920 and run vision-model Visual QC + report."""
+    import cairo
+    from core import engine, lego
+    sys.path.insert(0, str(ROOT.parent))
+    import visual_qc
+
+    story = importlib.import_module(f"shorts.{name}")
+    qc_dir = engine.OUT_DIR / "work" / name / "qc"
+    qc_dir.mkdir(parents=True, exist_ok=True)
+    dur = 6.0
+    engine.SCENES.clear()
+    t0 = 0.0
+    items = []
+    for idx, spec in enumerate(getattr(story, "SPEC", [])):
+        key = spec["key"]
+        cls = story.SCENE_CLASSES.get(key)
+        if not cls:
+            continue
+        engine.SCENES.append({"key": key, "obj": cls(), "start": t0, "dur": dur, "captions": []})
+        surf = lego.compose(story, len(engine.SCENES) - 1, dur * 0.65)
+        img_path = qc_dir / f"scene_{idx + 1:02d}_{key}.png"
+        surf.write_to_png(str(img_path))
+        narration = " ".join(hi for _, chunks, *_ in spec.get("vo", []) for hi, _ in chunks)
+        items.append({
+            "scene_id": f"scene_{idx + 1:02d}_{key}",
+            "image_path": img_path,
+            "narration": narration,
+            "visual_brief": spec.get("visual", ""),
+        })
+        t0 += dur
+    reports = visual_qc.validate_scene_sequence(items, debug_dir=qc_dir, is_cartoon=True)
+    for rep in reports:
+        print(f"[visual_qc] {rep['scene_id']}: {rep['status']} ({rep['score']}/100)")
+    print(f"[visual_qc] report -> {qc_dir / 'qc_report.json'}")
+
+
+def run_audit(name):
+    """Run full-video audience, audio, pacing, and policy audit on the rendered Short."""
+    from core import engine
+    sys.path.insert(0, str(ROOT.parent))
+    import shorts_auditor
+
+    story = importlib.import_module(f"shorts.{name}")
+    mp4 = engine.shorts_dir(story) / next(iter(getattr(story, "OUTPUTS", {"edge": f"{name}_short.mp4"}).values()))
+    rep = shorts_auditor.audit_short(mp4, story_module=story)
+    print(f"[audit] {mp4.name}: {rep['video_status']} ({rep['overall_score']}/100) - {rep['final_recommendation']}")
+    for seg in rep["weak_segments"]:
+        print(f"  - {seg['start']}-{seg['end']}: {seg['problem']} -> {seg['suggestion']}")
+    print(f"[audit] report -> {mp4.with_name(mp4.stem + '_audit.json')}")
+
+
 def main():
     args = sys.argv[1:]
     if not args or args[0] in ("-h", "--help"):
@@ -96,6 +148,10 @@ def main():
         policy.check(importlib.import_module(f"shorts.{name}"), name)
     elif "--preview" in args:
         preview(name)
+    elif "--qc" in args:
+        run_qc(name)
+    elif "--audit" in args:
+        run_audit(name)
     elif "--kit" in args:
         from core import upload_kit
         sys.argv = [sys.argv[0], name]
@@ -107,6 +163,8 @@ def main():
         from core import voice_kit
         voice_kit.split(name, check="--check-voice" in args)
     else:
+        if "--strict-qc" in args:
+            run_qc(name)
         render(name, args)
 
 

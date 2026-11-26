@@ -1,0 +1,68 @@
+{
+  "_note": "One entry per media file the videos can contain. license: own | original | cc0 | public-domain | licensed | cc-by | unknown. Fill 'source' and 'proof' (invoice, licence URL, 'made in code by X') by hand.",
+  "assets": {
+    "SanatanKatha/assets/divya_rahasya_logo.png": {
+      "channel": "dr",
+      "sha": "8140872af2c92918",
+      "owner": null,
+      "license": "unknown",
+      "source": null,
+      "proof": null,
+      "added": "2026-11-26"
+    },
+    "BrainBlitz/assets/audio/ding.wav": {
+      "channel": "bb",
+      "sha": "8db7effa35fe1d14",
+      "owner": null,
+      "license": "unknown",
+      "source": null,
+      "proof": null,
+      "added": "2026-11-26"
+    },
+    "BrainBlitz/assets/audio/tick.wav": {
+      "channel": "bb",
+      "sha": "2675b18926be651e",
+      "owner": null,
+      "license": "unknown",
+      "source": null,
+      "proof": null,
+      "added": "2026-11-26"
+    },
+    "BrainBlitz/assets/audio/whoosh.wav": {
+      "channel": "bb",
+      "sha": "56c02163886ccc09",
+      "owner": null,
+      "license": "unknown",
+      "source": null,
+      "proof": null,
+      "added": "2026-11-26"
+    },
+    "BrainBlitz/assets/images/logo.png": {
+      "channel": "bb",
+      "sha": "7746fa97ef5b44a8",
+      "owner": null,
+      "license": "unknown",
+      "source": null,
+      "proof": null,
+      "added": "2026-11-26"
+    },
+    "BrainBlitz/assets/images/logo_round.png": {
+      "channel": "bb",
+      "sha": "3e128890bb69fc50",
+      "owner": null,
+      "license": "unknown",
+      "source": null,
+      "proof": null,
+      "added": "2026-11-26"
+    },
+    "BrainBlitz/assets/realistic/mystery_scene.png": {
+      "channel": "bb",
+      "sha": "ad098af3a6f9ec41",
+      "owner": null,
+      "license": "unknown",
+      "source": null,
+      "proof": null,
+      "added": "2026-11-26"
+    }
+  }
+}

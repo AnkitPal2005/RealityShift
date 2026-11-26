@@ -160,7 +160,25 @@ def build(story, final: Path, duration: float) -> Path:
     for ok, label, detail in rows:
         print(f"         {'ok ' if ok else 'FIX'} {label}: {detail}")
     print(f"[upload] {path}\n[upload] {thumb}")
+    growth_check("dr", name, final)
     return path
+
+
+def growth_check(ch: str, name: str, final: Path) -> None:
+    """Advice-only growth/monetization check (story-pipeline/growth). Never blocks or breaks the render."""
+    try:
+        pipeline = str(Path(__file__).resolve().parents[2])
+        if pipeline not in sys.path:
+            sys.path.insert(0, pipeline)
+        from growth import report as growth_report
+        rep = growth_report.run_video(ch, name)
+        paths = growth_report.save_video(rep, next_to=final)
+        d = rep["decision"]
+        print(f"[growth] {d['decision']} ({d['score']}/100) - {paths[-1]}")
+        for x in (d["must_fix"] + d["improve"])[:5]:
+            print(f"         {x}")
+    except (Exception, SystemExit) as e:   # advisory step, the video is already rendered
+        print(f"[growth] skipped: {e}")
 
 
 def main() -> None:

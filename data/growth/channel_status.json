@@ -1,0 +1,30 @@
+{
+  "_note": "Facts the YouTube APIs do NOT expose. Fill these from YouTube Studio by hand (Studio -> Earn, and Studio -> Settings -> Channel -> Status). Leave null when unknown - the auditor then says 'unknown', it never guesses. application_status: null | 'not_applied' | 'pending' | 'approved' | 'rejected'. channel_id: optional; with OAuth the tool reads your own channel automatically.",
+  "dr": {
+    "channel_id": null,
+    "community_guidelines_strikes": null,
+    "copyright_strikes": null,
+    "application_status": null,
+    "early_ypp_member": null,
+    "ads_monetized": null,
+    "updated": null
+  },
+  "rs": {
+    "channel_id": "UC-siM5h44Pt614vQFJSiVag",
+    "community_guidelines_strikes": null,
+    "copyright_strikes": null,
+    "application_status": null,
+    "early_ypp_member": null,
+    "ads_monetized": null,
+    "updated": null
+  },
+  "bb": {
+    "channel_id": null,
+    "community_guidelines_strikes": null,
+    "copyright_strikes": null,
+    "application_status": null,
+    "early_ypp_member": null,
+    "ads_monetized": null,
+    "updated": null
+  }
+}

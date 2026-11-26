@@ -16,3 +16,13 @@ render_*/
 .idea/
 Thumbs.db
 .DS_Store
+
+# Growth system: OAuth tokens and private channel analytics (never commit)
+data/growth/auth/
+data/growth/analytics_cache/
+data/growth/studio_metrics.json
+data/growth/quota_log.jsonl
+data/growth/reports/
+
+# Reference voiceovers from other creators (style study only, never commit)
+data/voice_samples/

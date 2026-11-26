@@ -62,6 +62,56 @@ def preview(name):
     print(f"preview: {out / (name + '_sheet.png')}\n         {out / (name + '_thumb.png')}")
 
 
+def run_qc(name):
+    """Render each scene at 1080x1920 and run vision-model Visual QC + report."""
+    from core import engine, katha
+    sys.path.insert(0, str(ROOT.parent))
+    import visual_qc
+
+    story = importlib.import_module(f"kathas.{name}")
+    qc_dir = engine.OUT_DIR / "work" / name / "qc"
+    qc_dir.mkdir(parents=True, exist_ok=True)
+    dur = 6.0
+    engine.SCENES.clear()
+    t0 = 0.0
+    spec_map = {s["key"]: s for s in getattr(story, "SPEC", [])}
+    items = []
+    for idx, (key, chunks) in enumerate(story.SCRIPT):
+        caps = [(dur * 0.9 * i / len(chunks), cap) for i, (_, cap) in enumerate(chunks)]
+        engine.SCENES.append({"key": key, "obj": story.SCENE_CLASSES[key](), "start": t0, "dur": dur,
+                              "captions": caps})
+        surf = katha.compose(story, idx, dur * 0.65)
+        img_path = qc_dir / f"scene_{idx + 1:02d}_{key}.png"
+        surf.write_to_png(str(img_path))
+        spec = spec_map.get(key, {})
+        items.append({
+            "scene_id": f"scene_{idx + 1:02d}_{key}",
+            "image_path": img_path,
+            "narration": " ".join(hi for hi, _ in chunks),
+            "visual_brief": spec.get("visual", ""),
+        })
+        t0 += dur
+    reports = visual_qc.validate_scene_sequence(items, debug_dir=qc_dir, is_cartoon=True)
+    for rep in reports:
+        print(f"[visual_qc] {rep['scene_id']}: {rep['status']} ({rep['score']}/100)")
+    print(f"[visual_qc] report -> {qc_dir / 'qc_report.json'}")
+
+
+def run_audit(name):
+    """Run full-video audience, audio, pacing, and policy audit on the rendered Short."""
+    from core import engine
+    sys.path.insert(0, str(ROOT.parent))
+    import shorts_auditor
+
+    story = importlib.import_module(f"kathas.{name}")
+    mp4 = engine.SHORTS_DIR / f"{name}_short.mp4"
+    rep = shorts_auditor.audit_short(mp4, story_module=story)
+    print(f"[audit] {mp4.name}: {rep['video_status']} ({rep['overall_score']}/100) - {rep['final_recommendation']}")
+    for seg in rep["weak_segments"]:
+        print(f"  - {seg['start']}-{seg['end']}: {seg['problem']} -> {seg['suggestion']}")
+    print(f"[audit] report -> {mp4.with_name(mp4.stem + '_audit.json')}")
+
+
 def main():
     args = sys.argv[1:]
     if not args or args[0] in ("-h", "--help"):
@@ -81,6 +131,10 @@ def main():
         policy.check(importlib.import_module(f"kathas.{name}"), name)
     elif "--preview" in args:
         preview(name)
+    elif "--qc" in args:
+        run_qc(name)
+    elif "--audit" in args:
+        run_audit(name)
     elif "--kiki-export" in args:
         from core import voice_kit
         voice_kit.export(name)
@@ -88,6 +142,8 @@ def main():
         from core import voice_kit
         voice_kit.split(name, check="--check-voice" in args)
     else:
+        if "--strict-qc" in args:
+            run_qc(name)
         from core import katha
         katha.run(name, args[args.index("--engine") + 1] if "--engine" in args else None)
 
